@@ -55,113 +55,167 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/dashboard",
+    redirect: "/homepage",
     children: [
       {
-        path: "dashboard",
-        name: "Dashboard",
-        component: () => import("@/views/dashboard/index"),
-        meta: { title: "Dashboard", icon: "dashboard" },
+        path: "homepage",
+        name: "Homepage",
+        component: () => import("@/views/homepage/index"),
+        meta: { title: "主页", icon: "dashboard" },
       },
     ],
   },
 
   {
-    path: "/example",
+    path: "/trans",
     component: Layout,
-    redirect: "/example/table",
-    name: "Example",
-    meta: { title: "Example", icon: "el-icon-s-help" },
+    redirect: "/trans/in",
+    name: "变迁申请",
+    meta: { title: "变迁申请", icon: "el-icon-s-help" },
     children: [
       {
-        path: "table",
-        name: "Table",
-        component: () => import("@/views/table/index"),
-        meta: { title: "Table", icon: "table" },
+        path: "in",
+        name: "入驻申请",
+        component: () => import("@/views/trans/in/index"),
+        meta: { title: "入驻申请", icon: "table" },
       },
       {
-        path: "tree",
-        name: "Tree",
-        component: () => import("@/views/tree/index"),
-        meta: { title: "Tree", icon: "tree" },
+        path: "out",
+        name: "搬离申请",
+        component: () => import("@/views/trans/out/index"),
+        meta: { title: "搬离申请", icon: "tree" },
       },
     ],
   },
 
   {
-    path: "/form",
+    path: "/pro_related",
     component: Layout,
-    children: [
-      {
-        path: "index",
-        name: "Form",
-        component: () => import("@/views/form/index"),
-        meta: { title: "Form", icon: "form" },
-      },
-    ],
-  },
-
-  {
-    path: "/nested",
-    component: Layout,
-    redirect: "/nested/menu1",
-    name: "Nested",
+    redirect: "/pro_related/release",
+    name: "Pro_related",
     meta: {
-      title: "Nested",
+      title: "项目相关",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "release",
+        name: "Release",
+        component: () => import("@/views/pro_related/release/index"),
+        meta: { title: "项目发布" },
+      },
+      {
+        path: "apply",
+        name: "Apply",
+        component: () => import("@/views/pro_related/apply/index"),
+        meta: { title: "项目申报" },
+      },
+      {
+        path: "query",
+        name: "Query",
+        component: () => import("@/views/pro_related/query/index"),
+        meta: { title: "项目查询" },
+      },
+      {
+        path: "progress_query",
+        name: "Progress_query",
+        component: () => import("@/views/pro_related/progress_query/index"),
+        meta: { title: "项目进度查询" },
+      },
+    ],
+  },
+
+  {
+    path: "/change",
+    component: Layout,
+    redirect: "/change/menu1",
+    name: "Change",
+    meta: {
+      title: "信息更改",
       icon: "nested",
     },
     children: [
       {
         path: "menu1",
-        component: () => import("@/views/nested/menu1/index"), // Parent router-view
+        component: () => import("@/views/change/menu1/index"), // Parent router-view
         name: "Menu1",
-        meta: { title: "Menu1" },
-        children: [
-          {
-            path: "menu1-1",
-            component: () => import("@/views/nested/menu1/menu1-1"),
-            name: "Menu1-1",
-            meta: { title: "Menu1-1" },
-          },
-          {
-            path: "menu1-2",
-            component: () => import("@/views/nested/menu1/menu1-2"),
-            name: "Menu1-2",
-            meta: { title: "Menu1-2" },
-            children: [
-              {
-                path: "menu1-2-1",
-                component: () =>
-                  import("@/views/nested/menu1/menu1-2/menu1-2-1"),
-                name: "Menu1-2-1",
-                meta: { title: "Menu1-2-1" },
-              },
-              {
-                path: "menu1-2-2",
-                component: () =>
-                  import("@/views/nested/menu1/menu1-2/menu1-2-2"),
-                name: "Menu1-2-2",
-                meta: { title: "Menu1-2-2" },
-              },
-            ],
-          },
-          {
-            path: "menu1-3",
-            component: () => import("@/views/nested/menu1/menu1-3"),
-            name: "Menu1-3",
-            meta: { title: "Menu1-3" },
-          },
-        ],
+        meta: { title: "企业信息更改" },
+        // children: [
+        //   {
+        //     path: "menu1-1",
+        //     component: () => import("@/views/nested/menu1/menu1-1"),
+        //     name: "Menu1-1",
+        //     meta: { title: "Menu1-1" },
+        //   },
+        //   {
+        //     path: "menu1-2",
+        //     component: () => import("@/views/nested/menu1/menu1-2"),
+        //     name: "Menu1-2",
+        //     meta: { title: "Menu1-2" },
+        //     children: [
+        //       {
+        //         path: "menu1-2-1",
+        //         component: () =>
+        //           import("@/views/nested/menu1/menu1-2/menu1-2-1"),
+        //         name: "Menu1-2-1",
+        //         meta: { title: "Menu1-2-1" },
+        //       },
+        //       {
+        //         path: "menu1-2-2",
+        //         component: () =>
+        //           import("@/views/nested/menu1/menu1-2/menu1-2-2"),
+        //         name: "Menu1-2-2",
+        //         meta: { title: "Menu1-2-2" },
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     path: "menu1-3",
+        //     component: () => import("@/views/nested/menu1/menu1-3"),
+        //     name: "Menu1-3",
+        //     meta: { title: "Menu1-3" },
+        //   },
+        // ],
       },
       {
         path: "menu2",
-        component: () => import("@/views/nested/menu2/index"),
+        component: () => import("@/views/change/menu2/index"),
         name: "Menu2",
-        meta: { title: "menu2" },
+        meta: { title: "基础信息完善" },
+      },
+      {
+        path: "menu3",
+        component: () => import("@/views/change/menu3/index"),
+        name: "Menu3",
+        meta: { title: "重大信息变更" },
       },
     ],
   },
 
+  {
+    path: "/policy_related",
+    component: Layout,
+    redirect: "/policy_related/browse",
+    name: "政策兑现",
+    meta: {
+      title: "政策兑现",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "browse",
+        component: () => import("@/views/policy_related/browse/index"),
+        name: "Browse",
+        meta: { title: "政策查询" },
+      },
+      {
+        path: "reques",
+        component: () => import("@/views/policy_related/reques/index"),
+        name: "Reques",
+        meta: { title: "政策申报" },
+      },
+    ],
+  },
   {
     path: "external-link",
     component: Layout,
