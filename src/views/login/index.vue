@@ -62,8 +62,8 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleSignup"
+        style="width: 100%; margin-left: 0; margin-bottom: 30px"
+        @click.native.prevent="gotoSignup"
         >注册</el-button
       >
 
@@ -82,7 +82,7 @@ export default {
   name: "Login",
   //返回的数据，会到哪里去？
   data() {
-    //
+    //这里定义了两个验证函数
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error("Please enter the correct user name"));
@@ -98,10 +98,12 @@ export default {
       }
     };
     return {
+      //表单数据
       loginForm: {
         username: "admin",
         password: "111111",
       },
+      //表单的验证规则
       loginRules: {
         username: [
           { required: true, trigger: "blur", validator: validateUsername },
@@ -155,7 +157,7 @@ export default {
       });
     },
     //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
-    handleSignup() {
+    gotoSignup() {
       this.$router.push({ path: "/signup" });
     },
   },
