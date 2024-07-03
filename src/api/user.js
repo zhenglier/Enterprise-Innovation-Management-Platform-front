@@ -1,11 +1,13 @@
 import request from '@/utils/request'
 
-export function login(data) {
-  return request({
-    url: '/vue-admin-template/user/login',
+export async function login(data) {
+  const ttt = await request({
+    url: '/auth/login',
     method: 'post',
     data
-  })
+  });
+  console.log(ttt);
+  return ttt;
 }
 
 export function getInfo(token) {
