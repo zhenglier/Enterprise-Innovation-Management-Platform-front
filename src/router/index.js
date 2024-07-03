@@ -140,42 +140,6 @@ export const constantRoutes = [
         component: () => import("@/views/change/enterprise_Information/index"), // Parent router-view
         name: "Enterprise_Information",
         meta: { title: "企业信息查看" },
-        // children: [
-        //   {
-        //     path: "menu1-1",
-        //     component: () => import("@/views/nested/menu1/menu1-1"),
-        //     name: "Menu1-1",
-        //     meta: { title: "Menu1-1" },
-        //   },
-        //   {
-        //     path: "menu1-2",
-        //     component: () => import("@/views/nested/menu1/menu1-2"),
-        //     name: "Menu1-2",
-        //     meta: { title: "Menu1-2" },
-        //     children: [
-        //       {
-        //         path: "menu1-2-1",
-        //         component: () =>
-        //           import("@/views/nested/menu1/menu1-2/menu1-2-1"),
-        //         name: "Menu1-2-1",
-        //         meta: { title: "Menu1-2-1" },
-        //       },
-        //       {
-        //         path: "menu1-2-2",
-        //         component: () =>
-        //           import("@/views/nested/menu1/menu1-2/menu1-2-2"),
-        //         name: "Menu1-2-2",
-        //         meta: { title: "Menu1-2-2" },
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     path: "menu1-3",
-        //     component: () => import("@/views/nested/menu1/menu1-3"),
-        //     name: "Menu1-3",
-        //     meta: { title: "Menu1-3" },
-        //   },
-        // ],
       },
       {
         path: "base_Information",
@@ -195,7 +159,7 @@ export const constantRoutes = [
   {
     path: "/policy_related",
     component: Layout,
-    redirect: "/policy_related/browse",
+    redirect: "/policy_related/realize",
     name: "政策兑现",
     meta: {
       title: "政策兑现",
@@ -203,16 +167,16 @@ export const constantRoutes = [
     },
     children: [
       {
+        path: "realize",
+        component: () => import("@/views/policy_related/realize/index"),
+        name: "Realize",
+        meta: { title: "政策兑现" },
+      },
+      {
         path: "browse",
         component: () => import("@/views/policy_related/browse/index"),
         name: "Browse",
         meta: { title: "政策查询" },
-      },
-      {
-        path: "reques",
-        component: () => import("@/views/policy_related/reques/index"),
-        name: "Reques",
-        meta: { title: "政策申报" },
       },
     ],
   },
