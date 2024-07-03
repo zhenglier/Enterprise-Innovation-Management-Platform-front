@@ -1,5 +1,7 @@
 <template>
   <div class="login-container">
+    <!-- model是表单的数据对象 -->
+    <!-- rules是表单的验证规则 -->
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -9,7 +11,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">创新创业管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -78,7 +80,9 @@ import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
+  //返回的数据，会到哪里去？
   data() {
+    //
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error("Please enter the correct user name"));
@@ -150,7 +154,10 @@ export default {
         }
       });
     },
-    handleSignup() {},
+    //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
+    handleSignup() {
+      this.$router.push({ path: "/signup" });
+    },
   },
 };
 </script>
