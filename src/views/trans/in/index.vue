@@ -112,23 +112,110 @@
           :model="baseinfoForm"
           :rules="baseinforules"
           ref="baseinfoForm"
-          label-width="100px"
+          label-width="130px"
           class="baseForm"
         >
-          <el-form-item label="活动名称" prop="name">
-            <el-input v-model="baseinfoForm.name"></el-input>
+          <el-form-item label="企业名称" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="活动区域" prop="region">
+          <el-form-item
+            label="注册资本(万元)"
+            prop="age"
+            :rules="[
+              { required: true, message: '注册资本不能为空' },
+              { type: 'number', message: '注册资本必须为数字值' },
+            ]"
+          >
+            <el-input
+              v-model.number="numberValidateForm.age"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="信用代码" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="公司网址" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="办公地址" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="注册地址" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="主营业务" prop="name">
+            <el-input
+              v-model="baseinfoForm.name"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="企业性质" prop="property">
             <el-select
-              v-model="baseinfoForm.region"
-              placeholder="请选择活动区域"
+              v-model="baseinfoForm.property"
+              placeholder="请选择企业性质"
             >
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option label="国有企业" value="guoyou"></el-option>
+              <el-option label="国有控股企业" value="guoyoukonggu"></el-option>
+              <el-option label="外资企业" value="waizi"></el-option>
+              <el-option label="合资企业" value="hezi"></el-option>
+              <el-option label="私营企业" value="siying"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="活动时间" required>
-            <el-col :span="11">
+
+          <el-form-item label="国民经济行业分类" prop="field">
+            <el-select
+              v-model="baseinfoForm.field"
+              placeholder="请选择行业类型"
+            >
+              <el-option label="制造业" value="guoyou"></el-option>
+              <el-option
+                label="信息传输，软件和信息技术服务业"
+                value="guoyoukonggu"
+              ></el-option>
+              <el-option label="金融业" value="waizi"></el-option>
+              <el-option label="科学研究和技术服务类" value="hezi"></el-option>
+              <el-option
+                label="交通运输，仓储和邮政业"
+                value="siying"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="高新技术产业分类" prop="field">
+            <el-select
+              v-model="baseinfoForm.field"
+              placeholder="请选择产业类型"
+            >
+              <el-option label="生物医药" value="guoyou"></el-option>
+              <el-option
+                label="信息传输，软件和信息技术服务业"
+                value="guoyoukonggu"
+              ></el-option>
+              <el-option label="金融业" value="waizi"></el-option>
+              <el-option label="科学研究和技术服务类" value="hezi"></el-option>
+              <el-option
+                label="交通运输，仓储和邮政业"
+                value="siying"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="注册时间" required>
+            <el-col :span="2">
               <el-form-item prop="date1">
                 <el-date-picker
                   type="date"
@@ -138,40 +225,28 @@
                 ></el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="date2">
-                <el-time-picker
-                  placeholder="选择时间"
-                  v-model="baseinfoForm.date2"
-                  style="width: 100%"
-                ></el-time-picker>
-              </el-form-item>
-            </el-col>
           </el-form-item>
-          <el-form-item label="即时配送" prop="delivery">
-            <el-switch v-model="baseinfoForm.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="活动性质" prop="type">
+          <el-form-item label="认定情况" prop="type">
             <el-checkbox-group v-model="baseinfoForm.type">
-              <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-              <el-checkbox label="地推活动" name="type"></el-checkbox>
-              <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-              <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+              <el-checkbox label="高企" name="type"></el-checkbox>
+              <el-checkbox label="科技小巨人" name="type"></el-checkbox>
+              <el-checkbox label="上市企业" name="type"></el-checkbox>
+              <el-checkbox label="专精特新中小企业" name="type"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="特殊资源" prop="resource">
+          <el-form-item label="企业创办类别" prop="resource">
             <el-radio-group v-model="baseinfoForm.resource">
-              <el-radio label="线上品牌商赞助"></el-radio>
-              <el-radio label="线下场地免费"></el-radio>
+              <el-radio label="独资"></el-radio>
+              <el-radio label="合伙"></el-radio>
+              <el-radio label="公司制"></el-radio>
             </el-radio-group>
           </el-form-item>
         </el-form>
-        <p>这里是基本信息的内容</p>
       </div>
 
       <div v-if="active === 2">
         <h2>社会信息</h2>
+        <el-alert :closable="false" title="法人信息" class="sector-title" />
         <el-form
           :model="socialinfoForm"
           :rules="socialinforules"
@@ -179,63 +254,39 @@
           label-width="100px"
           class="socialForm"
         >
-          <el-form-item label="活动名称" prop="name">
-            <el-input v-model="socialinfoForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="活动区域" prop="region">
-            <el-select
-              v-model="socialinfoForm.region"
-              placeholder="请选择活动区域"
-            >
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="活动时间" required>
-            <el-col :span="11">
-              <el-form-item prop="date1">
-                <el-date-picker
-                  type="date"
-                  placeholder="选择日期"
-                  v-model="socialinfoForm.date1"
-                  style="width: 100%"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="date2">
-                <el-time-picker
-                  placeholder="选择时间"
-                  v-model="socialinfoForm.date2"
-                  style="width: 100%"
-                ></el-time-picker>
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="即时配送" prop="delivery">
-            <el-switch v-model="socialinfoForm.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="活动性质" prop="type">
-            <el-checkbox-group v-model="socialinfoForm.type">
-              <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-              <el-checkbox label="地推活动" name="type"></el-checkbox>
-              <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-              <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="特殊资源" prop="resource">
-            <el-radio-group v-model="socialinfoForm.resource">
-              <el-radio label="线上品牌商赞助"></el-radio>
-              <el-radio label="线下场地免费"></el-radio>
-            </el-radio-group>
-          </el-form-item>
         </el-form>
-        <p>这里是社会信息的内容</p>
+        <el-alert :closable="false" title="联系人信息" class="sector-title" />
+        <el-form
+          :model="socialinfoForm"
+          :rules="socialinforules"
+          ref="socialinfoForm"
+          label-width="100px"
+          class="socialForm"
+        >
+        </el-form>
+        <el-alert :closable="false" title="银行账户信息" class="sector-title" />
+        <el-form
+          :model="socialinfoForm"
+          :rules="socialinforules"
+          ref="socialinfoForm"
+          label-width="100px"
+          class="socialForm"
+        >
+        </el-form>
+        <el-alert :closable="false" title="企业证明材料" class="sector-title" />
+        <el-form
+          :model="socialinfoForm"
+          :rules="socialinforules"
+          ref="socialinfoForm"
+          label-width="100px"
+          class="socialForm"
+        >
+        </el-form>
       </div>
 
       <div v-if="active === 3">
         <h2>员工与租房信息</h2>
+        <el-alert :closable="false" title="员工信息" class="sector-title" />
         <el-form
           :model="employinfoForm"
           :rules="employinforules"
@@ -243,58 +294,8 @@
           label-width="100px"
           class="employForm"
         >
-          <el-form-item label="活动名称" prop="name">
-            <el-input v-model="employinfoForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="活动区域" prop="region">
-            <el-select
-              v-model="employinfoForm.region"
-              placeholder="请选择活动区域"
-            >
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="活动时间" required>
-            <el-col :span="11">
-              <el-form-item prop="date1">
-                <el-date-picker
-                  type="date"
-                  placeholder="选择日期"
-                  v-model="employinfoForm.date1"
-                  style="width: 100%"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="date2">
-                <el-time-picker
-                  placeholder="选择时间"
-                  v-model="employinfoForm.date2"
-                  style="width: 100%"
-                ></el-time-picker>
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="即时配送" prop="delivery">
-            <el-switch v-model="employinfoForm.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="活动性质" prop="type">
-            <el-checkbox-group v-model="employinfoForm.type">
-              <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-              <el-checkbox label="地推活动" name="type"></el-checkbox>
-              <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-              <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="特殊资源" prop="resource">
-            <el-radio-group v-model="employinfoForm.resource">
-              <el-radio label="线上品牌商赞助"></el-radio>
-              <el-radio label="线下场地免费"></el-radio>
-            </el-radio-group>
-          </el-form-item>
         </el-form>
+        <el-alert :closable="false" title="租房信息" class="sector-title" />
         <p>这里是员工与租房信息的内容</p>
       </div>
 
@@ -324,20 +325,19 @@ export default {
       activeNames: ["1"],
       baseinfoForm: {
         name: "",
-        region: "",
+        property: "",
         date1: "",
-        date2: "",
         delivery: false,
         type: [],
-        resource: "",
+        // resource: "",
       },
       baseinforules: {
         name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
+        property: [
+          { required: true, message: "请选择企业性质", trigger: "change" },
         ],
         date1: [
           {
@@ -347,19 +347,11 @@ export default {
             trigger: "change",
           },
         ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
         type: [
           {
             type: "array",
             required: true,
-            message: "请至少选择一个活动性质",
+            message: "请至少选择一个类别",
             trigger: "change",
           },
         ],
@@ -459,6 +451,9 @@ export default {
           { required: true, message: "请选择活动资源", trigger: "change" },
         ],
       },
+      numberValidateForm: {
+        age: "",
+      },
     };
   },
 
@@ -485,6 +480,10 @@ export default {
   }
 }
 
+.sector-title {
+  margin-bottom: 15px;
+}
+
 .progress {
   margin-bottom: 20px;
 }
@@ -496,6 +495,10 @@ export default {
 .step-navigation {
   display: flex;
   justify-content: space-between;
+}
+
+.custom-input {
+  width: 50%;
 }
 
 p,
