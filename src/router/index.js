@@ -136,10 +136,10 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: "menu1",
-        component: () => import("@/views/change/menu1/index"), // Parent router-view
-        name: "Menu1",
-        meta: { title: "企业信息更改" },
+        path: "enterprise_Information",
+        component: () => import("@/views/change/enterprise_Information/index"), // Parent router-view
+        name: "Enterprise_Information",
+        meta: { title: "企业信息查看" },
         // children: [
         //   {
         //     path: "menu1-1",
@@ -178,15 +178,15 @@ export const constantRoutes = [
         // ],
       },
       {
-        path: "menu2",
-        component: () => import("@/views/change/menu2/index"),
-        name: "Menu2",
+        path: "base_Information",
+        component: () => import("@/views/change/base_Information/index"),
+        name: "Base_Information",
         meta: { title: "基础信息完善" },
       },
       {
-        path: "menu3",
-        component: () => import("@/views/change/menu3/index"),
-        name: "Menu3",
+        path: "importance_Information",
+        component: () => import("@/views/change/importance_Information/index"),
+        name: "Importance_Information",
         meta: { title: "重大信息变更" },
       },
     ],
