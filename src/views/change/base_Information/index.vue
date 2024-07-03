@@ -174,7 +174,7 @@
       </div>
       <div class="button-container">
         <el-row>
-          <el-button type="primary">完成</el-button>
+          <el-button type="primary" @click="open">完成</el-button>
         </el-row>
       </div>
     </div>
@@ -187,7 +187,31 @@
 .button-container {
   text-align: center;
 }
+.date-picker {
+  width: 100%;
+}
 .button-container.button {
   width: 50px;
 }
 </style>
+<script>
+export default {
+  methods: {
+    open() {
+      this.$alert("编辑成功", "编辑结果", {
+        confirmButtonText: "确定",
+        callback: (action) => {
+          let customAction = ""; // 默认值
+          if (action === "confirm") {
+            customAction = "编辑成功"; // 自定义值
+          }
+          this.$message({
+            type: "info",
+            message: `action: ${customAction}`,
+          });
+        },
+      });
+    },
+  },
+};
+</script>

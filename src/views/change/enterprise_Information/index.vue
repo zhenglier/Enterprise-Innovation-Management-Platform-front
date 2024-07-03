@@ -244,9 +244,13 @@
       </div>
       <div class="button-container">
         <el-row>
-          <el-button type="primary">基本信息编辑</el-button>
+          <el-button type="primary" @click="goToBaseInformation"
+            >基本信息编辑</el-button
+          >
 
-          <el-button type="danger">重大信息更改</el-button>
+          <el-button type="danger" @click="goToImportantInformation"
+            >重大信息更改</el-button
+          >
         </el-row>
       </div>
     </div>
@@ -393,6 +397,14 @@ export default {
       fits: [""],
       url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
     };
+  },
+  methods: {
+    goToBaseInformation() {
+      this.$router.push({ path: "/change/base_Information" });
+    },
+    goToImportantInformation() {
+      this.$router.push({ path: "/change/importance_Information" });
+    },
   },
 };
 </script>
