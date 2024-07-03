@@ -9,57 +9,68 @@
           <el-alert :closable="false" title="企业基本信息" />
         </div>
         <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">*企业ID: 2022213474</div></el-col
+          <el-col :span="3"
+            ><div class="info-item qiyeID">*企业ID:</div></el-col
           >
+          <el-col :span="9"><div class="info-item">2022213474</div></el-col>
           <el-col :span="12"
             ><div class="info-item">*信用代码: 91340100MA</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">
-              *企业名称: 中国五环工程有限公司
-            </div></el-col
+          <el-col :span="3"
+            ><div class="info-item name">*企业名称:</div></el-col
+          >
+          <el-col :span="9"
+            ><div class="info-item">中国五环工程有限公司</div></el-col
           >
           <el-col :span="12"
             ><div class="info-item">*注册资本(万元): 1000.00</div></el-col
           >
         </el-row>
         <el-row :gutter="19" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">
-              *企业性质: 有限责任公司(自然人投资或控股)
-            </div></el-col
+          <el-col :span="3"
+            ><div class="info-item essence">*企业性质:</div></el-col
+          >
+          <el-col :span="9"
+            ><div class="info-item">有限责任公司(自然人投资或控股)</div></el-col
           >
           <el-col :span="12"
             ><div class="info-item">*行 业: 软件及数据</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">
-              *注册地址: 北京市西城区广安门外
-            </div></el-col
+          <el-col :span="3"
+            ><div class="info-item address">*注册地址:</div></el-col
+          >
+          <el-col :span="9"
+            ><div class="info-item">北京市西城区广安门外</div></el-col
           >
           <el-col :span="12"
             ><div class="info-item">*注册日期:2024-6-24</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">*经营者姓名: 张三</div></el-col
+          <el-col :span="3"
+            ><div class="info-item businessman">*经营者姓名:</div></el-col
+          >
+          <el-col :span="9"><div class="info-item">张三</div></el-col>
+        </el-row>
+        <el-row :gutter="20" class="info-row">
+          <el-col :span="3"
+            ><div class="info-item zaiti">*所属载体:</div></el-col
+          >
+          <el-col :span="9"
+            ><div class="info-item">聚元生物科技孵化器</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
-            ><div class="info-item">*所属载体: 展开税收分类明细表</div></el-col
+          <el-col :span="3"
+            ><div class="info-item duty">*主营业务:</div></el-col
           >
-        </el-row>
-        <el-row :gutter="20" class="info-row">
-          <el-col :span="12"
+          <el-col :span="9"
             ><div class="info-item">
-              *主营业务:软件开发，测试以及相关服务的任务
+              软件开发，测试以及相关服务的任务
             </div></el-col
           >
         </el-row>
@@ -169,11 +180,31 @@
           <el-row :gutter="20" class="info-row">
             <el-col :span="4">
               <div class="info-item">*租赁开始时间</div>
-              <el-input></el-input>
+              <div class="block">
+                <span class="demonstration"></span>
+                <el-date-picker
+                  v-model="value2"
+                  align="right"
+                  type="date"
+                  placeholder="选择日期"
+                  :picker-options="pickerOptions"
+                >
+                </el-date-picker>
+              </div>
             </el-col>
             <el-col :span="4">
               <div class="info-item">*租赁结束时间</div>
-              <el-input></el-input>
+              <div class="block">
+                <span class="demonstration"></span>
+                <el-date-picker
+                  v-model="value2"
+                  align="right"
+                  type="date"
+                  placeholder="选择日期"
+                  :picker-options="pickerOptions"
+                >
+                </el-date-picker>
+              </div>
             </el-col>
             <el-col :span="4">
               <div class="info-item">*租房面积(平米)</div>
@@ -211,11 +242,21 @@
           </div>
         </div>
       </div>
+      <div class="button-container">
+        <el-row>
+          <el-button type="primary">基本信息编辑</el-button>
+
+          <el-button type="danger">重大信息更改</el-button>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
+.button-container {
+  text-align: center;
+}
 .all {
   margin: 0px 20px;
   border-style: solid;
@@ -274,8 +315,8 @@
 }
 .info-item {
   margin-left: 16px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .custom-background .info-item {
@@ -322,6 +363,27 @@
 }
 .employee-container {
   margin: 2px 2px;
+}
+.qiyeID {
+  text-align: right;
+}
+.name {
+  text-align: right;
+}
+.businessman {
+  text-align: right;
+}
+.essence {
+  text-align: right;
+}
+.address {
+  text-align: right;
+}
+.zaiti {
+  text-align: right;
+}
+.duty {
+  text-align: right;
 }
 </style>
 <script>
