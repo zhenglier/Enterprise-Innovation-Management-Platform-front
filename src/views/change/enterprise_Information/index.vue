@@ -231,15 +231,17 @@
           <el-alert :closable="false" title="认证信息" />
         </div>
         <!-- 根据需要添加认证信息 -->
-        <div class="demo-image">
-          <div class="block" v-for="fit in fits" :key="fit">
-            <span class="demonstration">{{ fit }}</span>
-            <el-image
-              style="width: 100px; height: 100px"
-              :src="url"
-              :fit="fit"
-            ></el-image>
-          </div>
+        <div class="Image">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </div>
       </div>
       <div class="button-container">
@@ -258,6 +260,33 @@
 </template>
 
 <style>
+.Image {
+  text-align: center;
+  margin: 10px 10px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 .button-container {
   text-align: center;
 }
