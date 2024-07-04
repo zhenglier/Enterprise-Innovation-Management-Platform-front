@@ -366,28 +366,6 @@ var governmentRoutes =[
   },
 
   {
-    path: "/trans",
-    component: Layout,
-    redirect: "/trans/in",
-    name: "变迁申请",
-    meta: { title: "变迁申请", icon: "el-icon-s-help" },
-    children: [
-      {
-        path: "in",
-        name: "入驻申请",
-        component: () => import("@/views/trans/in/index"),
-        meta: { title: "入驻申请", icon: "table" },
-      },
-      {
-        path: "out",
-        name: "搬离申请",
-        component: () => import("@/views/trans/out/index"),
-        meta: { title: "搬离申请", icon: "tree" },
-      },
-    ],
-  },
-
-  {
     path: "/pro_related",
     component: Layout,
     redirect: "/pro_related/release",
@@ -639,23 +617,23 @@ var constantRoutes = [
 
 
 function createRouter(role){
-  console.log("create router now! " +role);
+  // console.log("create router now! " +role);
   if(role=="enterprise"){
-    console.log("enterprise login!");
+    // console.log("enterprise login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: enterpriseRoutes,
     })
   }else if(role=="carrier"){
-    console.log("carrier login!");
+    // console.log("carrier login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: carrierRoutes,
     })
   }else if(role=="government"){
-    console.log("government login!");
+    // console.log("government login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
@@ -671,7 +649,7 @@ function createRouter(role){
   }
 };
 
-console.log("local:"+localStorage.getItem('role'));
+// console.log("local:"+localStorage.getItem('role'));
 const router = createRouter(localStorage.getItem('role'));
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
