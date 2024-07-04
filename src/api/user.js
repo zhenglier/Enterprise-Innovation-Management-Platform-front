@@ -19,10 +19,14 @@ export function getInfo(token) {
 }
 
 export function signup(username,password) {
+  var data={
+    "username":username,
+    "password":password
+  }
   return request({
     url: '/auth/register',
     method: 'post',
-    params: { username,password }
+    data
   })
 }
 

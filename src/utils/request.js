@@ -47,7 +47,7 @@ service.interceptors.response.use(
 
     //这里下面的代码对请求做了一个简单的验证
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.code !== 20000 && false) {
       Message({
         message: res.message || "Error",
         type: "error",
