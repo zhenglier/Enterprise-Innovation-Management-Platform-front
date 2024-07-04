@@ -6,7 +6,7 @@ export async function login(data) {
     method: 'post',
     data
   });
-  console.log(ttt);
+  // console.log(ttt);
   return ttt;
 }
 

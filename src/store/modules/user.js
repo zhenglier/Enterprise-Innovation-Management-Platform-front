@@ -7,10 +7,11 @@ const getDefaultState = () => {
     token: getToken(),
     name: "",
     avatar: "",
+    role: "",
   };
 };
 
-const state = getDefaultState();
+export const state = getDefaultState();
 
 const mutations = {
   RESET_STATE: (state) => {
@@ -18,6 +19,9 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token;
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role;
   },
   SET_NAME: (state, name) => {
     state.name = name;
@@ -34,10 +38,15 @@ const actions = {
     //发送网络请求
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password })
-        .then((response) => {
+        .then(async (response) => {
           const data = response;
           commit("SET_TOKEN", data.token);
+          console.log(data.role+" login");
+          localStorage.clear();
+          localStorage.setItem('role',data.role);
+          resetRouter();
           setToken(data.token);
+          window.location.reload();
           resolve();
         })
         .catch((error) => {
@@ -87,7 +96,7 @@ const actions = {
       await logout(state.token)
         .then(() => {
           removeToken(); // must remove  token  first
-          resetRouter();
+          // resetRouter();
           commit("RESET_STATE");
           resolve();
           window.location.reload();
