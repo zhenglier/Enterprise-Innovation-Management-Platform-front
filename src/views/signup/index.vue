@@ -150,26 +150,13 @@ export default {
     //   });
     // },
     //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
-    async handleSignup() {
-      console.log(this.loginForm);
-      this.loading = true;
-      //触发action,这里的user是模块
-      this.$store
-        .dispatch("user/signup", this.loginForm)
-        .then(() => {
-          console.log("fuvk you")
-          this.$router.push({ path: this.redirect || "/" });
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    }
+    handleSignup() {
       //具体怎样的逻辑还需要在这里修改
       /*
       注册的逻辑大致如下：首先数据的有效性在前面定义的函数中做验证，数据没问题之后将得到的数据向后台提交
       ，提交完成之后在十秒之后转到登录界面。
       */
+    },
   },
 };
 </script>
