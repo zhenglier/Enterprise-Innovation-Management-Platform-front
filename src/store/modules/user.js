@@ -40,11 +40,13 @@ const actions = {
           setToken(data.token);
           resolve();
         })
-        // .catch((error) => {
-        //   reject(error);
-        // });
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
+
+  
 
   // get user info
   getInfo({ commit, state }) {

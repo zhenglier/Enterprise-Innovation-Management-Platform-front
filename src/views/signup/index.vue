@@ -1,17 +1,17 @@
 <template>
-  <div class="login-container">
+  <div class="signup-container">
     <!-- model是表单的数据对象 -->
     <!-- rules是表单的验证规则 -->
     <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
+      ref="signupForm"
+      :model="signupForm"
+      :rules="signupRules"
+      class="signup-form"
       auto-complete="on"
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">创新创业管理系统</h3>
+        <h3 class="title">用户注册</h3>
       </div>
 
       <el-form-item prop="username">
@@ -51,26 +51,20 @@
         </span>
       </el-form-item>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >登录</el-button
-      >
       <!-- 新增注册按钮 -->
       <el-button
         :loading="loading"
         type="primary"
-        style="width: 100%; margin-left: 0; margin-bottom: 30px"
-        @click.native.prevent="gotoSignup"
+        style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleSignup"
         >注册</el-button
       >
 
-      <div class="tips">
+      <!-- 注册页面的提示信息暂时不要 -->
+      <!-- <div class="tips">
         <span style="margin-right: 20px">用户名：admin</span>
         <span> 密码：任意</span>
-      </div>
+      </div> -->
     </el-form>
   </div>
 </template>
@@ -79,10 +73,10 @@
 import { validUsername } from "@/utils/validate";
 
 export default {
-  name: "Login",
+  name: "Signup",
   //返回的数据，会到哪里去？
   data() {
-    //这里定义了两个验证函数
+    //
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error("Please enter the correct user name"));
@@ -98,12 +92,9 @@ export default {
       }
     };
     return {
-      //表单数据
       loginForm: {
-        username: "admin",
-        password: "111111",
+        //这里的数据是直接传给后端的
       },
-      //表单的验证规则
       loginRules: {
         username: [
           { required: true, trigger: "blur", validator: validateUsername },
@@ -136,29 +127,35 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          //触发action,这里的user是模块
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
+
+    //此页面不需要处理登录逻辑
+    // handleLogin() {
+    //   this.$refs.loginForm.validate((valid) => {
+    //     if (valid) {
+    //       this.loading = true;
+    //       //触发action,这里的user是模块
+    //       this.$store
+    //         .dispatch("user/login", this.loginForm)
+    //         .then(() => {
+    //           this.$router.push({ path: this.redirect || "/" });
+    //           this.loading = false;
+    //         })
+    //         .catch(() => {
+    //           this.loading = false;
+    //         });
+    //     } else {
+    //       console.log("error submit!!");
+    //       return false;
+    //     }
+    //   });
+    // },
     //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
-    gotoSignup() {
-      this.$router.push({ path: "/signup" });
+    handleSignup() {
+      //具体怎样的逻辑还需要在这里修改
+      /*
+      注册的逻辑大致如下：首先数据的有效性在前面定义的函数中做验证，数据没问题之后将得到的数据向后台提交
+      ，提交完成之后在十秒之后转到登录界面。
+      */
     },
   },
 };
@@ -173,13 +170,13 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
+  .signup-container .el-input input {
     color: $cursor;
   }
 }
 
 /* reset element-ui css */
-.login-container {
+.signup-container {
   .el-input {
     display: inline-block;
     height: 47px;
@@ -216,13 +213,13 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-container {
+.signup-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
 
-  .login-form {
+  .signup-form {
     position: relative;
     width: 520px;
     max-width: 100%;
@@ -274,5 +271,3 @@ $light_gray: #eee;
   }
 }
 </style>
-
-<!-- 增加注释 -->
