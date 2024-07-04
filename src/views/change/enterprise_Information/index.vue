@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all_body">
     <div style="padding: 15px 20px" class="top1">
       <el-alert :closable="false" title="企业信息查看" />
     </div>
@@ -388,6 +388,9 @@
 }
 .duty {
   text-align: right;
+}
+.all_body {
+  margin: 20px 20px;
 }
 </style>
 <script>

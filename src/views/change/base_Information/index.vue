@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all_body">
     <div style="padding: 30px" class="top1">
       <el-alert :closable="false" title="基本信息完善" />
     </div>
@@ -174,13 +174,19 @@
       </div>
       <div class="button-container">
         <el-row>
-          <el-button type="primary" @click="open">完成</el-button>
+          <el-button type="primary" @click="open" class="finish" size="medium "
+            >完成</el-button
+          >
         </el-row>
       </div>
     </div>
   </div>
 </template>
 <style>
+.employee-info {
+  margin-bottom: 0px;
+}
+
 .info-input {
   padding-top: 8px;
 }
@@ -192,6 +198,9 @@
 }
 .button-container.button {
   width: 50px;
+}
+.all_body {
+  margin: 20px 20px;
 }
 </style>
 <script>
