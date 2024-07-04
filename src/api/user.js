@@ -18,9 +18,14 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+export async function logout(data) {
+  console.log(data)
+  data={
+    "token":data
+  }
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    url: '/auth/logout',
+    method: 'post',
+    data
   })
 }
