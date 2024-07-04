@@ -1,33 +1,47 @@
-import request from "@/utils/request";
+import request from '@/utils/request'
 
-export function login(data) {
-  return request({
-    url: "/vue-admin-template/user/login",
-    method: "post",
-    data,
+export async function login(data) {
+  const ttt = await request({
+    url: '/auth/login',
+    method: 'post',
+    data
   });
-}
-
-//这里为注册写一个网络请求接口
-export function signup(data) {
-  return request({
-    url: "/vue-admin-template/user/signup",
-    method: "post",
-    data,
-  });
+  console.log(ttt);
+  return ttt;
 }
 
 export function getInfo(token) {
   return request({
-    url: "/vue-admin-template/user/info",
-    method: "get",
-    params: { token },
-  });
+    url: '/vue-admin-template/user/info',
+    method: 'get',
+    params: { token }
+  })
 }
 
-export function logout() {
+export function getInfo(token) {
   return request({
-    url: "/vue-admin-template/user/logout",
-    method: "post",
-  });
+    url: '/vue-admin-template/user/info',
+    method: 'get',
+    params: { token }
+  })
+}
+
+export function signup(token) {
+  return request({
+    url: '/vue-admin-template/signup',
+    method: 'get',
+    params: { token }
+  })
+}
+
+export async function logout(data) {
+  console.log(data)
+  data={
+    "token":data
+  }
+  return request({
+    url: '/auth/logout',
+    method: 'post',
+    data
+  })
 }

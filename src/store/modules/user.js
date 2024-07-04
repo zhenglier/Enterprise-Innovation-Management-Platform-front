@@ -35,7 +35,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password })
         .then((response) => {
-          const { data } = response;
+          const data = response;
           commit("SET_TOKEN", data.token);
           setToken(data.token);
           resolve();
@@ -73,13 +73,14 @@ const actions = {
 
   // user logout
   logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token)
+    return new Promise(async (resolve, reject) => {
+      await logout(state.token)
         .then(() => {
           removeToken(); // must remove  token  first
           resetRouter();
           commit("RESET_STATE");
           resolve();
+          window.location.reload();
         })
         .catch((error) => {
           reject(error);
