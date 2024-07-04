@@ -6,10 +6,18 @@ e
     </div>
     <div class="button-container">
       <el-row>
-        <el-button class="custom-button" type="warning" size="medium"
+        <el-button
+          class="custom-button"
+          type="warning"
+          size="medium"
+          @click="open"
           >保存</el-button
         >
-        <el-button class="custom-button" type="success" size="medium"
+        <el-button
+          class="custom-button"
+          type="success"
+          size="medium"
+          @click="apply"
           >申请</el-button
         >
         <el-button class="custom-button" type="danger" size="medium"
@@ -115,3 +123,39 @@ e
   background-color: rgb(241, 244, 249);
 }
 </style>
+<script>
+export default {
+  methods: {
+    open() {
+      this.$alert("保存成功", "提示", {
+        confirmButtonText: "确定",
+        callback: (action) => {
+          this.$message({
+            type: "info",
+            message: `action: ${action}`,
+          });
+        },
+      });
+    },
+    apply() {
+      this.$confirm("此操作将提交申请, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "提交成功！",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消提交",
+          });
+        });
+    },
+  },
+};
+</script>
