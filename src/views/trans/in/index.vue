@@ -1,7 +1,8 @@
 <template>
   <!-- 这里的index默认是第一个步骤 -->
-  <div class="describe-container">
+  <div>
     <el-alert :closable="false" title="入驻申请" />
+
     <el-steps
       :space="200"
       :active="active"
@@ -22,9 +23,6 @@
           title="填报说明"
           style="margin-top: 30px; margin-bottom: 10px"
         /> -->
-
-        <h2>填报说明</h2>
-        <el-divider></el-divider>
         <!-- 填报说明的分段确定 -->
         <el-collapse
           v-model="activeNames"
@@ -215,7 +213,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="注册时间" required>
-            <el-col :span="2">
+            <el-col :span="3">
               <el-form-item prop="date1">
                 <el-date-picker
                   type="date"
@@ -246,71 +244,285 @@
 
       <div v-if="active === 2">
         <h2>社会信息</h2>
-        <el-alert :closable="false" title="法人信息" class="sector-title" />
         <el-form
           :model="socialinfoForm"
+          status-icon
           :rules="socialinforules"
-          ref="socialinfoForm"
+          ref="socialForm"
           label-width="100px"
           class="socialForm"
         >
-        </el-form>
-        <el-alert :closable="false" title="联系人信息" class="sector-title" />
-        <el-form
-          :model="socialinfoForm"
-          :rules="socialinforules"
-          ref="socialinfoForm"
-          label-width="100px"
-          class="socialForm"
-        >
-        </el-form>
-        <el-alert :closable="false" title="银行账户信息" class="sector-title" />
-        <el-form
-          :model="socialinfoForm"
-          :rules="socialinforules"
-          ref="socialinfoForm"
-          label-width="100px"
-          class="socialForm"
-        >
-        </el-form>
-        <el-alert :closable="false" title="企业证明材料" class="sector-title" />
-        <el-form
-          :model="socialinfoForm"
-          :rules="socialinforules"
-          ref="socialinfoForm"
-          label-width="100px"
-          class="socialForm"
-        >
+          <el-alert :closable="false" title="法人信息" class="sector-title" />
+          <el-form-item label="姓名" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="手机号码" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="学历" prop="checkPass">
+            <el-select
+              v-model="baseinfoForm.field"
+              placeholder="请选择学历类型"
+            >
+              <el-option label="高中" value="gaozhong"></el-option>
+              <el-option label="专科" value="zhuangke"></el-option>
+              <el-option label="本科" value="benke"></el-option>
+              <el-option label="硕士" value="shuoshi"></el-option>
+              <el-option label="博士" value="boshi"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="固定电话" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="毕业院校" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+
+          <el-alert :closable="false" title="联系人信息" class="sector-title" />
+          <el-form-item label="姓名" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="手机号码" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="QQ" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="职务" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="固定电话" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="传真" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="微信" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-alert
+            :closable="false"
+            title="银行账户信息"
+            class="sector-title"
+          />
+          <el-form-item label="开户银行" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="账号" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-alert
+            :closable="false"
+            title="企业证明材料"
+            class="sector-title"
+          />
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            class="pic-upload"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="" />
+          </el-dialog>
         </el-form>
       </div>
 
       <div v-if="active === 3">
         <h2>员工与租房信息</h2>
-        <el-alert :closable="false" title="员工信息" class="sector-title" />
+
         <el-form
           :model="employinfoForm"
+          status-icon
           :rules="employinforules"
-          ref="employinfoForm"
-          label-width="100px"
+          ref="employForm"
+          label-width="150px"
           class="employForm"
         >
+          <el-alert :closable="false" title="员工信息" class="sector-title" />
+          <!-- 这里稍后改为数字验证表单项 -->
+          <!-- 不需要改，这里反正是自定义规则的表单，后续定义一个统一规则 -->
+          <el-form-item label="员工人数" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="管理人数" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="大专及以上人数" prop="pass">
+            <el-input
+              type="password"
+              v-model="socialinfoForm.pass"
+              autocomplete="off"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="参与专业培训人数" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="参保人数" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="研究人数" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+
+          <el-alert :closable="false" title="租房信息" class="sector-title" />
+          <el-form-item label="租房开始时间" required>
+            <el-col :span="3">
+              <el-form-item prop="date1">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="baseinfoForm.date1"
+                  style="width: 100%"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="租房结束时间" required>
+            <el-col :span="3">
+              <el-form-item prop="date1">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="baseinfoForm.date1"
+                  style="width: 100%"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="租房面积(平米)" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="单位租金(元/平米)" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="租房地址" prop="age">
+            <el-input
+              v-model.number="socialinfoForm.age"
+              class="custom-input"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="材料" prop="age">
+            <!-- 这里是有限制类型和大小的 -->
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-change="handleChange"
+              :file-list="fileList"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                上传租房相关的证明材料
+              </div>
+            </el-upload>
+          </el-form-item>
         </el-form>
-        <el-alert :closable="false" title="租房信息" class="sector-title" />
-        <p>这里是员工与租房信息的内容</p>
       </div>
 
       <div v-if="active === 4">
         <h2>提交申请</h2>
-        <el-button style="margin-top: 12px" @click="submit">提交申请</el-button>
       </div>
     </div>
 
+    <el-divider></el-divider>
     <!-- 这里更完善的逻辑还需要看是否表单内容填写符合规则 -->
-    <div calsss="step-navigation">
-      <el-button style="margin-top: 12px" @click="prev" :disabled="active === 0"
+    <div class="step-button-container">
+      <el-button @click="prev" :disabled="active === 0" class="step-button"
         >上一步</el-button
       >
-      <el-button style="margin-top: 12px" @click="next" :disabled="active === 4"
+      <el-button @click="next" :disabled="active === 4" class="step-button"
         >下一步</el-button
       >
     </div>
@@ -320,6 +532,42 @@
 <script>
 export default {
   data() {
+    //下面这一堆是socialinfo的自定义规则函数
+    var checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("年龄不能为空"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("请输入数字值"));
+        } else {
+          if (value < 18) {
+            callback(new Error("必须年满18岁"));
+          } else {
+            callback();
+          }
+        }
+      }, 1000);
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.socialinfoForm.checkPass !== "") {
+          this.$refs.socialinfoForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.socialinfoForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       active: 0,
       activeNames: ["1"],
@@ -330,6 +578,11 @@ export default {
         delivery: false,
         type: [],
         // resource: "",
+        dialogImageUrl: "",
+        //上传文件的提示框
+        dialogVisible: false,
+        //申请提交的提示框
+        centerDialogVisible: false,
       },
       baseinforules: {
         name: [
@@ -361,99 +614,33 @@ export default {
       },
 
       socialinfoForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
+        pass: "",
+        checkPass: "",
+        age: "",
       },
       socialinforules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
-        ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "请至少选择一个活动性质",
-            trigger: "change",
-          },
-        ],
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" },
-        ],
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        age: [{ validator: checkAge, trigger: "blur" }],
       },
 
-      employinfoForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-      },
-      employinforules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
-        ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "请至少选择一个活动性质",
-            trigger: "change",
-          },
-        ],
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" },
-        ],
-      },
+      employinfoForm: {},
+      employinforules: {},
       numberValidateForm: {
         age: "",
       },
+
+      // 租房信息中的文件上传列表
+      fileList: [
+        {
+          name: "food.jpeg",
+          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+        },
+        {
+          name: "food2.jpeg",
+          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+        },
+      ],
     };
   },
 
@@ -468,7 +655,19 @@ export default {
     handleChange(val) {
       console.log(val);
     },
+    //包含将数据传输到后端的逻辑
     submit() {},
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    // 租房信息中的文件上传处理函数
+    handleChange(file, fileList) {
+      this.fileList = fileList.slice(-3);
+    },
   },
 };
 </script>
@@ -485,20 +684,40 @@ export default {
 }
 
 .progress {
-  margin-bottom: 20px;
+  margin: 20px 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.down-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 .step-content {
   margin-bottom: 20px;
 }
 
-.step-navigation {
+.step-button-container {
+  margin-top: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.step-button {
+  margin: 0 40px;
 }
 
 .custom-input {
   width: 50%;
+}
+
+.pic-upload {
+  margin-left: 40px;
 }
 
 p,
