@@ -5,11 +5,10 @@ import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
 import { getToken } from "@/utils/auth"; // get token from cookie
 import getPageTitle from "@/utils/get-page-title";
-import axios from "axios";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
-const whiteList = ["/login","/signup"]; // no redirect whitelist
+const whiteList = ["/login", "/signup"]; // no redirect whitelist
 
 //导航守卫，所有路由跳转经过这里
 router.beforeEach(async (to, from, next) => {
@@ -21,21 +20,9 @@ router.beforeEach(async (to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken();
-  var valid=false;
-  if(hasToken){
-    await axios.get('http://localhost:8080/auth/check', {
-      params:{
-        "token":hasToken
-      }
-      })  
-    .then(response => {  
-      // console.log(response.data);
-      valid=response.data;
-    });
-  }
-  
+
   //是否有token
-  if (hasToken && valid) {
+  if (hasToken) {
     if (to.path === "/login") {
       // if is logged in, redirect to the home page
       next({ path: "/" });
@@ -48,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           // get user info
-          // await store.dispatch("user/getInfo");
+          await store.dispatch("user/getInfo");
 
           next();
         } catch (error) {
