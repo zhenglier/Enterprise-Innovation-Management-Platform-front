@@ -84,8 +84,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -153,8 +153,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -223,8 +223,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -293,8 +293,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -369,8 +369,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -438,8 +438,8 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary">发起变更流程</el-button>
-            <el-button type="info" plain>取消</el-button>
+            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
       </div>
@@ -491,6 +491,28 @@
 </style>
 <script>
 export default {
+  methods: {
+      open() {
+        this.$confirm('此操作将提交变更申请, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '提交成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        });
+      },
+      cancle(){
+        this.$router.push({path:"/change/importance_Information"})
+      }
+    },
   data() {
     return {
       options: [
@@ -523,4 +545,5 @@ export default {
     };
   },
 };
+
 </script>
