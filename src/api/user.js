@@ -18,11 +18,11 @@ export function getInfo(token) {
   })
 }
 
-export function signup(token) {
+export function signup(username,password) {
   return request({
-    url: '/vue-admin-template/signup',
-    method: 'get',
-    params: { token }
+    url: '/auth/register',
+    method: 'post',
+    params: { username,password }
   })
 }
 

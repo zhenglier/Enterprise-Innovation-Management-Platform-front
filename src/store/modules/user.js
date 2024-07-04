@@ -45,7 +45,17 @@ const actions = {
         });
     });
   },
+  signup({commit},userInfo){
+    const {username,password} = userInfo;
+    return new Promise((resolve,reject) => {
+      signup(username,password)
+        .then((response) =>{
+          console.log(response);
+          resolve();
+        })
+    })
 
+  },
   
 
   // get user info
@@ -96,6 +106,8 @@ const actions = {
       resolve();
     });
   },
+
+
 };
 
 export default {
