@@ -104,6 +104,7 @@ export const constantRoutes = [
         component: () => import("@/views/pro_related/apply/index"),
         meta: { title: "项目申报" },
       },
+
       {
         path: "query",
         name: "Query",

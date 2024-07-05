@@ -9,62 +9,43 @@
       </div>
       <div class="s"><el-button icon="el-icon-search" circle></el-button></div>
     </div>
-    <div class="content">
-      <el-row :gutter="20" class="info-row">
-        <el-col :span="5">
-          <div class="first">
-            <div class="info-item">
-              <h3>申报状态</h3>
-            </div>
-            <div class="info-item">
-              <h3>主管部门</h3>
-            </div>
-            <div class="info-item">
-              <h3>行业/主题</h3>
-            </div>
-          </div></el-col
+    <el-container>
+      <el-aside width="200px">
+        <el-row><div class="status">申报状态</div></el-row>
+        <el-row><div class="status">主管部门</div></el-row>
+        <el-row><div class="status">行业/主题</div></el-row>
+      </el-aside>
+      <el-main>
+        <el-row
+          ><div class="status">
+            <el-col :span="3"><div class="fs1">不限</div></el-col>
+            <el-col :span="3"><div class="fs">待申请</div></el-col>
+            <el-col :span="3"><div class="fs">已通过</div></el-col>
+            <el-col :span="3"><div class="fs">已拒绝</div></el-col>
+            <el-col :span="3"><div class="fs">已退回</div></el-col>
+          </div></el-row
         >
-        <el-col :span="19">
-          <div class="second">
-            <div class="not_limit">
-              <span><strong>不限</strong></span>
-              <el-divider direction="vertical"></el-divider>
-              <span>申报中</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>未开始</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>已截止</span>
-            </div>
-            <div class="not_limit">
-              <span><strong>不限</strong></span>
-              <el-divider direction="vertical"></el-divider>
-              <span>广电局</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>教育局</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>人力资源保障局</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>文化和旅游局</span>
-            </div>
-            <div class="not_limit">
-              <span><strong>不限</strong></span>
-              <el-divider direction="vertical"></el-divider>
-              <span>科技创新</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>商务贸易</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>文化</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>农业农村</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>节能环保</span>
-              <el-divider direction="vertical"></el-divider>
-              <span>社会保障</span>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
+        <el-row
+          ><div class="status">
+            <el-col :span="3"><div class="fs1">不限</div></el-col>
+            <el-col :span="3"><div class="fs">广电局</div></el-col>
+            <el-col :span="3"><div class="fs">教育局</div></el-col>
+            <el-col :span="3"><div class="fs">人力资源保障局</div></el-col>
+            <el-col :span="3"><div class="fs">文化和旅游局</div></el-col>
+          </div></el-row
+        ><el-row
+          ><div class="status">
+            <el-col :span="3"><div class="fs1">不限</div></el-col>
+            <el-col :span="3"><div class="fs">科技创新</div></el-col>
+            <el-col :span="3"><div class="fs">商务贸易</div></el-col>
+            <el-col :span="3"><div class="fs">文化</div></el-col>
+            <el-col :span="3"><div class="fs">农村农业</div></el-col>
+            <el-col :span="3"><div class="fs">节能环保</div></el-col>
+            <el-col :span="3"><div class="fs">社会保障</div></el-col>
+          </div></el-row
+        ></el-main
+      >
+    </el-container>
     <div class="second_body">
       <el-row :gutter="60" class="info-row">
         <el-col :span="5">
@@ -203,15 +184,41 @@
   border-width: 1px;
   border-color: rgb(215, 215, 215);
 }
-.content {
-  margin-bottom: 10px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(215, 215, 215);
+.table {
+  margin: 30px 30px;
+}
+.fs1 {
+  font-weight: bold;
+}
+.fs {
+  font-weight: bold;
+  color: #b3c0d1;
+}
+
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  text-align: center;
+  line-height: 80px;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  text-align: center;
+  padding: 0 0;
+  line-height: 80px;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
 }
 .search {
   display: flex;
   justify-content: end;
+  margin-bottom: 5px;
 }
 .s {
   margin: 2px 15px;

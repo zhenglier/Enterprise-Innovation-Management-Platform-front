@@ -37,8 +37,7 @@ e
               placeholder="请输入申报项目名称"
             ></el-input
           ></el-col>
-          ></el-row
-        >
+        </el-row>
       </div>
     </div>
     <div class="apply_file">
