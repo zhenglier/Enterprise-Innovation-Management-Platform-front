@@ -25,22 +25,22 @@
     <div class="policy-searchbox">
       <div class="title-container">
         <h2 class="policy-title">政策列表</h2>
-        <input
-          type="text"
-          autocomplete="off"
-          placeholder="请输入政策名称"
-          class="zq-input__inner"
-        />
-        <button
-          type="button"
-          class="zq-button zq-button--primary zq-button--small"
-        >
-          <!---->
-          <i class="el-icon-search"></i>
-          <!---->
-        </button>
+        <div class="search-tab">
+          <input
+            type="text"
+            autocomplete="off"
+            placeholder="请输入政策名称"
+            class="zq-input__inner"
+          />
+          <button type="button" class="search-button">
+            <!---->
+            <i class="el-icon-search"></i>
+            <!---->
+          </button>
+        </div>
+        <fieldset class="title-fieldset"></fieldset>
       </div>
-      <div class="theme-toolbar el-row">
+      <div class="filter-box">
         <div class="el-col el-col-12">
           <span class="font">排序选择&nbsp;&nbsp;</span>
           <button
@@ -209,5 +209,34 @@ export default {
 .highlight {
   color: red;
   font-weight: bold;
+}
+
+.policy-title {
+  display: inline-block;
+}
+
+.search-tab {
+  float: right;
+  margin-top: 35px;
+}
+
+.title-container {
+  margin-bottom: 30px;
+}
+
+.title-fieldset {
+  border: none;
+  border-top: 3px solid black;
+}
+.title-fieldset .inner {
+  margin: 0 auto;
+  padding: 0 0.25rem;
+}
+
+.search-button {
+  color: white;
+  background-color: #bd192e;
+  border: none;
+  padding: 3px;
 }
 </style>

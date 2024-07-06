@@ -37,6 +37,7 @@
       <div class="policy-content">
         <div v-if="policyactiveTab === 'policyList'">
           <ul class="policy-list">
+            <!-- 内容是从policyList中拿来的 -->
             <li v-for="policy in policyList" :key="policy.id">
               <span class="policy-title">{{ policy.title }}</span>
               <span class="policy-date">{{ policy.date }}</span>
@@ -54,11 +55,17 @@
       </div>
     </div>
     <div class="project-container">
-      <h2>项目申报</h2>
-      <!-- 这个文字链接点击后进入到项目查询界面 -->
-      <el-link href="https://element.eleme.io" target="_blank"
-        >查看更多 &gt;
-      </el-link>
+      <div class="sector-header">
+        <h2 class="project-apply-header">项目申报</h2>
+        <!-- 这个文字链接点击后进入到项目查询界面 -->
+        <el-link
+          href="https://element.eleme.io"
+          target="_blank"
+          class="more-button"
+          >查看更多 &gt;
+        </el-link>
+        <fieldset class="title-fieldset"></fieldset>
+      </div>
       <div class="project-cards">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
@@ -71,24 +78,40 @@
             {{ "列表内容 " + o }}
           </div>
         </el-card>
+        <!-- 这个card貌似也要动态生成 -->
       </div>
-      <h2>政策月历</h2>
-      <el-link href="https://element.eleme.io" target="_blank"
-        >查看更多 &gt;
-      </el-link>
+      <div class="sector-header">
+        <h2 class="policy-month-header">政策月历</h2>
+        <el-link
+          href="https://element.eleme.io"
+          target="_blank"
+          class="more-button"
+          >查看更多 &gt;
+        </el-link>
+        <fieldset class="title-fieldset"></fieldset>
+      </div>
       <div class="month-container">
         <el-tabs
           v-model="monthactiveTab"
           @tab-click="monthhandleTabClick"
           type="border-card"
         >
-          <el-tab-pane label="政策清单" name="monthList"></el-tab-pane>
-          <el-tab-pane label="北京" name="beijing"></el-tab-pane>
-          <el-tab-pane label="各区" name="districts"></el-tab-pane>
+          <el-tab-pane label="1月" name="January"></el-tab-pane>
+          <el-tab-pane label="2月" name="February"></el-tab-pane>
+          <el-tab-pane label="3月" name="March"></el-tab-pane>
+          <el-tab-pane label="4月" name="April"></el-tab-pane>
+          <el-tab-pane label="5月" name="May"></el-tab-pane>
+          <el-tab-pane label="6月" name="June"></el-tab-pane>
+          <el-tab-pane label="7月" name="July"></el-tab-pane>
+          <el-tab-pane label="8月" name="August"></el-tab-pane>
+          <el-tab-pane label="9月" name="September"></el-tab-pane>
+          <el-tab-pane label="10月" name="October"></el-tab-pane>
+          <el-tab-pane label="11月" name="November"></el-tab-pane>
+          <el-tab-pane label="12月" name="December"></el-tab-pane>
         </el-tabs>
         <div class="month-content">
           <!-- 条件渲染内容 -->
-          <div v-if="monthactiveTab === 'monthList'">
+          <div v-if="monthactiveTab === 'January'">
             <ul class="month-list">
               <li v-for="policy in policyList" :key="policy.id">
                 <span class="month-title">{{ policy.title }}</span>
@@ -97,16 +120,53 @@
             </ul>
           </div>
 
-          <div v-if="monthactiveTab === 'beijing'">
+          <div v-if="monthactiveTab === 'February'">
             <!-- 北京的内容 -->
             <p>北京的政策内容展示在这里。</p>
           </div>
-          <div v-if="monthactiveTab === 'districts'">
+          <div v-if="monthactiveTab === 'March'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'April'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'May'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'June'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'July'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'August'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'September'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'October'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'November'">
+            <!-- 各区的内容 -->
+            <p>各区的政策内容展示在这里。</p>
+          </div>
+          <div v-if="monthactiveTab === 'December'">
             <!-- 各区的内容 -->
             <p>各区的政策内容展示在这里。</p>
           </div>
         </div>
         <!-- 分页组件 -->
+        <!-- 分页组件也是根据月份变化的 -->
         <el-pagination background layout="prev, pager, next" :total="1000">
         </el-pagination>
       </div>
@@ -114,7 +174,9 @@
 
     <div class="policy-month-container"></div>
 
-    <div class="pic-text-container">
+    <!-- 图文解读部分暂时不做，因为没有这部分的内容 -->
+
+    <!-- <div class="pic-text-container">
       <h2>图文解读</h2>
       <el-link href="https://element.eleme.io" target="_blank"
         >查看更多 &gt;
@@ -143,7 +205,7 @@
           </el-col>
         </el-row>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -152,7 +214,7 @@ export default {
   data() {
     return {
       policyactiveTab: "policyList",
-      monthactiveTab: "monthList",
+      monthactiveTab: "January",
       // 带图卡片的日期
       currentDate: new Date(),
       monthList: [
@@ -326,5 +388,32 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+
+.project-apply-header {
+  display: inline-block;
+}
+
+.sector-header {
+  margin-bottom: 30px;
+}
+
+.more-button {
+  float: right;
+  margin-top: 40px;
+}
+
+.policy-month-header {
+  display: inline-block;
+}
+
+/* 设置分割线样式 */
+.title-fieldset {
+  border: none;
+  border-top: 3px solid black;
+}
+.title-fieldset .inner {
+  margin: 0 auto;
+  padding: 0 0.25rem;
 }
 </style>
