@@ -7,10 +7,11 @@ const getDefaultState = () => {
     token: getToken(),
     name: "",
     avatar: "",
+    role: "",
   };
 };
 
-const state = getDefaultState();
+export const state = getDefaultState();
 
 const mutations = {
   RESET_STATE: (state) => {
@@ -18,6 +19,9 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token;
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role;
   },
   SET_NAME: (state, name) => {
     state.name = name;
@@ -37,7 +41,12 @@ const actions = {
         .then((response) => {
           const { data } = response;
           commit("SET_TOKEN", data.token);
+          console.log(data.role+" login");
+          localStorage.clear();
+          localStorage.setItem('role',data.role);
+          resetRouter();
           setToken(data.token);
+          window.location.reload();
           resolve();
         })
         .catch((error) => {
@@ -77,7 +86,7 @@ const actions = {
       logout(state.token)
         .then(() => {
           removeToken(); // must remove  token  first
-          resetRouter();
+          // resetRouter();
           commit("RESET_STATE");
           resolve();
         })

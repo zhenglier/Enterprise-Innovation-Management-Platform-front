@@ -32,7 +32,436 @@ import Layout from "@/layout";
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
+
+var enterpriseRoutes = [
+  {
+    path: "/login",
+    //组件的映射,@是src目录
+    component: () => import("@/views/login/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/signup",
+    component: () => import("@/views/signup/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
+  },
+
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/homepage",
+    children: [
+      {
+        path: "homepage",
+        name: "Homepage",
+        component: () => import("@/views/homepage/index"),
+        meta: { title: "主页", icon: "dashboard" },
+      },
+    ],
+  },
+
+  {
+    path: "/trans",
+    component: Layout,
+    redirect: "/trans/in",
+    name: "变迁申请",
+    meta: { title: "变迁申请", icon: "el-icon-s-help" },
+    children: [
+      {
+        path: "in",
+        name: "入驻申请",
+        component: () => import("@/views/trans/in/index"),
+        meta: { title: "入驻申请", icon: "table" },
+      },
+      {
+        path: "out",
+        name: "搬离申请",
+        component: () => import("@/views/trans/out/index"),
+        meta: { title: "搬离申请", icon: "tree" },
+      },
+    ],
+  },
+
+  {
+    path: "/pro_related",
+    component: Layout,
+    redirect: "/pro_related/release",
+    name: "Pro_related",
+    meta: {
+      title: "项目相关",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "apply",
+        name: "Apply",
+        component: () => import("@/views/pro_related/apply/index"),
+        meta: { title: "项目申报" },
+      },
+      {
+        path: "query",
+        name: "Query",
+        component: () => import("@/views/pro_related/query/index"),
+        meta: { title: "项目查询" },
+      },
+      {
+        path: "progress_query",
+        name: "Progress_query",
+        component: () => import("@/views/pro_related/progress_query/index"),
+        meta: { title: "项目进度查询" },
+      },
+    ],
+  },
+
+  {
+    path: "/change",
+    component: Layout,
+    redirect: "/change/menu1",
+    name: "Change",
+    meta: {
+      title: "信息更改",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "enterprise_Information",
+        component: () => import("@/views/change/enterprise_Information/index"), // Parent router-view
+        name: "Enterprise_Information",
+        meta: { title: "企业信息查看" },
+      },
+      {
+        path: "base_Information",
+        component: () => import("@/views/change/base_Information/index"),
+        name: "Base_Information",
+        meta: { title: "基础信息完善" },
+      },
+      {
+        path: "importance_Information",
+        component: () => import("@/views/change/importance_Information/index"),
+        name: "Importance_Information",
+        meta: { title: "重大信息变更" },
+      },
+    ],
+  },
+
+  {
+    path: "/policy_related",
+    component: Layout,
+    redirect: "/policy_related/realize",
+    name: "政策兑现",
+    meta: {
+      title: "政策兑现",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "realize",
+        component: () => import("@/views/policy_related/realize/index"),
+        name: "Realize",
+        meta: { title: "政策兑现" },
+      },
+      {
+        path: "browse",
+        component: () => import("@/views/policy_related/browse/index"),
+        name: "Browse",
+        meta: { title: "政策查询" },
+      },
+    ],
+  },
+
+  // 404 page must be placed at the end !!!
+  { path: "*", redirect: "/404", hidden: true },
+];
+var carrierRoutes =[
+  {
+    path: "/login",
+    //组件的映射,@是src目录
+    component: () => import("@/views/login/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/signup",
+    component: () => import("@/views/signup/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
+  },
+
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/homepage",
+    children: [
+      {
+        path: "homepage",
+        name: "Homepage",
+        component: () => import("@/views/homepage/index"),
+        meta: { title: "主页", icon: "dashboard" },
+      },
+    ],
+  },
+
+  {
+    path: "/trans",
+    component: Layout,
+    redirect: "/trans/in",
+    name: "变迁申请",
+    meta: { title: "变迁申请", icon: "el-icon-s-help" },
+    children: [
+      {
+        path: "in",
+        name: "入驻申请",
+        component: () => import("@/views/trans/in/index"),
+        meta: { title: "入驻申请", icon: "table" },
+      },
+      {
+        path: "out",
+        name: "搬离申请",
+        component: () => import("@/views/trans/out/index"),
+        meta: { title: "搬离申请", icon: "tree" },
+      },
+    ],
+  },
+
+  {
+    path: "/pro_related",
+    component: Layout,
+    redirect: "/pro_related/release",
+    name: "Pro_related",
+    meta: {
+      title: "项目相关",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "release",
+        name: "Release",
+        component: () => import("@/views/pro_related/release/index"),
+        meta: { title: "项目发布" },
+      },
+      {
+        path: "apply",
+        name: "Apply",
+        component: () => import("@/views/pro_related/apply/index"),
+        meta: { title: "项目申报" },
+      },
+      {
+        path: "query",
+        name: "Query",
+        component: () => import("@/views/pro_related/query/index"),
+        meta: { title: "项目查询" },
+      },
+      {
+        path: "progress_query",
+        name: "Progress_query",
+        component: () => import("@/views/pro_related/progress_query/index"),
+        meta: { title: "项目进度查询" },
+      },
+    ],
+  },
+
+  {
+    path: "/change",
+    component: Layout,
+    redirect: "/change/menu1",
+    name: "Change",
+    meta: {
+      title: "信息更改",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "enterprise_Information",
+        component: () => import("@/views/change/enterprise_Information/index"), // Parent router-view
+        name: "Enterprise_Information",
+        meta: { title: "企业信息查看" },
+      },
+      {
+        path: "base_Information",
+        component: () => import("@/views/change/base_Information/index"),
+        name: "Base_Information",
+        meta: { title: "基础信息完善" },
+      },
+      {
+        path: "importance_Information",
+        component: () => import("@/views/change/importance_Information/index"),
+        name: "Importance_Information",
+        meta: { title: "重大信息变更" },
+      },
+    ],
+  },
+
+  {
+    path: "/policy_related",
+    component: Layout,
+    redirect: "/policy_related/realize",
+    name: "政策兑现",
+    meta: {
+      title: "政策兑现",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "realize",
+        component: () => import("@/views/policy_related/realize/index"),
+        name: "Realize",
+        meta: { title: "政策兑现" },
+      },
+      {
+        path: "browse",
+        component: () => import("@/views/policy_related/browse/index"),
+        name: "Browse",
+        meta: { title: "政策查询" },
+      },
+    ],
+  },
+
+  // 404 page must be placed at the end !!!
+  { path: "*", redirect: "/404", hidden: true },
+];
+var governmentRoutes =[
+  {
+    path: "/login",
+    //组件的映射,@是src目录
+    component: () => import("@/views/login/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/signup",
+    component: () => import("@/views/signup/index"),
+    hidden: true,
+  },
+
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
+  },
+
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/homepage",
+    children: [
+      {
+        path: "homepage",
+        name: "Homepage",
+        component: () => import("@/views/homepage/index"),
+        meta: { title: "主页", icon: "dashboard" },
+      },
+    ],
+  },
+
+  {
+    path: "/pro_related",
+    component: Layout,
+    redirect: "/pro_related/release",
+    name: "Pro_related",
+    meta: {
+      title: "项目相关",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "release",
+        name: "Release",
+        component: () => import("@/views/pro_related/release/index"),
+        meta: { title: "项目发布" },
+      },
+      {
+        path: "apply",
+        name: "Apply",
+        component: () => import("@/views/pro_related/apply/index"),
+        meta: { title: "项目申报" },
+      },
+      {
+        path: "query",
+        name: "Query",
+        component: () => import("@/views/pro_related/query/index"),
+        meta: { title: "项目查询" },
+      },
+      {
+        path: "progress_query",
+        name: "Progress_query",
+        component: () => import("@/views/pro_related/progress_query/index"),
+        meta: { title: "项目进度查询" },
+      },
+    ],
+  },
+
+  {
+    path: "/change",
+    component: Layout,
+    redirect: "/change/menu1",
+    name: "Change",
+    meta: {
+      title: "信息更改",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "enterprise_Information",
+        component: () => import("@/views/change/enterprise_Information/index"), // Parent router-view
+        name: "Enterprise_Information",
+        meta: { title: "企业信息查看" },
+      },
+      {
+        path: "base_Information",
+        component: () => import("@/views/change/base_Information/index"),
+        name: "Base_Information",
+        meta: { title: "基础信息完善" },
+      },
+      {
+        path: "importance_Information",
+        component: () => import("@/views/change/importance_Information/index"),
+        name: "Importance_Information",
+        meta: { title: "重大信息变更" },
+      },
+    ],
+  },
+
+  {
+    path: "/policy_related",
+    component: Layout,
+    redirect: "/policy_related/realize",
+    name: "政策兑现",
+    meta: {
+      title: "政策兑现",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "realize",
+        component: () => import("@/views/policy_related/realize/index"),
+        name: "Realize",
+        meta: { title: "政策兑现" },
+      },
+      {
+        path: "browse",
+        component: () => import("@/views/policy_related/browse/index"),
+        name: "Browse",
+        meta: { title: "政策查询" },
+      },
+    ],
+  },
+
+  // 404 page must be placed at the end !!!
+  { path: "*", redirect: "/404", hidden: true },
+];
+var constantRoutes = [
   {
     path: "/login",
     //组件的映射,@是src目录
@@ -180,18 +609,47 @@ export const constantRoutes = [
   { path: "*", redirect: "/404", hidden: true },
 ];
 
-const createRouter = () =>
-  new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes,
-  });
 
-const router = createRouter();
+
+function createRouter(role){
+  // console.log("create router now! " +role);
+  if(role=="enterprise"){
+    // console.log("enterprise login!");
+    return new Router({
+      // mode: 'history', // require service support
+      scrollBehavior: () => ({ y: 0 }),
+      routes: enterpriseRoutes,
+    })
+  }else if(role=="carrier"){
+    // console.log("carrier login!");
+    return new Router({
+      // mode: 'history', // require service support
+      scrollBehavior: () => ({ y: 0 }),
+      routes: carrierRoutes,
+    })
+  }else if(role=="government"){
+    // console.log("government login!");
+    return new Router({
+      // mode: 'history', // require service support
+      scrollBehavior: () => ({ y: 0 }),
+      routes: governmentRoutes,
+    })
+  }else{
+    return new Router({
+      // mode: 'history', // require service support
+      scrollBehavior: () => ({ y: 0 }),
+      routes: constantRoutes,
+    })
+
+  }
+};
+
+// console.log("local:"+localStorage.getItem('role'));
+const router = createRouter(localStorage.getItem('role'));
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter();
+  const newRouter = createRouter(localStorage.getItem('role'));
   router.matcher = newRouter.matcher; // reset router
 }
 
