@@ -511,6 +511,11 @@
         </el-form>
       </div>
 
+      <!-- 这块怎么设计？
+        可以将前面所有的信息做一个展示，这样就方便表单的向后端提交
+        也可以就简单放一个按钮
+       -->
+
       <div v-if="active === 4">
         <h2>提交申请</h2>
       </div>
@@ -522,10 +527,29 @@
       <el-button @click="prev" :disabled="active === 0" class="step-button"
         >上一步</el-button
       >
-      <el-button @click="next" :disabled="active === 4" class="step-button"
+      <el-button
+        v-if="active !== 4"
+        @click="next"
+        :disabled="active === 4"
+        class="step-button"
         >下一步</el-button
       >
+      <el-button v-else @click="submit" class="submit-button"> 提交 </el-button>
     </div>
+    <el-dialog
+      title="入驻申请提交成功"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center
+    >
+      <span>您的入驻申请已经提交，请注意查看消息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -571,6 +595,8 @@ export default {
     return {
       active: 0,
       activeNames: ["1"],
+      //点击提交按钮后的提示框
+      centerDialogVisible: false,
       baseinfoForm: {
         name: "",
         property: "",
@@ -581,8 +607,6 @@ export default {
         dialogImageUrl: "",
         //上传文件的提示框
         dialogVisible: false,
-        //申请提交的提示框
-        centerDialogVisible: false,
       },
       baseinforules: {
         name: [
@@ -656,7 +680,9 @@ export default {
       console.log(val);
     },
     //包含将数据传输到后端的逻辑
-    submit() {},
+    submit() {
+      this.centerDialogVisible = true;
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },

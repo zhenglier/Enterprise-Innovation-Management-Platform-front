@@ -1,7 +1,6 @@
 "use strict";
 const path = require("path");
 const defaultSettings = require("./src/settings.js");
-const { hostname } = require("os");
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -31,7 +30,6 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
-    host: '127.0.0.1',
     port: port,
     open: true,
     overlay: {
