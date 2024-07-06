@@ -192,6 +192,7 @@
 }
 .button-container {
   text-align: center;
+  margin: 20px 20px;
 }
 .date-picker {
   width: 100%;

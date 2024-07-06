@@ -91,7 +91,7 @@ export const constantRoutes = [
   {
     path: "/pro_related",
     component: Layout,
-    redirect: "/pro_related/release",
+    redirect: "/pro_related/apply",
     name: "Pro_related",
     meta: {
       title: "项目相关",
@@ -99,17 +99,12 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: "release",
-        name: "Release",
-        component: () => import("@/views/pro_related/release/index"),
-        meta: { title: "项目发布" },
-      },
-      {
         path: "apply",
         name: "Apply",
         component: () => import("@/views/pro_related/apply/index"),
         meta: { title: "项目申报" },
       },
+
       {
         path: "query",
         name: "Query",
