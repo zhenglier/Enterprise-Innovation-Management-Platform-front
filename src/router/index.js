@@ -175,7 +175,43 @@ var enterpriseRoutes = [
       },
     ],
   },
-
+  {
+    path: "/declar_approval",
+    component: Layout,
+    redirect: "/declar_approval/in_approval",
+    name: "Declar_approval",
+    meta: {
+      title: "申报审批",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "in_approval",
+        name: "In_approval",
+        component: () => import("@/views/declar_approval/in_approval/index"),
+        meta: { title: "入驻审批" },
+      },
+      {
+        path: "out_approval",
+        name: "Out_approval",
+        component: () => import("@/views/declar_approval/out_approval/index"),
+        meta: { title: "搬离审批" },
+      },
+      {
+        path: "important_approval",
+        name: "Important_approval",
+        component: () =>
+          import("@/views/declar_approval/important_approval/index"),
+        meta: { title: "重大信息变更审批" },
+      },
+      {
+        path: "pro_approval",
+        name: "Pro_approval",
+        component: () => import("@/views/declar_approval/pro_approval/index"),
+        meta: { title: "项目审批" },
+      },
+    ],
+  },
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];
@@ -231,6 +267,44 @@ var carrierRoutes = [
         name: "搬离申请",
         component: () => import("@/views/trans/out/index"),
         meta: { title: "搬离申请", icon: "tree" },
+      },
+    ],
+  },
+
+  {
+    path: "/declar_approval",
+    component: Layout,
+    redirect: "/declar_approval/in_approval",
+    name: "Declar_approval",
+    meta: {
+      title: "申报审批",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "in_approval",
+        name: "In_approval",
+        component: () => import("@/views/declar_approval/in_approval/index"),
+        meta: { title: "入驻审批" },
+      },
+      {
+        path: "out_approval",
+        name: "Out_approval",
+        component: () => import("@/views/declar_approval/out_approval/index"),
+        meta: { title: "搬离审批" },
+      },
+      {
+        path: "important_approval",
+        name: "Important_approval",
+        component: () =>
+          import("@/views/declar_approval/important_approval/index"),
+        meta: { title: "重大信息变更审批" },
+      },
+      {
+        path: "pro_approval",
+        name: "Pro_approval",
+        component: () => import("@/views/declar_approval/pro_approval/index"),
+        meta: { title: "项目审批" },
       },
     ],
   },
@@ -601,6 +675,132 @@ var constantRoutes = [
         component: () => import("@/views/policy_related/browse/index"),
         name: "Browse",
         meta: { title: "政策查询" },
+      },
+    ],
+  },
+  {
+    path: "/declar_approval",
+    component: Layout,
+    redirect: "/declar_approval/in_approval",
+    name: "Declar_approval",
+    meta: {
+      title: "申报审批",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "in_approval",
+        name: "In_approval",
+        component: () => import("@/views/declar_approval/in_approval/index"),
+        meta: { title: "入驻审批" },
+      },
+      {
+        path: "out_approval",
+        name: "Out_approval",
+        component: () => import("@/views/declar_approval/out_approval/index"),
+        meta: { title: "搬离审批" },
+      },
+      {
+        path: "important_approval",
+        name: "Important_approval",
+        component: () =>
+          import("@/views/declar_approval/important_approval/index"),
+        meta: { title: "重大信息变更审批" },
+      },
+      {
+        path: "pro_approval",
+        name: "Pro_approval",
+        component: () => import("@/views/declar_approval/pro_approval/index"),
+        meta: { title: "项目审批" },
+      },
+    ],
+  },
+  {
+    path: "/performance_requ",
+    component: Layout,
+    redirect: "/performance_requ/per_fill",
+    name: "Performance_requ",
+    meta: {
+      title: "绩效申报",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "per_fill",
+        name: "Per_fill",
+        component: () => import("@/views/performance_requ/per_fill/index"),
+        meta: { title: "考察填写" },
+      },
+      {
+        path: "per_history",
+        name: "Per_history",
+        component: () => import("@/views/performance_requ/per_history/index"),
+        meta: { title: "绩效历史" },
+      },
+    ],
+  },
+  {
+    path: "/performance_rele",
+    component: Layout,
+    redirect: "/performance_rele/survey_release",
+    name: "Performance_rele",
+    meta: {
+      title: "绩效发布",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "survey_release",
+        name: "Survey_release",
+        component: () =>
+          import("@/views/performance_rele/survey_release/index"),
+        meta: { title: "考察发布" },
+      },
+      {
+        path: "template_making",
+        name: "Template_making",
+        component: () =>
+          import("@/views/performance_rele/template_making/index"),
+        meta: { title: "模板制作" },
+      },
+    ],
+  },
+  {
+    path: "/performance_appraisal",
+    component: Layout,
+    redirect: "/performance_appraisal/per_approval",
+    name: "Performance_appraisal",
+    meta: {
+      title: "绩效考核",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "per_approval",
+        name: "Per_approval",
+        component: () =>
+          import("@/views/performance_appraisal/per_approval/index"),
+        meta: { title: "绩效审核" },
+      },
+      {
+        path: "per_history",
+        name: "Per_history",
+        component: () =>
+          import("@/views/performance_appraisal/per_history/index"),
+        meta: { title: "绩效历史" },
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/General_Inquiries",
+    children: [
+      {
+        path: "General_Inquiries",
+        name: "general_Inquiries",
+        component: () => import("@/views/General_Inquiries/index"),
+        meta: { title: "综合查询", icon: "dashboard" },
       },
     ],
   },
