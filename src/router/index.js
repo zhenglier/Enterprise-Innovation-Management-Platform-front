@@ -179,7 +179,7 @@ var enterpriseRoutes = [
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];
-var carrierRoutes =[
+var carrierRoutes = [
   {
     path: "/login",
     //组件的映射,@是src目录
@@ -331,7 +331,7 @@ var carrierRoutes =[
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];
-var governmentRoutes =[
+var governmentRoutes = [
   {
     path: "/login",
     //组件的映射,@是src目录
@@ -609,47 +609,44 @@ var constantRoutes = [
   { path: "*", redirect: "/404", hidden: true },
 ];
 
-
-
-function createRouter(role){
+function createRouter(role) {
   // console.log("create router now! " +role);
-  if(role=="enterprise"){
+  if (role == "enterprise") {
     // console.log("enterprise login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: enterpriseRoutes,
-    })
-  }else if(role=="carrier"){
+    });
+  } else if (role == "carrier") {
     // console.log("carrier login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: carrierRoutes,
-    })
-  }else if(role=="government"){
+    });
+  } else if (role == "government") {
     // console.log("government login!");
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: governmentRoutes,
-    })
-  }else{
+    });
+  } else {
     return new Router({
       // mode: 'history', // require service support
       scrollBehavior: () => ({ y: 0 }),
       routes: constantRoutes,
-    })
-
+    });
   }
-};
+}
 
 // console.log("local:"+localStorage.getItem('role'));
-const router = createRouter(localStorage.getItem('role'));
+const router = createRouter(localStorage.getItem("role"));
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter(localStorage.getItem('role'));
+  const newRouter = createRouter(localStorage.getItem("role"));
   router.matcher = newRouter.matcher; // reset router
 }
 
