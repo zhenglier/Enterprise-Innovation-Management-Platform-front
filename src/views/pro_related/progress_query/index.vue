@@ -193,7 +193,7 @@ export default {
   methods: {
     
     handleClick(row) {
-      this.$router.push({ path: '/pro_related/progress_query/query_query/index'});
+     
       console.log(row);
     },
     filterTag(value, row) 
