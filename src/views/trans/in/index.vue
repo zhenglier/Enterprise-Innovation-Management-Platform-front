@@ -380,10 +380,13 @@
             class="sector-title"
           />
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="alert()"
             list-type="picture-card"
+            :file-list="fileList"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
+            :on-change="loadJsonFromFile"
+            :auto-upload="false"
             class="pic-upload"
           >
             <i class="el-icon-plus"></i>
@@ -554,6 +557,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     //下面这一堆是socialinfo的自定义规则函数
@@ -593,6 +597,7 @@ export default {
       }
     };
     return {
+      
       active: 0,
       activeNames: ["1"],
       //点击提交按钮后的提示框
@@ -669,6 +674,20 @@ export default {
   },
 
   methods: {
+    async loadJsonFromFile(file, fileList){
+      this.uploadFiles = fileList
+      console.log(fileList[2].raw);
+
+      let data=new FormData()
+      data.append("files",fileList[2].raw)
+      await axios.post('http://localhost:8080/test/test', data
+      )  
+        .then(response => {  
+          // console.log(response.data);
+          // valid=response.data;
+        });
+      
+    },
     next() {
       if (this.active++ > 3) this.active = 0;
     },
