@@ -134,7 +134,7 @@ export default {
       this.$store
         .dispatch("user/signup", this.signupForm)
         .then(() => {
-          console.log("fuvk you")
+          // console.log("fuvk you")
           this.$router.push({ path: this.redirect || "/" });
           this.loading = false;
         })

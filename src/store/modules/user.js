@@ -42,7 +42,7 @@ const actions = {
           const  data  = response;
           commit("SET_TOKEN", data.token);
           console.log(data.role+" login");
-          localStorage.clear();
+          localStorage.removeItem('role');
           localStorage.setItem('role',data.role);
           resetRouter();
           setToken(data.token);
@@ -65,7 +65,6 @@ const actions = {
     })
 
   },
-
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -81,7 +80,6 @@ const actions = {
         });
     });
   },
-
   // remove token
   resetToken({ commit }) {
     return new Promise((resolve) => {
@@ -89,7 +87,7 @@ const actions = {
       commit("RESET_STATE");
       resolve();
     });
-  },
+  }
 };
 
 export default {

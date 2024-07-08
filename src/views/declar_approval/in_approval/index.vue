@@ -72,7 +72,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="apply_condition" label="申请情况" width="180">
+          <el-table-column prop="applyCondition" label="申请情况" width="180">
           </el-table-column>
         </el-table>
       </div>
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -103,24 +103,36 @@ export default {
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
-          apply_condition: "已通过",
+          applyCondition: "已通过",
         },
       ],
     };
   },
-  async beforeMount() {
-    await axios.get('/review/in')  
-      .then(response => {  
-        // 请求成功，处理响应数据  
-        this.data = response.data;  
-        // 如果需要在数据加载完成后立即进行一些操作，可以在这里进行  
-      })  
-      .catch(error => {  
-        // 请求失败，处理错误情况  
-        console.error('加载信息失败:', error);  
-        // 可以在这里设置一个错误状态或错误信息  
-      });
-
+  async created() {
+    new Promise(async (resolve,reject) =>{
+      var status=0;
+      await request({
+        url: "/trans/review/in",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.firsttableData=response;
+        })
+    })
+    new Promise(async (resolve,reject) =>{
+      var status=1;
+      await request({
+        url: "/trans/review/in",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.secondtableData=response;
+        })
+    })
   },
   //标签页跳转方法
   methods: {
@@ -129,11 +141,29 @@ export default {
     },
     //同意入驻按钮,这里的两个参数
     handleSuccess(index, row) {
-      console.log(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/in/accept/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     //拒绝入驻按钮
     handleCancel(index, row) {
-      console.log(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/in/reject/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     //查看企业详情按钮
     checkDetail(index, unicode) {
