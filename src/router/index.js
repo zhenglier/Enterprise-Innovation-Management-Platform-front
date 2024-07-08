@@ -818,6 +818,42 @@ var constantRoutes = [
     ],
   },
 
+  {
+    path: "/example",
+    component: Layout,
+    redirect: "/example/list",
+    name: "Example",
+    meta: {
+      title: "Example",
+      icon: "el-icon-s-help",
+    },
+    children: [
+      {
+        path: "create",
+        component: () => import("@/views/example/create.vue"),
+        name: "CreateArticle",
+        meta: { title: "Create Article", icon: "edit" },
+      },
+      {
+        path: "edit/:id(\\d+)",
+        component: () => import("@/views/example/edit.vue"),
+        name: "EditArticle",
+        meta: {
+          title: "Edit Article",
+          noCache: true,
+          activeMenu: "/example/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "list",
+        component: () => import("@/views/example/list.vue"),
+        name: "ArticleList",
+        meta: { title: "Article List", icon: "list" },
+      },
+    ],
+  },
+
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];
