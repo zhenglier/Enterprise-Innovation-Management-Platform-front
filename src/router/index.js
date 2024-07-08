@@ -804,6 +804,19 @@ var constantRoutes = [
       },
     ],
   },
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/Policy_release",
+    children: [
+      {
+        path: "Policy_release",
+        name: "policy_release",
+        component: () => import("@/views/policy_related/release/index"),
+        meta: { title: "政策发布", icon: "dashboard" },
+      },
+    ],
+  },
 
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
