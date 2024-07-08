@@ -542,6 +542,11 @@ var constantRoutes = [
     component: () => import("@/views/login/index"),
     hidden: true,
   },
+  {
+    path: "/q",
+    component: () => import("@/views/q/query_pro"),
+    hidden: true,
+  },
 
   {
     path: "/signup",

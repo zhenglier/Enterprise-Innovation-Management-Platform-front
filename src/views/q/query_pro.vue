@@ -7,19 +7,9 @@
       <el-row>
         <el-button
           class="custom-button"
-          type="warning"
+          type="danger"
           size="medium"
-          @click="open"
-          >保存</el-button
-        >
-        <el-button
-          class="custom-button"
-          type="success"
-          size="medium"
-          @click="apply"
-          >申请</el-button
-        >
-        <el-button class="custom-button" type="danger" size="medium"
+          @click="backTo"
           >返回</el-button
         >
       </el-row>
@@ -169,6 +159,9 @@ export default {
   },
 
   methods: {
+    backTo() {
+      this.$router.push({ path: "/pro_related/progress_query" });
+    },
     open() {
       this.$alert("保存成功", "提示", {
         confirmButtonText: "确定",
