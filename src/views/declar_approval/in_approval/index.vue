@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
@@ -107,9 +108,23 @@ export default {
       ],
     };
   },
+  async beforeMount() {
+    await axios.get('/review/in')  
+      .then(response => {  
+        // 请求成功，处理响应数据  
+        this.data = response.data;  
+        // 如果需要在数据加载完成后立即进行一些操作，可以在这里进行  
+      })  
+      .catch(error => {  
+        // 请求失败，处理错误情况  
+        console.error('加载信息失败:', error);  
+        // 可以在这里设置一个错误状态或错误信息  
+      });
+
+  },
   //标签页跳转方法
   methods: {
-    handleClick(tab, event) {
+        handleClick(tab, event) {
       console.log(tab, event);
     },
     //同意入驻按钮,这里的两个参数

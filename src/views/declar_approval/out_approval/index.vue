@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import axios from "axios"
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -106,6 +108,15 @@ export default {
         },
       ],
     };
+  },
+  async beforeMount() {
+    var data = request({
+      url: "/vue-admin-template/user/login",
+      method: "post",
+      data,
+    })
+    console.log(data)
+
   },
   //标签页跳转方法
   methods: {
