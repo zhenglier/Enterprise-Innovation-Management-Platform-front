@@ -7,17 +7,17 @@
         title="搬离企业信息"
         style="margin-bottom: 20px"
       />
-      <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item label="企业名称">
-          <el-input v-model="form.name"></el-input>
+      <el-form ref="form" :model="form" label-width="100px" :rules="formrules">
+        <el-form-item label="企业名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入企业名称"></el-input>
         </el-form-item>
-        <el-form-item label="所属载体">
-          <el-select v-model="form.region" placeholder="请选择所属载体">
-            <el-option label="载体一" value="shanghai"></el-option>
-            <el-option label="载体二" value="beijing"></el-option>
-          </el-select>
+        <el-form-item label="所属载体" prop="carrier">
+          <el-input
+            v-model="form.carrier"
+            placeholder="请输入所属载体"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="入驻日期">
+        <el-form-item label="入驻日期" prop="date1">
           <el-col :span="11">
             <el-date-picker
               type="date"
@@ -27,7 +27,7 @@
             ></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="预计搬离日期">
+        <el-form-item label="预计搬离日期" prop="date2">
           <el-col :span="11">
             <el-date-picker
               type="date"
@@ -37,7 +37,7 @@
             ></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="享受政策类型">
+        <el-form-item label="享受政策类型" prop="type">
           <el-checkbox-group v-model="form.type">
             <el-checkbox label="财税优惠" name="type"></el-checkbox>
             <el-checkbox label="资金支持" name="type"></el-checkbox>
@@ -45,8 +45,8 @@
             <el-checkbox label="人才引进和培养" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="搬离类型">
-          <el-radio-group v-model="form.resource">
+        <el-form-item label="搬离类型" prop="outtype">
+          <el-radio-group v-model="form.outtype">
             <el-radio label="更换载体"></el-radio>
             <el-radio label="退出孵化"></el-radio>
           </el-radio-group>
@@ -65,8 +65,11 @@
       </el-input>
     </div>
     <div class="button-container">
-      <el-button type="primary" @click="handleOut" class="out-button"
+      <el-button type="primary" @click="submitForm('form')" class="out-button"
         >搬离申请</el-button
+      >
+      <el-button type="primary" @click="resetForm('form')" class="out-button"
+        >重置</el-button
       >
     </div>
     <!-- 点击申请按钮之后出现的提示框 -->
@@ -93,25 +96,41 @@ export default {
     return {
       form: {
         name: "",
-        region: "",
+        carrier: "",
         date1: "",
         date2: "",
-        delivery: false,
+        // 这里的type定义成了数组类型
         type: [],
-        resource: "",
-        desc: "",
+        outtype: "",
+      },
+      formrules: {
+        name: [
+          { required: true, message: "企业名称不能为空", trigger: "blur" },
+          { min: 3, message: "长度至少为三个字符", trigger: "change" },
+        ],
+        carrier: [
+          { required: true, message: "所属载体不能为空", trigger: "blur" },
+        ],
       },
       textreason: "",
       centerDialogVisible: false,
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
     //这里弹出弹框，并且要将数据传输给后端
-    handleOut() {
-      this.centerDialogVisible = true;
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.centerDialogVisible = true;
+          //这里写提交数据到后端的逻辑
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     },
   },
 };
@@ -126,7 +145,7 @@ export default {
 }
 
 .out-button {
-  height: 60px;
-  width: 100px;
+  height: 40px;
+  width: 120px;
 }
 </style>

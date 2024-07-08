@@ -5,6 +5,7 @@
     </div>
     <div class="se_body">
       <el-table ref="filterTable" :data="tableData" style="width: 100%">
+<<<<<<< HEAD
         <el-table-column prop="number" label="序号" min-width="10%">
         </el-table-column>
         <el-table-column prop="date" label="申请时间" min-width="20%">
@@ -32,6 +33,14 @@
             }}</el-tag>
           </template>
         </el-table-column>
+=======
+      <el-table-column prop="number" label="序号" min-width="10%">
+      </el-table-column>
+      <el-table-column prop="date" label="申请时间" min-width="20%">
+      </el-table-column>
+      <el-table-column prop="name" label="企业名称" smin-width="20%"> </el-table-column>
+      <el-table-column prop="kind" label="变更类型" min-width="20%"> </el-table-column>
+>>>>>>> 1ff686be7419321e628e90ea760ca790f87ea01c
 
         <el-table-column fixed="right" label="操作" min-width="10%">
           <template slot-scope="scope">
