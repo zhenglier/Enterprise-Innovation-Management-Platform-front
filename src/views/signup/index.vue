@@ -20,7 +20,7 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="signupForm.username"
           placeholder="Username"
           name="username"
           type="text"
@@ -36,13 +36,13 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="signupForm.password"
           :type="passwordType"
           placeholder="Password"
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleSignup"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon
@@ -92,10 +92,10 @@ export default {
       }
     };
     return {
-      loginForm: {
+      signupForm: {
         //这里的数据是直接传给后端的
       },
-      loginRules: {
+      signupRules: {
         username: [
           { required: true, trigger: "blur", validator: validateUsername },
         ],
@@ -127,9 +127,22 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleSignup() {
-      
-    },
+    async handleSignup() {
+      console.log(this.signupForm);
+      this.loading = true;
+      //触发action,这里的user是模块
+      this.$store
+        .dispatch("user/signup", this.signupForm)
+        .then(() => {
+          console.log("fuvk you")
+          this.$router.push({ path: this.redirect || "/" });
+          this.loading = false;
+        })
+        // .catch(() => {
+        //   this.loading = false;
+        // });
+    }
+
   },
 };
 </script>

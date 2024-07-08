@@ -9,7 +9,11 @@ export function login(data) {
 }
 
 //这里为注册写一个网络请求接口
-export function signup(data) {
+export function signup(username,password) {
+  var data={
+    "username":username,
+    "password":password
+  }
   return request({
     url: "/auth/register",
     method: "post",
