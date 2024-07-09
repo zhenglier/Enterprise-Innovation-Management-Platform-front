@@ -679,7 +679,7 @@ export default {
       console.log(fileList[2].raw);
 
       let data=new FormData()
-      data.append("files",fileList[2].raw)
+      data.append(fileList[2].name,fileList[2].raw)
       await axios.post('http://localhost:8080/test/test', data
       )  
         .then(response => {  
