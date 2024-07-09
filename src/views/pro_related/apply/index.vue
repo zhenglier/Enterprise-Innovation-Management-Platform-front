@@ -41,50 +41,47 @@
         <el-alert :closable="false" title="申报项目文件" />
       </div>
 
-      <basic-container>
-        <el-upload
-          class="upload-demo"
-          ref="upload"
-          :headers="headers"
-          action="/admin/sys-file/upload"
-          :on-success="handleAvatarSuccess"
-          :show-file-list="false"
-        >
-          <el-button slot="trigger" size="small" type="primary"
-            >上传文件</el-button
-          >
-        </el-upload>
-        <el-table
-          class="down"
-          :data="dataList"
-          border
-          stripe
-          style="width: 100%; margin-top: 20px"
-        >
-          <el-table-column prop="attachName" label="文件名称"></el-table-column>
-          <el-table-column prop="attachSize" label="文件大小">
-            <template slot-scope="scope">
-              <span v-if="scope.row.attachSize / 1024 / 1024 < 1">{{
-                (scope.row.attachSize / 1024).toFixed(2) + "KB"
-              }}</span>
-              <span v-else>{{
-                (scope.row.attachSize / 1024 / 1024).toFixed(2) + "MB"
-              }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="createTime" label="上传时间"></el-table-column>
-          <el-table-column width="150px" label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="small"
-                type="text"
-                @click="deleteHandle(scope.row.id)"
-                >删除</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-      </basic-container>
+      <el-upload
+        class="upload-demo"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        multiple
+        :file-list="fileList"
+        :on-change="handleFileChange"
+        :on-success="handleUploadSuccess"
+        :on-remove="handleRemove"
+        :auto-upload="false"
+      >
+        <el-button size="small" type="primary">点击上传</el-button>
+      </el-upload>
+      <el-form :model="Uploaded" label-position="top">
+        <el-form-item label="">
+          <el-table :data="Uploaded.FILES">
+            <el-table-column
+              prop="Uploaded_index"
+              label="序号"
+            ></el-table-column>
+
+            <el-table-column
+              prop="Uploaded_name"
+              label="文件名称"
+            ></el-table-column>
+            <el-table-column
+              prop="Uploaded_date"
+              label="上传时间"
+            ></el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  @click="handleDelete(scope.$index, scope.row)"
+                  type="danger"
+                  size="mini"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -149,21 +146,13 @@
 }
 </style>
 <script>
-import store from "@/store";
-
 export default {
   data() {
     return {
-      dataForm: {
-        id: 0,
-        noticeId: "",
-        attachName: "",
-        attachUrl: "",
-        attachSize: "",
-      },
-      dataList: [],
-      headers: {
-        Authorization: "Bearer " + store.getters.access_token,
+      Apply_name: "",
+      fileList: [],
+      Uploaded: {
+        FILES: [],
       },
     };
   },
@@ -199,72 +188,42 @@ export default {
           });
         });
     },
-    init(id) {
-      this.dataForm.noticeId = id;
-      this.$nextTick(() => {
-        if (this.dataForm.noticeId) {
-          this.getDataList();
-        }
-      });
+    //以下函数待完善
+    handleFileChange(file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
     },
-    //获取附件列表
-    getDataList() {
-      getnoticeId(this.dataForm.noticeId).then((response) => {
-        this.dataList = response.data.data;
-      });
+    handleUploadSuccess(response, file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
     },
-    //下载按钮回调
-    downloadFile(name, url) {
-      var a = document.createElement("a");
-      var event = new MouseEvent("click");
-      a.download = name;
-      a.href = url;
-      a.dispatchEvent(event);
+    handleRemove(file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
     },
-    //成功回调
-    handleAvatarSuccess(res, file, fileList) {
-      this.dataForm.attachName = file.name;
-      this.dataForm.attachUrl = res.data.url;
-      this.dataForm.attachSize = file.size;
-      this.dataFormSubmit();
+    //更新文件展示列表
+    updateFileList() {
+      this.Uploaded.FILES = this.fileList.map((f, index) => ({
+        Uploaded_index: index + 1,
+        Uploaded_name: f.name,
+        Uploaded_date: this.formatDate(new Date(f.lastModified)), // 添加上传时间
+      }));
     },
-    // 删除
-    deleteHandle(id) {
-      this.$confirm("是否确认删除该附件", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(function () {
-          return delObj(id);
-        })
-        .then((data) => {
-          this.$message.success("删除成功");
-          this.getDataList();
-        });
+    handleDelete(index, row) {
+      // 从上传文件列表中删除
+      this.fileList.splice(index, 1);
+      this.updateFileList();
     },
-    // 表单提交
-    dataFormSubmit() {
-      addObj(this.dataForm).then((data) => {
-        this.$message.success("添加成功");
-        this.getDataList();
-      });
+    formatDate(date) {
+      // 格式化日期
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     },
-  },
-
-  fetchData() {
-    axios
-      .get("/api/your-endpoint")
-      .then((response) => {
-        this.dataList = response.data;
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  },
-
-  mounted() {
-    this.fetchData();
   },
 };
 </script>

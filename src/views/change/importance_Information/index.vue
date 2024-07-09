@@ -56,7 +56,7 @@
                 :on-change="handleUploadChange"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="name_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -75,7 +75,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date1"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -87,8 +87,10 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary" @click="open">发起变更流程</el-button>
-            <el-button type="info" plain @click="cancle">取消</el-button>
+            <el-button type="primary" @click="submitData"
+              >发起变更流程</el-button
+            >
+            <el-button type="info" plain>取消</el-button>
           </div>
         </el-row>
       </div>
@@ -127,7 +129,7 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="money_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -146,7 +148,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date2"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -158,8 +160,10 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary" @click="open">发起变更流程</el-button>
-            <el-button type="info" plain @click="cancle">取消</el-button>
+            <el-button type="primary" @click="submitData"
+              >发起变更流程</el-button
+            >
+            <el-button type="info" plain>取消</el-button>
           </div>
         </el-row>
       </div>
@@ -169,7 +173,7 @@
             <div class="info-item">当前状态</div>
           </el-col>
           <el-col :span="9">
-            <div class="info-item"></div>
+            <div class="info-item">{{ currentStatus }}</div>
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后的状态</div>
@@ -178,7 +182,7 @@
             <div class="money">
               <el-input
                 class="money"
-                v-model="input"
+                v-model="AfterStatus"
                 placeholder="请输入变更后的状态"
                 size="medium"
               ></el-input>
@@ -196,7 +200,7 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="status_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -215,7 +219,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date3"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -227,8 +231,10 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary" @click="open">发起变更流程</el-button>
-            <el-button type="info" plain @click="cancle">取消</el-button>
+            <el-button type="primary" @click="submitData"
+              >发起变更流程</el-button
+            >
+            <el-button type="info" plain>取消</el-button>
           </div>
         </el-row>
       </div>
@@ -238,7 +244,7 @@
             <div class="info-item">企业原始主营业务</div>
           </el-col>
           <el-col :span="9">
-            <div class="info-item"></div>
+            <div class="info-item">{{ orgBusiness }}</div>
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后的主营业务</div>
@@ -249,34 +255,13 @@
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 4 }"
                 placeholder="新的主营业务"
-                v-model="textarea2"
+                v-model="newBusiness"
               >
               </el-input>
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="info-row">
-          <el-col :span="3">
-            <div class="info-item">变更证明材料</div>
-          </el-col>
-          <el-col :span="10">
-            <div class="up">
-              <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList"
-                list-type="picture"
-              >
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">
-                  只能上传jpg/png文件，且不超过500kb
-                </div>
-              </el-upload>
-            </div>
-          </el-col>
-        </el-row>
+
         <el-row :gutter="20" class="info-row">
           <el-col :span="2">
             <div class="info-item">变更时间</div>
@@ -285,7 +270,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date4"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -297,18 +282,20 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary" @click="open">发起变更流程</el-button>
-            <el-button type="info" plain @click="cancle">取消</el-button>
+            <el-button type="primary" @click="submitData"
+              >发起变更流程</el-button
+            >
+            <el-button type="info" plain>取消</el-button>
           </div>
         </el-row>
       </div>
       <div v-if="value == '选项5'">
         <el-row :gutter="20" class="info-row">
-          <el-col :span="2">
+          <el-col :span="3">
             <div class="info-item">企业原始logo</div>
           </el-col>
-          <el-col :span="10">
-            <div class="info-item"></div>
+          <el-col :span="9">
+            <img width="100%" :src="ImageUrl" alt="" />
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后的企业logo</div>
@@ -320,7 +307,7 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="After_logo_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -342,7 +329,7 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="logo_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -361,7 +348,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date5"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -384,7 +371,7 @@
             <div class="info-item">当前地址</div>
           </el-col>
           <el-col :span="10">
-            <div class="info-item"></div>
+            <div class="info-item">{{ currentAddress }}</div>
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后的地址</div>
@@ -411,7 +398,7 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="fileList"
+                :file-list="address_list"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -430,7 +417,7 @@
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                v-model="value2"
+                v-model="date6"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -442,7 +429,9 @@
         </el-row>
         <el-row :gutter="20" class="info-row">
           <div class="button-container">
-            <el-button type="primary" @click="open">发起变更流程</el-button>
+            <el-button type="primary" @click="submitData"
+              >发起变更流程</el-button
+            >
             <el-button type="info" plain @click="cancle">取消</el-button>
           </div>
         </el-row>
@@ -514,59 +503,126 @@ export default {
           });
         });
     },
-    handleUploadChange(file, fileList) {
-      // 文件上传状态改变时的处理函数
-      this.fileList = fileList;
-    },
-    sendDataToBackend() {
-      // 准备发送文件到后端的逻辑
-      const formData = new FormData();
-      this.fileList.forEach((file) => {
-        formData.append("files[]", file.raw);
-      });
+    submitData() {
+      // Collect data to send to the backend
+      let data = {};
+      switch (this.value) {
+        case "选项1":
+          data = {
+            date: this.date1,
+            name: this.name,
+            name_list: this.name_list,
+          };
+          break;
+        case "选项2":
+          data = {
+            registered_capital: this.registered_capital,
+            date: this.date2,
+            money_list: this.money_list,
+          };
+          break;
+        case "选项3":
+          data = {
+            currentStatus: this.currentStatus,
+            date: this.date3,
+            status_list: this.status_list,
+          };
+          break;
+        case "选项4":
+          data = {
+            orgBusiness: this.orgBusiness,
+            date: this.date4,
+          };
+          break;
+        case "选项5":
+          data = {
+            ImageUrl: this.ImageUrl,
+            date: this.date5,
+            logo_list: this.logo_list,
+          };
+          break;
+        case "选项6":
+          data = {
+            currentAddress: this.currentAddress,
+            date: this.date6,
+            address_list: this.address_list,
+          };
+          break;
+        default:
+          console.error("Invalid option selected");
+          return;
+      }
 
-      // 使用axios或者其他方法发送formData到后端
+      // Send POST request to the backend
       axios
-        .post("/your-backend-api-url", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post("YOUR_BACKEND_API_URL", data)
         .then((response) => {
-          console.log("成功上传文件到后端");
-          // 处理后端响应
+          console.log("Data submitted successfully:", response.data);
         })
         .catch((error) => {
-          console.error("上传文件到后端失败", error);
-          // 处理错误
+          console.error("Error submitting data:", error);
         });
     },
-    sendDataToBackend() {
-      // 准备发送日期到后端的逻辑
-      const selectedDate = this.value2;
+    //不知道这个函数是否有用（与return是否重复）
+    async fetchData() {
+      try {
+        const response = await axios.get(`your-api-endpoint/${this.value}`);
+        if (this.value === "选项1") {
+          this.name = response.data.currentName;
 
-      // 使用axios或其他方法发送日期到后端
-      axios
-        .post("/your-backend-api-url", {
-          selectedDate: selectedDate,
-        })
-        .then((response) => {
-          console.log("成功发送日期到后端");
-          // 处理后端响应
-        })
-        .catch((error) => {
-          console.error("发送日期到后端失败", error);
-          // 处理错误
-        });
-    },
-    cancle() {
-      this.$router.push({ path: "/change/importance_Information" });
+          this.date1 = response.data.date;
+        } else if (this.value === "选项2") {
+          this.registered_capital = response.data.registered_capital;
+
+          this.date2 = response.data.date2;
+        } else if (this.value === "选项3") {
+          this.currentStatus = response.data.currentStatus;
+
+          this.date3 = response.data.date3;
+        } else if (this.value === "选项4") {
+          this.orBusiness = response.data.orBusiness;
+
+          this.date4 = response.data.date4;
+        } else if (this.value === "选项5") {
+          this.ImageUrl = response.data.ImageUrl;
+
+          this.date5 = response.data.date5;
+        } else if (this.value === "选项6") {
+          this.currentAddress = response.data.currentAddress;
+
+          this.date6 = response.data.date6;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     },
   },
   data() {
     return {
-      value2: "", // 存储选择的日期
-      fileList: [],
+      //date1--date6是由用户选择的，不知道要不要写到这里
+      date1: "", // 存储选择的日期
+      name: "", //企业变更前名称
+      name_list: [], //证明材料
+      //
+      registered_capital: "", //变更前的注册资本
+      date2: "", // 存储选择的日期
+      money_list: [], //证明材料
+      //
+      currentStatus: "", //变更前的状态
+      date3: "", // 存储选择的日期
+      status_list: [], //证明材料
+      //
+      orgBusiness: "", //变更前的主营业务
+      date4: "", // 存储选择的日期
+
+      //
+      ImageUrl: "", //变更前的logo的url
+      date5: "", // 存储选择的日期
+      logo_list: [], //证明材料
+      //
+      currentAddress: "", //当前地址
+      date6: "", // 存储选择的日期
+      address_list: [], //证明材料
       options: [
         {
           value: "选项1",
