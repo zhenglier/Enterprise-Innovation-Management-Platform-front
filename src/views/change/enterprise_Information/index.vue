@@ -13,11 +13,11 @@
             ><div class="info-item qiyeID">*企业ID:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ companyID }}</div></el-col
+            ><div class="info-item">{{ data.companyId }}</div></el-col
           >
           <el-col :span="3"><div class="info-item">*信用代码:</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ creditCode }}</div></el-col
+            ><div class="info-item">{{ data.creditCode }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -25,13 +25,13 @@
             ><div class="info-item name">*企业名称:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ companyName }}</div></el-col
+            ><div class="info-item">{{ data.companyName }}</div></el-col
           >
           <el-col :span="3"
             ><div class="info-item">*注册资本(万元):</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ registeredCapital }}</div></el-col
+            ><div class="info-item">{{ data.registeredCapital }}</div></el-col
           >
         </el-row>
         <el-row :gutter="19" class="info-row">
@@ -39,11 +39,11 @@
             ><div class="info-item essence">*企业性质:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ essence }}</div></el-col
+            ><div class="info-item">{{ data.essence }}</div></el-col
           >
           <el-col :span="3"><div class="info-item">*行 业:</div></el-col
           ><el-col :span="9"
-            ><div class="info-item">{{ industry }}</div></el-col
+            ><div class="info-item">{{ data.industry }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -51,11 +51,11 @@
             ><div class="info-item address">*注册地址:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ Re_address }}</div></el-col
+            ><div class="info-item">{{ data.reAddress }}</div></el-col
           >
           <el-col :span="3"><div class="info-item">*注册日期:</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Register_date }}</div></el-col
+            ><div class="info-item">{{ data.registerDate }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -63,7 +63,7 @@
             ><div class="info-item businessman">*经营者姓名:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ Operator_name }}</div></el-col
+            ><div class="info-item">{{ data.operatorName }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -71,7 +71,7 @@
             ><div class="info-item zaiti">*所属载体:</div></el-col
           >
           <el-col :span="9"
-            ><div class="info-item">{{ Owning_carrier }}</div></el-col
+            ><div class="info-item">{{ data.owningCarrier }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -80,7 +80,7 @@
           >
           <el-col :span="9"
             ><div class="info-item">
-              {{ main_business }}
+              {{ data.mainBusiness }}
             </div></el-col
           >
         </el-row>
@@ -93,11 +93,11 @@
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">入孵时间</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Incubation_date }}</div></el-col
+            ><div class="info-item">{{ data.IncubationDate }}</div></el-col
           >
           <el-col :span="3"><div class="info-item">孵化状态</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Incubation_status }}</div></el-col
+            ><div class="info-item">{{ data.IncubationStatus }}</div></el-col
           >
         </el-row>
       </div>
@@ -109,7 +109,7 @@
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">是否为上市企业</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ If_market }}</div></el-col
+            ><div class="info-item">{{ data.ifMarket }}</div></el-col
           >
         </el-row>
       </div>
@@ -121,20 +121,20 @@
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">姓名</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Corporate_name }}</div></el-col
+            ><div class="info-item">{{ data.corporateName }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">手机号</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ telephone_number }}</div></el-col
+            ><div class="info-item">{{ data.telephoneNumber }}</div></el-col
           >
         </el-row>
 
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">邮箱</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ mailbox }}</div></el-col
+            ><div class="info-item">{{ data.mailbox }}</div></el-col
           >
         </el-row>
       </div>
@@ -146,13 +146,13 @@
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">姓名</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Contact_Name }}</div></el-col
+            ><div class="info-item">{{ data.contactName }}</div></el-col
           >
         </el-row>
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">手机号</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ Contact_number }}</div></el-col
+            ><div class="info-item">{{ data.contactNumber }}</div></el-col
           ></el-row
         >
       </div>
@@ -164,11 +164,11 @@
         <el-row :gutter="20" class="info-row">
           <el-col :span="3"><div class="info-item">开户银行</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ bank_name }}</div></el-col
+            ><div class="info-item">{{ data.bankName }}</div></el-col
           >
           <el-col :span="3"><div class="info-item">银行账户</div></el-col>
           <el-col :span="9"
-            ><div class="info-item">{{ account }}</div></el-col
+            ><div class="info-item">{{ data.account }}</div></el-col
           >
         </el-row>
         <!-- 根据需要添加银行开户信息 -->
@@ -182,55 +182,55 @@
           <el-row :gutter="20" class="info-row">
             <el-col :span="4">
               <div class="info-item">*员工总数</div>
-              <div class="info-item Input_odd">{{ employee_total }}</div>
+              <div class="info-item Input_odd">{{ data.employeeTotal }}</div>
             </el-col>
             <el-col :span="4">
               <div class="info-item">*管理人数</div>
-              <div class="info-item Input_odd">{{ manage_total }}</div>
+              <div class="info-item Input_odd">{{ data.manageTotal }}</div>
             </el-col>
             <el-col :span="5">
               <div class="info-item">*大专及以上学历人数</div>
               <div class="info-item Input_odd">
-                {{ College_degree_or_above }}
+                {{ data.collegeDegreeOrAbove }}
               </div>
             </el-col>
             <el-col :span="5">
               <div class="info-item">*参加园区专业培训人数</div>
-              <div class="info-item Input_odd">{{ trainer_number }}</div>
+              <div class="info-item Input_odd">{{ data.trainerNumber }}</div>
             </el-col>
             <el-col :span="3">
               <div class="info-item">*参保人数</div>
-              <div class="info-item Input_odd">{{ Insured_number }}</div>
+              <div class="info-item Input_odd">{{ data.insuredNumber }}</div>
             </el-col>
             <el-col :span="3">
               <div class="info-item">*研究人数</div>
-              <div class="info-item Input_odd">{{ research_number }}</div>
+              <div class="info-item Input_odd">{{ data.researchNumber }}</div>
             </el-col>
           </el-row>
           <el-row :gutter="20" class="info-row">
             <el-col :span="4">
               <div class="info-item">*租赁开始时间</div>
-              <div class="info-item Input_odd">{{ begin_date }}</div>
+              <div class="info-item Input_odd">{{ data.beginDate }}</div>
             </el-col>
             <el-col :span="4">
               <div class="info-item">*租赁结束时间</div>
-              <div class="info-item Input_odd">{{ end_date }}</div>
+              <div class="info-item Input_odd">{{ data.endDate }}</div>
             </el-col>
             <el-col :span="5">
               <div class="info-item">*租房面积(平米)</div>
-              <div class="info-item Input_odd">{{ area }}</div>
+              <div class="info-item Input_odd">{{ data.area }}</div>
             </el-col>
             <el-col :span="5">
               <div class="info-item">*单位租金（元/平/月）</div>
-              <div class="info-item Input_odd">{{ unit_rent }}</div>
+              <div class="info-item Input_odd">{{ data.unitRent }}</div>
             </el-col>
             <el-col :span="3">
               <div class="info-item">*租赁地址</div>
-              <div class="info-item Input_odd">{{ rent_address }}</div>
+              <div class="info-item Input_odd">{{ data.rentAddress }}</div>
             </el-col>
             <el-col :span="3">
               <div class="info-item">*材料</div>
-              <div class="info-item Input_odd">{{ material }}</div>
+              <div class="info-item Input_odd">{{ data.material }}</div>
             </el-col>
           </el-row>
         </div>
@@ -433,100 +433,70 @@
 }
 </style>
 <script>
+import request from "@/utils/request";
 export default {
   data() {
     return {
-      fits: [""],
-      url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      companyID: "",
-      creditCode: "",
-      companyName: "",
-      registeredCapital: "",
-      essence: "",
-      industry: "",
-      Re_address: "",
-      Register_date: "",
-      Operator_name: "",
-      Owning_carrier: "",
-      main_business: "",
-      Incubation_date: "",
-      Incubation_status: "",
-      If_market: "",
-      Corporate_name: "",
-      telephone_number: "",
-      mailbox: "",
-      Contact_Name: "",
-      Contact_number: "",
-      bank_name: "",
-      account: "",
-      employee_total: "",
-      manage_total: "",
-      College_degree_or_above: "",
-      trainer_number: "",
-      Insured_number: "",
-      research_number: "",
-      begin_date: "",
-      end_date: "",
-      area: "",
-      unit_rent: "",
-      rent_address: "",
-      material: "",
-      imageUrl: "", // Assuming imageUrl is needed for the image
+      data:{
+        fits: [""],
+        // url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        companyID: "1",
+        creditCode: "",
+        companyName: "",
+        registeredCapital: "",
+        essence: "",
+        industry: "",
+        reAddress: "",
+        registerDate: "",
+        operatorName: "",
+        owningCarrier: "",
+        mainBusiness: "",
+        incubationDate: "",
+        incubationStatus: "",
+        ifMarket: "",
+        corporateName: "",
+        telephoneNumber: "",
+        mailbox: "",
+        contactName: "",
+        contactNumber: "",
+        bankName: "",
+        account: "",
+        employeeTotal: "",
+        manageTotal: "",
+        CollegeDegreeOrAbove: "",
+        trainerNumber: "",
+        insuredNumber: "",
+        researchNumber: "",
+        beginDate: "",
+        end_Date: "",
+        area: "",
+        unitRent: "",
+        rentAddress: "",
+        material: "",
+        imageUrl: "", // Assuming imageUrl is needed for the image
+      }
     };
   },
-  methods: {
+  async created(){
+    new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/info/etp",
+        method: "Get",
+      })
+        .then((response) =>{
+          this.data=response;
+          console.log(this.data);
+          // window.location.reload();
+        })
+      })
+  },
+    methods: {
+    
     goToBaseInformation() {
       this.$router.push({ path: "/change/base_Information" });
     },
     goToImportantInformation() {
       this.$router.push({ path: "/change/importance_Information" });
-    },
-    fetchCompanyInfo() {
-      axios
-        .get("/api/company-info")
-        .then((response) => {
-          const data = response.data;
-          this.companyID = data.companyID;
-          this.creditCode = data.creditCode;
-          this.companyName = data.companyName;
-          this.registeredCapital = data.registeredCapital;
-          this.essence = data.essence;
-          this.industry = data.industry;
-          this.Re_address = data.Re_address;
-          this.Register_date = data.Register_date;
-          this.Operator_name = data.Operator_name;
-          this.Owning_carrier = data.Owning_carrier;
-          this.main_business = data.main_business;
-          this.Incubation_date = data.Incubation_date;
-          this.Incubation_status = data.Incubation_status;
-          this.If_market = data.If_market;
-          this.Corporate_name = data.Corporate_name;
-          this.telephone_number = data.telephone_number;
-          this.mailbox = data.mailbox;
-          this.Contact_Name = data.Contact_Name;
-          this.Contact_number = data.Contact_number;
-          this.bank_name = data.bank_name;
-          this.account = data.account;
-          this.employee_total = data.employee_total;
-          this.manage_total = data.manage_total;
-          this.College_degree_or_above = data.College_degree_or_above;
-          this.trainer_number = data.trainer_number;
-          this.Insured_number = data.Insured_number;
-          this.research_number = data.research_number;
-          this.begin_date = data.begin_date;
-          this.end_date = data.end_date;
-          this.area = data.area;
-          this.unit_rent = data.unit_rent;
-          this.rent_address = data.rent_address;
-          this.material = data.material;
-          this.imageUrl = data.imageUrl; // Assuming the image URL is part of the response
-        })
-        .catch((error) => {
-          console.error("Error fetching company info:", error);
-        });
-    },
-    mounted() {
-      this.fetchCompanyInfo();
     },
   },
 };

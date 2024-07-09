@@ -387,7 +387,6 @@
           <el-upload
             action="alert()"
             list-type="picture-card"
-            :file-list="fileList"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleSuccess"
