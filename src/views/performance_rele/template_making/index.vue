@@ -85,17 +85,13 @@
             :label="'域名' + index"
             :key="domain.key"
             :prop="'domains.' + index + '.value'"
-            :rules="{
-              required: true,
-              message: '域名不能为空',
-              trigger: 'blur',
-            }"
           >
             <el-input v-model="domain.value"></el-input
             ><el-button @click.prevent="removeDomain(domain)">删除</el-button>
           </el-form-item>
           <el-form-item>
             <el-button @click="addDomain">新增域名</el-button>
+            <el-button @click="addDomain">新增示例文件</el-button>
             <el-button @click="resetForm('dynamicValidateForm')"
               >重置</el-button
             >
