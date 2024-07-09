@@ -20,7 +20,7 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="signupForm.username"
           placeholder="Username"
           name="username"
           type="text"
@@ -36,13 +36,13 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="signupForm.password"
           :type="passwordType"
           placeholder="Password"
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleSignup"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon
@@ -92,10 +92,10 @@ export default {
       }
     };
     return {
-      loginForm: {
+      signupForm: {
         //这里的数据是直接传给后端的
       },
-      loginRules: {
+      signupRules: {
         username: [
           { required: true, trigger: "blur", validator: validateUsername },
         ],
@@ -127,36 +127,22 @@ export default {
         this.$refs.password.focus();
       });
     },
+    async handleSignup() {
+      console.log(this.signupForm);
+      this.loading = true;
+      //触发action,这里的user是模块
+      this.$store
+        .dispatch("user/signup", this.signupForm)
+        .then(() => {
+          // console.log("fuvk you")
+          this.$router.push({ path: this.redirect || "/" });
+          this.loading = false;
+        })
+        // .catch(() => {
+        //   this.loading = false;
+        // });
+    }
 
-    //此页面不需要处理登录逻辑
-    // handleLogin() {
-    //   this.$refs.loginForm.validate((valid) => {
-    //     if (valid) {
-    //       this.loading = true;
-    //       //触发action,这里的user是模块
-    //       this.$store
-    //         .dispatch("user/login", this.loginForm)
-    //         .then(() => {
-    //           this.$router.push({ path: this.redirect || "/" });
-    //           this.loading = false;
-    //         })
-    //         .catch(() => {
-    //           this.loading = false;
-    //         });
-    //     } else {
-    //       console.log("error submit!!");
-    //       return false;
-    //     }
-    //   });
-    // },
-    //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
-    handleSignup() {
-      //具体怎样的逻辑还需要在这里修改
-      /*
-      注册的逻辑大致如下：首先数据的有效性在前面定义的函数中做验证，数据没问题之后将得到的数据向后台提交
-      ，提交完成之后在十秒之后转到登录界面。
-      */
-    },
   },
 };
 </script>

@@ -2,16 +2,20 @@ import request from "@/utils/request";
 
 export function login(data) {
   return request({
-    url: "/vue-admin-template/user/login",
+    url: "/auth/login",
     method: "post",
     data,
   });
 }
 
 //这里为注册写一个网络请求接口
-export function signup(data) {
+export function signup(username,password) {
+  var data={
+    "username":username,
+    "password":password
+  }
   return request({
-    url: "/vue-admin-template/user/signup",
+    url: "/auth/register",
     method: "post",
     data,
   });
@@ -25,9 +29,13 @@ export function getInfo(token) {
   });
 }
 
-export function logout() {
+export function logout(token) {
+  var data={
+    "token":token
+  }
   return request({
-    url: "/vue-admin-template/user/logout",
+    url: "/auth/logout",
     method: "post",
+    data
   });
 }

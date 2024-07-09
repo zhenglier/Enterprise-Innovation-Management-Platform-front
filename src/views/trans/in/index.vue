@@ -385,8 +385,9 @@
           />
           <!-- 这里没有写相对应的函数 -->
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="alert()"
             list-type="picture-card"
+            :file-list="fileList"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleSuccess"
@@ -557,6 +558,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
@@ -681,6 +683,20 @@ export default {
   },
 
   methods: {
+    async loadJsonFromFile(file, fileList){
+      this.uploadFiles = fileList
+      console.log(fileList[2].raw);
+
+      let data=new FormData()
+      data.append(fileList[2].name,fileList[2].raw)
+      await axios.post('http://localhost:8080/test/test', data
+      )  
+        .then(response => {  
+          // console.log(response.data);
+          // valid=response.data;
+        });
+      
+    },
     next() {
       if (this.activeStep === 0) this.activeStep++;
       else {
