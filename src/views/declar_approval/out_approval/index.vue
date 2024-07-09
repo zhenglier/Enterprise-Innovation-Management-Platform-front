@@ -26,7 +26,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column label="审核选项" width="180">
+          <el-table-column label="审批选项" width="240">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -40,9 +40,27 @@
                 @click="handleCancel(scope.$index, scope.row)"
                 >拒绝</el-button
               >
+              <el-button
+                size="mini"
+                type="warning"
+                @click="handleSendBack(scope.$index, scope.row)"
+                >退回</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
+        <div class="page-part">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage1"
+            :page-sizes="[100, 200, 300, 400]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
+          >
+          </el-pagination>
+        </div>
       </div>
     </el-tab-pane>
 
@@ -75,6 +93,18 @@
           <el-table-column prop="apply_condition" label="审核情况" width="180">
           </el-table-column>
         </el-table>
+        <div class="page-part">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage2"
+            :page-sizes="[100, 200, 300, 400]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
+          >
+          </el-pagination>
+        </div>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -105,6 +135,8 @@ export default {
           apply_condition: "同意搬离",
         },
       ],
+      currentPage1: 4,
+      currentPage2: 4,
     };
   },
   //标签页跳转方法
@@ -123,8 +155,22 @@ export default {
     checkDetail(index, unicode) {
       console.log(index, unicode);
     },
+    //设置分页的方法
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.page-part {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
