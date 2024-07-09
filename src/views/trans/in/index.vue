@@ -629,6 +629,9 @@ export default {
         highfield: [
           { required: true, message: "请选择行业分类", trigger: "blur" },
         ],
+        carrier: [
+          { required: true, message: "入驻载体不能为空", trigger: "blur" },
+        ],
       },
 
       socialinfoForm: {

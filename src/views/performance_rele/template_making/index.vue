@@ -106,7 +106,10 @@
         <el-button @click="removePanel(index)">删除板块</el-button>
       </div>
     </div>
-    <el-button type="primary" @click="addPanel">添加板块</el-button>
+    <div class="func-box">
+      <el-button type="primary" @click="addPanel">添加板块</el-button>
+      <el-button type="primary" @click="submit">发布模板</el-button>
+    </div>
   </div>
 </template>
 
@@ -156,7 +159,9 @@ export default {
             trigger: "change",
           },
         ],
-        desc: [{ required: true, message: "请输入考核描述", trigger: "blur" }],
+        desc: [
+          { required: true, message: "考核描述不能为空", trigger: "blur" },
+        ],
       },
       //动态板块数组
       panels: [
@@ -214,5 +219,11 @@ export default {
 .title-fieldset .inner {
   margin: 0 auto;
   padding: 0 0.25rem;
+}
+.func-box {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
