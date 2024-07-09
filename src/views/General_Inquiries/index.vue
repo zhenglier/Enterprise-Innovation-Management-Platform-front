@@ -98,6 +98,7 @@
     </div>
   </div>
 </template>
+
 <style>
 .block {
   text-align: center;
@@ -130,7 +131,7 @@
 export default {
   data() {
     return {
-      activeName: "second",
+      activeName: "first",
       formInline: {
         carrier: "",
         kind: "",

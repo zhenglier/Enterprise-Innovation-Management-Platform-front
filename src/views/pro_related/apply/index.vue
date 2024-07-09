@@ -1,4 +1,3 @@
-e
 <template>
   <div class="all_body">
     <div style="padding: 30px" class="top1">
@@ -26,17 +25,14 @@ e
       </el-row>
     </div>
     <div class="apply_name">
-      <div class="name">
-        <el-alert :closable="false" title="申报项目名称" />
-      </div>
       <div class="name_content">
         <el-row :gutter="20" class="info-row">
-          <el-col :span="6"
-            ><el-input
-              v-model="input"
-              placeholder="请输入申报项目名称"
-            ></el-input
-          ></el-col>
+          <el-col :span="3"> <div class="App">申报项目名称</div></el-col>
+          <el-col :span="3">
+            <div class="App_IN" style="font-weight: bold; font-size: larger">
+              {{ Apply_name }}
+            </div></el-col
+          >
         </el-row>
       </div>
     </div>
@@ -45,23 +41,47 @@ e
         <el-alert :closable="false" title="申报项目文件" />
       </div>
 
-      <div class="content">
-        <el-row>
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :file-list="fileList"
-          >
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-row>
-      </div>
+      <el-upload
+        class="upload-demo"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        multiple
+        :file-list="fileList"
+        :on-change="handleFileChange"
+        :on-success="handleUploadSuccess"
+        :on-remove="handleRemove"
+        :auto-upload="false"
+      >
+        <el-button size="small" type="primary">点击上传</el-button>
+      </el-upload>
+      <el-form :model="Uploaded" label-position="top">
+        <el-form-item label="">
+          <el-table :data="Uploaded.FILES">
+            <el-table-column
+              prop="Uploaded_index"
+              label="序号"
+            ></el-table-column>
+
+            <el-table-column
+              prop="Uploaded_name"
+              label="文件名称"
+            ></el-table-column>
+            <el-table-column
+              prop="Uploaded_date"
+              label="上传时间"
+            ></el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  @click="handleDelete(scope.$index, scope.row)"
+                  type="danger"
+                  size="mini"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -121,9 +141,22 @@ e
   border-radius: 0;
   background-color: rgb(241, 244, 249);
 }
+.App {
+  font-weight: bold;
+}
 </style>
 <script>
 export default {
+  data() {
+    return {
+      Apply_name: "",
+      fileList: [],
+      Uploaded: {
+        FILES: [],
+      },
+    };
+  },
+
   methods: {
     open() {
       this.$alert("保存成功", "提示", {
@@ -154,6 +187,42 @@ export default {
             message: "已取消提交",
           });
         });
+    },
+    //以下函数待完善
+    handleFileChange(file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
+    },
+    handleUploadSuccess(response, file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
+    },
+    handleRemove(file, fileList) {
+      this.fileList = fileList;
+      this.updateFileList();
+    },
+    //更新文件展示列表
+    updateFileList() {
+      this.Uploaded.FILES = this.fileList.map((f, index) => ({
+        Uploaded_index: index + 1,
+        Uploaded_name: f.name,
+        Uploaded_date: this.formatDate(new Date(f.lastModified)), // 添加上传时间
+      }));
+    },
+    handleDelete(index, row) {
+      // 从上传文件列表中删除
+      this.fileList.splice(index, 1);
+      this.updateFileList();
+    },
+    formatDate(date) {
+      // 格式化日期
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     },
   },
 };
