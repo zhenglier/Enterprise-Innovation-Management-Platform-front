@@ -52,14 +52,14 @@
     <!-- 这下面的内容是动态显示的 -->
     <div class="table-content">
       <el-table :data="paginatedTableData" stripe style="width: 100%">
-        <el-table-column prop="policy_name" label="政策名称" width="180">
+        <el-table-column prop="title" label="政策名称" width="180">
         </el-table-column>
-        <el-table-column prop="manage" label="主管部门" width="180">
+        <el-table-column prop="issuerName" label="主管部门" width="180">
         </el-table-column>
-        <el-table-column prop="policy_level" label="政策层级">
+        <el-table-column prop="level" label="政策层级">
         </el-table-column>
-        <el-table-column prop="hot" label="浏览量"> </el-table-column>
-        <el-table-column prop="date" label="发布日期"> </el-table-column>
+        <el-table-column prop="clicks" label="浏览量"> </el-table-column>
+        <el-table-column prop="createAt" label="发布日期"> </el-table-column>
       </el-table>
     </div>
     <div class="page-part">
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -109,32 +110,11 @@ export default {
       selectedDepartment: "不限",
       tableData: [
         {
-          policy_name: "王小虎",
-          manage: "财政部",
-          date: "2016-05-05",
-          policy_level: "国家级",
-          hot: 100,
-        },
-        {
-          policy_name: "无敌",
-          manage: "财政部",
-          date: "2016-05-04",
-          policy_level: "省级",
-          hot: 200,
-        },
-        {
-          policy_name: "傻逼",
-          manage: "财政部",
-          date: "2016-05-03",
-          policy_level: "市级",
-          hot: 300,
-        },
-        {
-          policy_name: "狗",
-          manage: "商务部",
-          date: "2016-05-02",
-          policy_level: "校级",
-          hot: 400,
+          title: "王小虎",
+          issuerName: "财政部",
+          createAt: "2016-05-05",
+          level: "国家级",
+          clicks: 100,
         },
       ],
       currentPage: 1,
@@ -144,7 +124,18 @@ export default {
     };
   },
   mounted() {
-    this.filterTableData();
+    new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/policy/brief",
+        method: "get",
+      })
+        .then((response) =>{
+          console.log(this.tableData);
+          this.tableData=response;
+          this.filterTableData();
+          // console.log(this.tableData);
+        })
+    })
   },
   methods: {
     handleOptionClick(category, option) {
@@ -244,7 +235,7 @@ export default {
     },
     filterTableData() {
       this.filteredTableData = this.tableData.filter((item) => {
-        const policyName = item.policy_name.toLowerCase();
+        const policyName = item.title.toLowerCase();
         const keyword = this.policyNameKeyword.toLowerCase();
         const selectedDepartment = this.selectedOptions["主管部门"];
         const selectedLevel = this.selectedOptions["政策层级"];
@@ -255,6 +246,7 @@ export default {
           (keyword === "" || policyName.includes(keyword))
         );
       });
+      console.log(this.filteredTableData);
     },
     sortbyTime() {
       this.filteredTableData.sort((a, b) => {
