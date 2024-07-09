@@ -45,7 +45,6 @@
         </el-table>
       </div>
     </el-tab-pane>
-
     <el-tab-pane label="已审核企业" name="second">
       <div class="second-container">
         <el-alert :closable="false">已审核企业列表</el-alert>

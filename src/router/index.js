@@ -612,6 +612,12 @@ var constantRoutes = [
         component: () => import("@/views/pro_related/apply/index"),
         meta: { title: "项目申报" },
       },
+      {
+        path: "release",
+        name: "Release",
+        component: () => import("@/views/pro_related/release/index"),
+        meta: { title: "项目发布" },
+      },
 
       {
         path: "query",
