@@ -29,17 +29,19 @@
     <div class="content">
       <div v-if="value == '选项1'">
         <el-row :gutter="20" class="info-row">
-          <el-col :span="2">
+          <el-col :span="3">
             <div class="info-item">当前企业名称</div>
           </el-col>
-          <el-col :span="10">
-            <div class="info-item">合肥聚信医药科技有限公司</div>
+          <el-col :span="9">
+            <div class="info-item">{{ name }}</div>
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后企业名称</div>
           </el-col>
           <el-col :span="9">
-            <div class="info-item">合肥聚能医药有限公司</div>
+            <div style="margin: 10px 10px">
+              <el-input v-model="newName" margin="30px 30px"></el-input>
+            </div>
           </el-col>
         </el-row>
         <el-row :gutter="20" class="info-row">
@@ -51,6 +53,7 @@
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
+                :on-change="handleUploadChange"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :file-list="fileList"
@@ -91,23 +94,25 @@
       </div>
       <div v-if="value == '选项2'">
         <el-row :gutter="20" class="info-row">
-          <el-col :span="2">
+          <el-col :span="3">
             <div class="info-item">当前注册资本</div>
           </el-col>
-          <el-col :span="10">
-            <div class="info-item"></div>
+          <el-col :span="9">
+            <div class="info-item">{{ registered_capital }}</div>
           </el-col>
           <el-col :span="3">
             <div class="info-item">变更后的注册资本</div>
           </el-col>
           <el-col :span="9">
             <div class="money">
-              <el-input
-                class="money"
-                v-model="input"
-                placeholder="请输入新的注册资本"
-                size="medium"
-              ></el-input>
+              <el-col :span="9">
+                <div style="margin: 10px 10px">
+                  <el-input
+                    v-model="new_registered_capital"
+                    margin="30px 30px"
+                  ></el-input>
+                </div>
+              </el-col>
             </div>
           </el-col>
         </el-row>
@@ -177,7 +182,6 @@
                 placeholder="请输入变更后的状态"
                 size="medium"
               ></el-input>
-              </el-input>
             </div>
           </el-col>
         </el-row>
@@ -447,7 +451,7 @@
   </div>
 </template>
 <style>
-.up{
+.up {
   margin-top: 10px;
 }
 .money {
@@ -460,8 +464,7 @@
   border-width: 1px;
   border-color: rgb(215, 215, 215);
 }
-.button-container
-{
+.button-container {
   text-align: center;
   margin-bottom: 10px;
 }
@@ -476,15 +479,15 @@
   border-style: solid;
   border-width: 1px;
   border-color: rgb(215, 215, 215);
-  margin:2px 30px;
-  margin-bottom:0px;
+  margin: 2px 30px;
+  margin-bottom: 0px;
 }
 .Enterprise_change .el-alert {
   border-radius: 0;
   background-color: rgb(241, 244, 249);
 }
 
-.content{
+.content {
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -492,29 +495,78 @@
 <script>
 export default {
   methods: {
-      open() {
-        this.$confirm('此操作将提交变更申请, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+    open() {
+      this.$confirm("此操作将提交变更申请, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
           this.$message({
-            type: 'success',
-            message: '提交成功!'
+            type: "success",
+            message: "提交成功!",
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消'
-          });          
+            type: "info",
+            message: "已取消",
+          });
         });
-      },
-      cancle(){
-        this.$router.push({path:"/change/importance_Information"})
-      }
     },
+    handleUploadChange(file, fileList) {
+      // 文件上传状态改变时的处理函数
+      this.fileList = fileList;
+    },
+    sendDataToBackend() {
+      // 准备发送文件到后端的逻辑
+      const formData = new FormData();
+      this.fileList.forEach((file) => {
+        formData.append("files[]", file.raw);
+      });
+
+      // 使用axios或者其他方法发送formData到后端
+      axios
+        .post("/your-backend-api-url", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("成功上传文件到后端");
+          // 处理后端响应
+        })
+        .catch((error) => {
+          console.error("上传文件到后端失败", error);
+          // 处理错误
+        });
+    },
+    sendDataToBackend() {
+      // 准备发送日期到后端的逻辑
+      const selectedDate = this.value2;
+
+      // 使用axios或其他方法发送日期到后端
+      axios
+        .post("/your-backend-api-url", {
+          selectedDate: selectedDate,
+        })
+        .then((response) => {
+          console.log("成功发送日期到后端");
+          // 处理后端响应
+        })
+        .catch((error) => {
+          console.error("发送日期到后端失败", error);
+          // 处理错误
+        });
+    },
+    cancle() {
+      this.$router.push({ path: "/change/importance_Information" });
+    },
+  },
   data() {
     return {
+      value2: "", // 存储选择的日期
+      fileList: [],
       options: [
         {
           value: "选项1",
@@ -545,5 +597,4 @@ export default {
     };
   },
 };
-
 </script>

@@ -2,7 +2,7 @@
   <!-- 绩效 -->
   <div>
     <h2>绩效模板制作</h2>
-    <el-alert>基本信息</el-alert>
+    <el-alert :closable="false">基本信息</el-alert>
     <el-form
       :model="baseinfoForm"
       :rules="baseinforules"

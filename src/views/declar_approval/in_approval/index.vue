@@ -2,7 +2,7 @@
   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="未审核企业" name="first">
       <div class="first-container">
-        <el-alert>未审核企业列表</el-alert>
+        <el-alert :closable="false">未审核企业列表</el-alert>
         <el-table
           :data="firsttableData"
           stripe
@@ -48,7 +48,7 @@
 
     <el-tab-pane label="已审核企业" name="second">
       <div class="second-container">
-        <el-alert>已审核企业列表</el-alert>
+        <el-alert :closable="false">已审核企业列表</el-alert>
         <el-table
           :data="secondtableData"
           stripe

@@ -542,6 +542,11 @@ var constantRoutes = [
     component: () => import("@/views/login/index"),
     hidden: true,
   },
+  {
+    path: "/q",
+    component: () => import("@/views/q/query_pro"),
+    hidden: true,
+  },
 
   {
     path: "/signup",
@@ -814,6 +819,42 @@ var constantRoutes = [
         name: "policy_release",
         component: () => import("@/views/policy_related/release/index"),
         meta: { title: "政策发布", icon: "dashboard" },
+      },
+    ],
+  },
+
+  {
+    path: "/example",
+    component: Layout,
+    redirect: "/example/list",
+    name: "Example",
+    meta: {
+      title: "Example",
+      icon: "el-icon-s-help",
+    },
+    children: [
+      {
+        path: "create",
+        component: () => import("@/views/example/create.vue"),
+        name: "CreateArticle",
+        meta: { title: "Create Article", icon: "edit" },
+      },
+      {
+        path: "edit/:id(\\d+)",
+        component: () => import("@/views/example/edit.vue"),
+        name: "EditArticle",
+        meta: {
+          title: "Edit Article",
+          noCache: true,
+          activeMenu: "/example/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "list",
+        component: () => import("@/views/example/list.vue"),
+        name: "ArticleList",
+        meta: { title: "Article List", icon: "list" },
       },
     ],
   },

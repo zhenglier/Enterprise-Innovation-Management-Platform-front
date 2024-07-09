@@ -53,22 +53,28 @@
         <el-table-column prop="name" label="项目名称" width="920">
         </el-table-column>
         <el-table-column
-      prop="status"
-      label="状态"
-      width="125"
-      :filters="[{ text: '待申请', value: '待申请' }, { text: '已通过', value: '已通过' },{text:'已拒绝',value:'已拒绝'},{text:'已退回',value:'已退回'}]"
-      :filter-method="filterTag"
-      filter-placement="bottom-end">
-      <template slot-scope="scope">
-        <el-tag
-          :type="getTagType(scope.row.status)"
-          disable-transitions>{{scope.row.status}}</el-tag>
-      </template>
-    </el-table-column>
+          prop="status"
+          label="状态"
+          width="125"
+          :filters="[
+            { text: '待申请', value: '待申请' },
+            { text: '已通过', value: '已通过' },
+            { text: '已拒绝', value: '已拒绝' },
+            { text: '已退回', value: '已退回' },
+          ]"
+          :filter-method="filterTag"
+          filter-placement="bottom-end"
+        >
+          <template slot-scope="scope">
+            <el-tag :type="getTagType(scope.row.status)" disable-transitions>{{
+              scope.row.status
+            }}</el-tag>
+          </template>
         </el-table-column>
+
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
+            <el-button @click="handleClick" type="text" size="small"
               >查看</el-button
             >
             <el-button type="text" size="small">编辑</el-button>
@@ -91,7 +97,6 @@
   color: #b3c0d1;
 }
 
-
 .el-aside {
   background-color: #d3dce6;
   color: #333;
@@ -99,7 +104,6 @@
   line-height: 80px;
   font-size: larger;
   font-weight: bold;
-
 }
 
 .el-main {
@@ -108,7 +112,6 @@
   text-align: center;
   padding: 0 0;
   line-height: 80px;
- 
 }
 
 body > .el-container {
@@ -135,84 +138,79 @@ export default {
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '待申请'
+          status: "待申请",
         },
         {
           request: "2016-05-04",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已拒绝'
+          status: "已拒绝",
         },
         {
           request: "2016-05-01",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已退回'
+          status: "已退回",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
+          status: "已通过",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
+          status: "已通过",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
+          status: "已通过",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已拒绝'
+          status: "已拒绝",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
+          status: "已通过",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
+          status: "已通过",
         },
         {
           request: "2016-05-02",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '待申请'
+          status: "待申请",
         },
         {
           request: "2016-05-03",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-          status: '已通过'
-        }
-      ]
-    }
+          status: "已通过",
+        },
+      ],
+    };
   },
   methods: {
-    
-    handleClick(row) {
-     
-      console.log(row);
+    handleClick() {
+      this.$router.push({ path: "/q" });
     },
-    filterTag(value, row) 
-    {
-        return row.status === value;
+    filterTag(value, row) {
+      return row.status === value;
     },
     getTagType(status) {
       const statusTagMap = {
-        '待申请':'info',
-        '已通过':'success',
-        '已拒绝':'danger',
-        '已退回':'warning',
-        '处理中':'primary',
+        待申请: "info",
+        已通过: "success",
+        已拒绝: "danger",
+        已退回: "warning",
+        处理中: "primary",
         // 可以继续添加更多的状态及其对应的标签类型
       };
-      return statusTagMap[status] ;
-    }
-  }
-
- 
+      return statusTagMap[status];
+    },
+  },
 };
 </script>
