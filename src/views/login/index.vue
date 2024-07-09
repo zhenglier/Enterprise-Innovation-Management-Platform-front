@@ -51,6 +51,28 @@
         </span>
       </el-form-item>
 
+      
+
+      <el-form-item prop="captcha">
+        <span class="svg-container">
+          <svg-icon icon-class="captcha" />
+        </span>
+        <el-input
+          :key="captchaType"
+          ref="captcha"
+          v-model="loginForm.captcha"
+          :type="captchaType"
+          placeholder="captcha"
+          name="captcha"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span>
+          <img :src="captchaUrl" style="height:100%;width:20%">
+        </span>
+      </el-form-item>
+
       <el-button
         :loading="loading"
         type="primary"
@@ -66,11 +88,6 @@
         @click.native.prevent="gotoSignup"
         >注册</el-button
       >
-
-      <div class="tips">
-        <span style="margin-right: 20px">用户名：admin</span>
-        <span> 密码：任意</span>
-      </div>
     </el-form>
   </div>
 </template>
@@ -102,7 +119,9 @@ export default {
       loginForm: {
         username: "admin",
         password: "111111",
+        captcha:""
       },
+      captchaUrl:"https://www.baidu.com/img/flexible/logo/pc/result@2.png",
       //表单的验证规则
       loginRules: {
         username: [
@@ -183,7 +202,7 @@ $cursor: #fff;
   .el-input {
     display: inline-block;
     height: 47px;
-    width: 85%;
+    width: 70%;
 
     input {
       background: transparent;
