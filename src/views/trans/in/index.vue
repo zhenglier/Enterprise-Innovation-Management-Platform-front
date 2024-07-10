@@ -741,6 +741,7 @@ export default {
       console.log(this.employinfoForm);
       console.log(this.socialinfoForm);
       this.centerDialogVisible = true;
+      
     },
     handleRemove(file, fileList) {
       this.socialinfoForm.proveList = fileList;

@@ -4,8 +4,11 @@
       <el-alert :closable="false" title="重大信息变更审批" />
     </div>
     <div class="se_body">
-      <el-table ref="filterTable" :data="tableData" style="width: 100%">
-<<<<<<< HEAD
+      <el-table
+        :data="getCurrentPageData(OnlytableData, currentPage, pageSize)"
+        stripe
+        style="width: 100%"
+      >
         <el-table-column prop="number" label="序号" min-width="10%">
         </el-table-column>
         <el-table-column prop="date" label="申请时间" min-width="20%">
@@ -33,14 +36,6 @@
             }}</el-tag>
           </template>
         </el-table-column>
-=======
-      <el-table-column prop="number" label="序号" min-width="10%">
-      </el-table-column>
-      <el-table-column prop="date" label="申请时间" min-width="20%">
-      </el-table-column>
-      <el-table-column prop="name" label="企业名称" smin-width="20%"> </el-table-column>
-      <el-table-column prop="kind" label="变更类型" min-width="20%"> </el-table-column>
->>>>>>> 1ff686be7419321e628e90ea760ca790f87ea01c
 
         <el-table-column fixed="right" label="操作" min-width="10%">
           <template slot-scope="scope">
@@ -48,20 +43,19 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
-
-    <div class="block">
-      <span class="demonstration"></span>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[10, 20]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
-      >
-      </el-pagination>
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[1, 2]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="OnlytableData.length"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -93,7 +87,24 @@ export default {
     handleClick(row) {
       console.log(row);
     },
-
+    getCurrentPageData(data, currentPage, pageSize) {
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      return data.slice(start, end);
+    },
+    //该函数用用于跳转到审批界面（审批界面只有一个，内容根据传递的参数动态显示，且该函数不一定对）
+    goToApprovalPage(row) {
+      this.$router.push({
+        name: "ApprovalPage",
+        query: {
+          number: row.number,
+          date: row.date,
+          name: row.name,
+          kind: row.kind,
+          result: row.result,
+        },
+      });
+    },
     getTagType(result) {
       const resultTagMap = {
         待审核: "info",
@@ -108,93 +119,20 @@ export default {
   },
   data() {
     return {
-      currentPage4: 1,
-      tableData: [
+      currentPage: 1,
+      OnlytableData: [
         {
-          number: "1",
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
+          number: 1,
+          date: "2016-05-20",
+          name: "王小龙",
+          kind: "企业企业名称变更",
           result: "同意",
         },
         {
-          number: "2",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "退回",
-        },
-        {
-          number: "3",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "拒绝",
-        },
-        {
-          number: "3",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "同意",
-        },
-        {
-          number: "4",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "同意",
-        },
-        {
-          number: "5",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "待审核",
-        },
-        {
-          number: "6",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "待审核",
-        },
-        {
-          number: "7",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "退回",
-        },
-        {
-          number: "8",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "拒绝",
-        },
-        {
-          number: "9",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
-          result: "同意",
-        },
-        {
-          number: "10",
-
-          date: "2016-05-02",
-          name: "安徽雷车科技有限公司",
-          kind: "企业注册资金变更",
+          number: 2,
+          date: "2016-05-20",
+          name: "王小龙",
+          kind: "企业企业名称变更",
           result: "同意",
         },
       ],
