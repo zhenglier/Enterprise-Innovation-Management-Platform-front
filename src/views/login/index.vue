@@ -58,10 +58,9 @@
           <svg-icon icon-class="captcha" />
         </span>
         <el-input
-          :key="captchaType"
           ref="captcha"
           v-model="loginForm.captcha"
-          :type="captchaType"
+          type="text"
           placeholder="captcha"
           name="captcha"
           tabindex="2"
@@ -119,9 +118,10 @@ export default {
       loginForm: {
         username: "admin",
         password: "111111",
-        captcha:""
+        uuid: "placeholder",
+        captcha: ""
       },
-      captchaUrl:"https://www.baidu.com/img/flexible/logo/pc/result@2.png",
+      captchaUrl: "placeholder",
       //表单的验证规则
       loginRules: {
         username: [
@@ -135,6 +135,9 @@ export default {
       passwordType: "password",
       redirect: undefined,
     };
+  },
+  created() {
+    this.genUUID();
   },
   watch: {
     $route: {
@@ -179,6 +182,10 @@ export default {
     gotoSignup() {
       this.$router.push({ path: "/signup" });
     },
+    genUUID() {
+      this.loginForm.uuid = crypto.randomUUID();
+      this.captchaUrl = "http://127.0.0.1:8080/auth/captcha/".concat(this.loginForm.uuid);
+    }
   },
 };
 </script>

@@ -34,12 +34,21 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo;
+    const { username, password, uuid, captcha} = userInfo;
     //发送网络请求
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password })
+      login({ username: username.trim(), password: password, uuid: uuid, captcha: captcha })
         .then((response) => {
           const  data  = response;
+
+          if (data.code === 20001) {
+            console.log("请输入验证码");
+          } else if (data.code === 20002) {
+            console.log("请刷新页面");
+          } else if (data.code === 20003) {
+            console.log("验证码错误");
+          }
+
           commit("SET_TOKEN", data.token);
           console.log(data.role+" login");
           localStorage.removeItem('role');
