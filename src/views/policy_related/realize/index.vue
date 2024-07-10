@@ -7,12 +7,12 @@
             src="https://zhengce.beijing.gov.cn/bk-config/pub/0002/0001/zhengcetoutiao.png?version=v1.1.5"
             class="zhengcetoutiao-img"
             alt="政策头条图片"
-          />
+          >
           <img
             src="https://zhengce.beijing.gov.cn/bk-config/pub/0002/0001/zhengcetoutiao2.png?version=v1.1.5"
             alt="政策头条"
             class="zhengcetoutiao-title"
-          />
+          >
         </div>
         <div class="top-policy-container">
           <ul class="top-policy-list">
@@ -24,12 +24,12 @@
         </div>
       </div>
     </div>
-    <div></div>
+    <div />
     <div class="policy-container">
       <el-tabs v-model="policyactiveTab" @tab-click="policyhandleTabClick">
-        <el-tab-pane label="政策清单" name="policyList"></el-tab-pane>
-        <el-tab-pane label="北京" name="beijing"></el-tab-pane>
-        <el-tab-pane label="各区" name="districts"></el-tab-pane>
+        <el-tab-pane label="政策清单" name="policyList" />
+        <el-tab-pane label="北京" name="beijing" />
+        <el-tab-pane label="各区" name="districts" />
       </el-tabs>
       <div class="policy-content">
         <div v-if="policyactiveTab === 'policyList'">
@@ -61,10 +61,12 @@
     <div class="project-container">
       <div class="sector-header">
         <h2 class="project-apply-header">项目申报</h2>
-        <el-button type="text" @click="proroute" class="more-button"
-          >查看更多 &gt;</el-button
-        >
-        <fieldset class="title-fieldset"></fieldset>
+        <el-button
+          type="text"
+          class="more-button"
+          @click="proroute"
+        >查看更多 &gt;</el-button>
+        <fieldset class="title-fieldset" />
       </div>
       <!-- 放置卡片 -->
       <div class="project-cards">
@@ -115,10 +117,12 @@
       </div>
       <div class="sector-header">
         <h2 class="policy-month-header">政策月历</h2>
-        <el-button type="text" @click="policyroute" class="more-button"
-          >查看更多 &gt;</el-button
-        >
-        <fieldset class="title-fieldset"></fieldset>
+        <el-button
+          type="text"
+          class="more-button"
+          @click="policyroute"
+        >查看更多 &gt;</el-button>
+        <fieldset class="title-fieldset" />
         <!-- 月份的选项行 -->
         <div class="month-selection">
           <el-button
@@ -136,23 +140,23 @@
             prop="daysLeft"
             label="剩余天数"
             width="120"
-          ></el-table-column>
-          <el-table-column prop="name" label="政策名称"></el-table-column>
+          />
+          <el-table-column prop="name" label="政策名称" />
           <el-table-column
             prop="startDate"
             label="申报开始时间"
             width="180"
-          ></el-table-column>
+          />
           <el-table-column
             prop="endDate"
             label="申报结束时间"
             width="180"
-          ></el-table-column>
+          />
           <el-table-column
             prop="views"
             label="浏览量"
             width="120"
-          ></el-table-column>
+          />
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
               <el-button
@@ -166,14 +170,14 @@
         <!-- Pagination -->
         <div class="page-part">
           <el-pagination
-            @current-change="handlePageChange"
             :current-page="currentPage"
             :page-size="pageSize"
             background
             layout="prev, pager, next"
             :total="filteredPolicies.length"
             :page-sizes="[5, 10, 20, 50]"
-          ></el-pagination>
+            @current-change="handlePageChange"
+          />
         </div>
       </div>
     </div>
@@ -181,124 +185,125 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data() {
     return {
-      policyactiveTab: "policyList",
+      policyactiveTab: 'policyList',
       // 头条处的数据
       toppolicyList: [
         {
           id: 1,
           title:
-            "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
-          date: "2024-06-14",
+            '北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》',
+          date: '2024-06-14'
         },
         {
           id: 2,
           title:
-            "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...》",
-          date: "2024-06-12",
+            '北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...》',
+          date: '2024-06-12'
         },
         {
           id: 3,
           title:
-            "北京市顺义区经济和信息化局关于印发《顺义区促进高端制造业和先进...》",
-          date: "2024-06-12",
-        },
+            '北京市顺义区经济和信息化局关于印发《顺义区促进高端制造业和先进...》',
+          date: '2024-06-12'
+        }
       ],
-      //政策清单部分数据
+      // 政策清单部分数据
       policyList: [
         {
           id: 1,
           title:
-            "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
-          date: "2024-06-14",
+            '北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》',
+          date: '2024-06-14'
         },
         {
           id: 2,
           title:
-            "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...》",
-          date: "2024-06-12",
+            '北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...》',
+          date: '2024-06-12'
         },
         {
           id: 3,
           title:
-            "北京市顺义区经济和信息化局关于印发《顺义区促进高端制造业和先进...》",
-          date: "2024-06-12",
+            '北京市顺义区经济和信息化局关于印发《顺义区促进高端制造业和先进...》',
+          date: '2024-06-12'
         },
         {
           id: 4,
           title:
-            "北京市海淀区农业农村局 北京市海淀区财政局关于印发《2023年度海淀...》",
-          date: "2024-06-03",
+            '北京市海淀区农业农村局 北京市海淀区财政局关于印发《2023年度海淀...》',
+          date: '2024-06-03'
         },
         {
           id: 5,
           title:
-            "北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》",
-          date: "2024-05-31",
+            '北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》',
+          date: '2024-05-31'
         },
         {
           id: 6,
           title:
-            "北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》",
-          date: "2024-05-23",
-        },
+            '北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》',
+          date: '2024-05-23'
+        }
       ],
-      //北京政策数据
+      // 北京政策数据
       beijingpolicyList: [
         {
           id: 5,
           title:
-            "北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》",
-          date: "2024-05-31",
+            '北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》',
+          date: '2024-05-31'
         },
         {
           id: 6,
           title:
-            "北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》",
-          date: "2024-05-23",
-        },
+            '北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》',
+          date: '2024-05-23'
+        }
       ],
-      //各区政策数据
+      // 各区政策数据
       districtspolicyList: [
         {
           id: 5,
           title:
-            "北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》",
-          date: "2024-05-31",
+            '北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》',
+          date: '2024-05-31'
         },
         {
           id: 6,
           title:
-            "北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》",
-          date: "2024-05-23",
-        },
+            '北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》',
+          date: '2024-05-23'
+        }
       ],
-      //卡片的数据部分
+      // 卡片的数据部分
       projects: [
-        { name: "项目名称1", unit: "发布单位1", views: 100 },
-        { name: "项目名称2", unit: "发布单位2", views: 120 },
-        { name: "项目名称3", unit: "发布单位3", views: 80 },
-        { name: "项目名称4", unit: "发布单位4", views: 90 },
-        { name: "项目名称5", unit: "发布单位5", views: 110 },
-        { name: "项目名称6", unit: "发布单位6", views: 130 },
-        { name: "项目名称7", unit: "发布单位7", views: 70 },
-        { name: "项目名称8", unit: "发布单位8", views: 85 },
+        { name: '项目名称1', unit: '发布单位1', views: 100 },
+        { name: '项目名称2', unit: '发布单位2', views: 120 },
+        { name: '项目名称3', unit: '发布单位3', views: 80 },
+        { name: '项目名称4', unit: '发布单位4', views: 90 },
+        { name: '项目名称5', unit: '发布单位5', views: 110 },
+        { name: '项目名称6', unit: '发布单位6', views: 130 },
+        { name: '项目名称7', unit: '发布单位7', views: 70 },
+        { name: '项目名称8', unit: '发布单位8', views: 85 }
       ],
       months: [
-        { value: 1, label: "一月" },
-        { value: 2, label: "二月" },
-        { value: 3, label: "三月" },
-        { value: 4, label: "四月" },
-        { value: 5, label: "五月" },
-        { value: 6, label: "六月" },
-        { value: 7, label: "七月" },
-        { value: 8, label: "八月" },
-        { value: 9, label: "九月" },
-        { value: 10, label: "十月" },
-        { value: 11, label: "十一月" },
-        { value: 12, label: "十二月" },
+        { value: 1, label: '一月' },
+        { value: 2, label: '二月' },
+        { value: 3, label: '三月' },
+        { value: 4, label: '四月' },
+        { value: 5, label: '五月' },
+        { value: 6, label: '六月' },
+        { value: 7, label: '七月' },
+        { value: 8, label: '八月' },
+        { value: 9, label: '九月' },
+        { value: 10, label: '十月' },
+        { value: 11, label: '十一月' },
+        { value: 12, label: '十二月' }
       ],
       selectedMonth: new Date().getMonth() + 1,
       policyCalendarList: [
@@ -306,24 +311,24 @@ export default {
         // 注意列表中会有一个剩余日期，这个不需要传，是直接通过结束时间和系统时间做差
         {
           id: 1,
-          name: "政策1",
-          startDate: "2024-01-15",
-          endDate: "2024-02-15",
-          views: 100,
+          name: '政策1',
+          startDate: '2024-01-15',
+          endDate: '2024-02-15',
+          views: 100
         },
         {
           id: 2,
-          name: "政策2",
-          startDate: "2024-03-01",
-          endDate: "2024-04-01",
-          views: 150,
-        },
+          name: '政策2',
+          startDate: '2024-03-01',
+          endDate: '2024-04-01',
+          views: 150
+        }
         // Add more policy data here
       ],
 
       currentPage: 1,
-      pageSize: 10,
-    };
+      pageSize: 10
+    }
   },
   computed: {
     filteredPolicies() {
@@ -331,68 +336,94 @@ export default {
         new Date().getFullYear(),
         this.selectedMonth - 1,
         1
-      );
+      )
       const endOfMonth = new Date(
         new Date().getFullYear(),
         this.selectedMonth,
         0
-      );
-      const today = new Date();
+      )
+      const today = new Date()
 
       return this.policyCalendarList
         .filter((policy) => {
-          const startDate = new Date(policy.startDate);
-          const endDate = new Date(policy.endDate);
+          const startDate = new Date(policy.startDate)
+          const endDate = new Date(policy.endDate)
           return (
             (startDate >= startOfMonth && startDate <= endOfMonth) ||
             (endDate >= startOfMonth && endDate <= endOfMonth) ||
             (startDate <= startOfMonth && endDate >= endOfMonth)
-          );
+          )
         })
         .map((policy) => {
-          const endDate = new Date(policy.endDate);
-          const timeDiff = endDate.getTime() - today.getTime();
-          const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-          return { ...policy, daysLeft };
-        });
+          const endDate = new Date(policy.endDate)
+          const timeDiff = endDate.getTime() - today.getTime()
+          const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24))
+          return { ...policy, daysLeft }
+        })
     },
     paginatedPolicies() {
-      const start = (this.currentPage - 1) * this.pageSize;
-      const end = start + this.pageSize;
-      return this.filteredPolicies.slice(start, end);
-    },
+      const start = (this.currentPage - 1) * this.pageSize
+      const end = start + this.pageSize
+      return this.filteredPolicies.slice(start, end)
+    }
+  },
+  async created() {
+    this.fetchPolicyList()
+    this.fetchPolicyCalendarList()
   },
   methods: {
+    async fetchPolicyList() {
+      await new Promise((resolve, reject) => {
+        request({
+          url: '/policy/heading',
+          method: 'get'
+        })
+          .then((response) => {
+            this.policyList = response
+          })
+      })
+    },
+    async fetchPolicyCalendarList() {
+      await new Promise((resolve, reject) => {
+        request({
+          url: '/policy/monthly',
+          method: 'get'
+        })
+          .then((response) => {
+            this.policyCalendarList = response
+          })
+      })
+    },
     proroute() {
-      this.$router.push({ name: "Query" });
+      this.$router.push({ name: 'Query' })
     },
     policyroute() {
-      this.$router.push({ name: "Browse" });
+      this.$router.push({ name: 'Browse' })
     },
     policyhandleTabClick(tab) {
-      console.log(`切换到标签页: ${tab.name}`);
+      console.log(`切换到标签页: ${tab.name}`)
     },
     monthhandleTabClick(tab) {
-      console.log(`切换到标签页: ${tab.name}`);
+      console.log(`切换到标签页: ${tab.name}`)
     },
     checkDetail(name) {
       this.$router.push({ path: `/details/policy/${name}` });
     },
     selectMonth(month) {
-      this.selectedMonth = month;
-      this.currentPage = 1;
+      this.selectedMonth = month
+      this.currentPage = 1
     },
     handlePageChange(page) {
-      this.currentPage = page;
+      this.currentPage = page
     },
     viewPolicyDetails(policy) {
-      console.log(`查看政策详情: ${policy.name}`);
+      console.log(`查看政策详情: ${policy.name}`)
       // Implement navigation to policy details page
-      const policyName = policy.name;
-      this.$router.push({ name: "PolicyDetails", params: { policyName } });
-    },
-  },
-};
+      const policyName = policy.name
+      this.$router.push({ name: 'PolicyDetails', params: { policyName }})
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -115,7 +115,9 @@ import request from "@/utils/request";
 export default {
   data() {
     return {
+      //标签页跳转数据
       activeName: "second",
+      // 未完成审核列表
       firsttableData: [
         { index: 1, unicode: "12345", name: "王小虎", date: "2016-05-02" },
         // Add more data as needed
@@ -126,7 +128,7 @@ export default {
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
-          apply_condition: "同意搬离",
+          applyCondition: "同意搬离",
         },
         {
           index: 1,
@@ -140,16 +142,8 @@ export default {
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
-          apply_condition: "同意搬离",
+          applyCondition: "同意搬离",
         },
-        {
-          index: 1,
-          unicode: "12345",
-          name: "王小虎",
-          date: "2016-05-02",
-          apply_condition: "同意搬离",
-        },
-        // Add more data as needed
       ],
       currentPage1: 1,
       currentPage2: 1,
@@ -188,6 +182,7 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    //同意搬离按钮,这里的两个参数
     handleSuccess(index, row) {
       new Promise(async (resolve,reject) =>{
       await request({
@@ -200,6 +195,7 @@ export default {
         })
       })
     },
+    //拒绝搬离按钮
     handleCancel(index, row) {
       new Promise(async (resolve,reject) =>{
       await request({
