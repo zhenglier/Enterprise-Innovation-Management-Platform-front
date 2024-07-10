@@ -882,21 +882,16 @@ var constantRoutes = [
         meta: { title: "政策详情", icon: "dashboard" },
         props: true,
       },
-    ],
-  },
-  {
-    path: "/",
-    component: Layout,
-    redirect: "/judge",
-    children: [
       {
-        path: "judge",
-        name: "Judge",
-        component: () => import("@/views/judge/index"),
-        meta: { title: "审批界面", icon: "dashboard" },
+        path: "approval/:unicode",
+        name: "Approval",
+        component: () => import("@/views/details/approval"),
+        meta: { title: "项目审查详情", icon: "dashboard" },
+        props: true,
       },
     ],
   },
+
   {
     path: "/example",
     component: Layout,
