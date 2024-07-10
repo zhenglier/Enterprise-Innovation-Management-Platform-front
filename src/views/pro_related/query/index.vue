@@ -276,6 +276,11 @@ export default {
   text-align: center;
 }
 
+.cell{
+  display: flex;
+  flex-direction: row;
+}
+
 .block {
   text-align: center;
   padding-bottom: 20px;
