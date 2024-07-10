@@ -738,6 +738,7 @@ export default {
     //包含将数据传输到后端的逻辑，对所有的数据post,发axios请求
     submit() {
       this.centerDialogVisible = true;
+      
     },
     handleRemove(file, fileList) {
       this.socialinfoForm.proveList = fileList;
