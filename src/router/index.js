@@ -861,7 +861,7 @@ var constantRoutes = [
       {
         path: "pro",
         name: "Pro",
-        component: () => import("@/views/details/pro/index"),
+        component: () => import("@/views/details/pro/:id"),
         meta: { title: "项目详情", icon: "dashboard" },
       },
     ],
