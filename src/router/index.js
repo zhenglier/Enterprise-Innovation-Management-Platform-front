@@ -787,11 +787,11 @@ var constantRoutes = [
 ];
 
 function createRouter(role) {
-  // return new Router({
-  //   // mode: 'history', // require service support
-  //   scrollBehavior: () => ({ y: 0 }),
-  //   routes: constantRoutes,
-  // });
+  return new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes,
+  });
   // console.log("create router now! " +role);
   if (role == "enterprise") {
     // console.log("enterprise login!");
