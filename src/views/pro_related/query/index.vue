@@ -72,7 +72,7 @@
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
-              @click="handleCardClick(project.id)"
+              @click="checkDetail(project.name)"
             >
               查看详情
             </el-button>
@@ -217,9 +217,9 @@ export default {
         });
     },
     // 处理查看详情按钮点击事件
-    handleCardClick(projectId) {
+    checkDetail(name) {
       //项目路由
-      this.$router.push({ name: "/Qin/index", params: { id: projectId } });
+      this.$router.push({ path: `/details/pro/${name}` });
     },
     // 处理每页显示的项目数改变事件
     handleSizeChange(val) {
