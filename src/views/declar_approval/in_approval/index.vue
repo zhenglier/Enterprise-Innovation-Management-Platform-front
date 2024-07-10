@@ -188,7 +188,7 @@ export default {
       console.log(index, row);
     },
     checkDetail(index, unicode) {
-      console.log(index, unicode);
+      this.$rouer.push({ name: "Pro", params: { unicode } });
     },
     handleSizeChange(pageSize) {
       if (this.activeName === "first") {
