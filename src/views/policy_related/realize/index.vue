@@ -80,7 +80,7 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="checkDetail(scope.row.name)"
+                @click="checkDetail(project.name)"
                 >查看详情</el-button
               >
             </div>
@@ -102,7 +102,7 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="checkDetail(scope.row.name)"
+                @click="checkDetail(project.name)"
                 >查看详情</el-button
               >
             </div>
@@ -155,7 +155,7 @@
           ></el-table-column>
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" @click="checkDetail(scope.row.name)"
+              <el-button type="text" @click="checkDetail(project.name)"
                 >查看详情</el-button
               >
             </template>

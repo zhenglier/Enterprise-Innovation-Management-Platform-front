@@ -43,10 +43,7 @@
 
         <el-table-column fixed="right" label="操作" min-width="20%">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="checkDetail(scope.row.name)"
+            <el-button type="text" size="small" @click="checkDetail(name)"
               >详情</el-button
             >
           </template>

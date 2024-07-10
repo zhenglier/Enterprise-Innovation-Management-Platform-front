@@ -130,8 +130,19 @@ export default {
   },
 
   methods: {
+    reject() {
+      this.$alert("拒绝成功", "提示", {
+        confirmButtonText: "确定",
+        callback: (action) => {
+          this.$message({
+            type: "info",
+            message: `action: ${action}`,
+          });
+        },
+      });
+    },
     Back() {
-      this.$alert("保存成功", "提示", {
+      this.$alert("退回成功", "提示", {
         confirmButtonText: "确定",
         callback: (action) => {
           this.$message({
@@ -142,7 +153,7 @@ export default {
       });
     },
     Pass() {
-      this.$confirm("此操作将提交申请, 是否继续?", "提示", {
+      this.$confirm("此操作将通过申请, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -156,7 +167,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消提交",
+            message: "已取消通过",
           });
         });
     },
