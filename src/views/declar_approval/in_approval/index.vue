@@ -63,7 +63,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage1"
-            :page-sizes="[1, 20, 50, 100]"
+            :page-sizes="[10, 20, 50, 100]"
             :page-size="pageSize1"
             layout="total, sizes, prev, pager, next, jumper"
             :total="firsttableData.length"
@@ -114,7 +114,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage2"
-            :page-sizes="[1, 20, 50, 100]"
+            :page-sizes="[10, 20, 50, 100]"
             :page-size="pageSize2"
             layout="total, sizes, prev, pager, next, jumper"
             :total="secondtableData.length"
@@ -153,8 +153,8 @@ export default {
       ],
       currentPage1: 1,
       currentPage2: 1,
-      pageSize1: 1,
-      pageSize2: 1,
+      pageSize1: 10,
+      pageSize2: 10,
     };
   },
   async created() {
@@ -213,7 +213,12 @@ export default {
       })
     },
     handleSendBack(index, row) {
-      console.log(index, row);
+      row.apply_condition = "已退回";
+      this.moveToSecondTable(index, row);
+    },
+    moveToSecondTable(index, row) {
+      this.firsttableData.splice(index, 1);
+      this.secondtableData.push(row);
     },
     checkDetail(index, unicode) {
       this.$router.push({ path: `/details/info/${unicode}` });
