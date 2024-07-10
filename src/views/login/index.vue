@@ -48,27 +48,44 @@
           />
         </span>
       </el-form-item>
-      <div class="button-box">
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width: 100%; margin-bottom: 30px"
-          @click.native.prevent="handleLogin"
-          >登录</el-button
-        >
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width: 100%; margin-left: 0; margin-bottom: 30px"
-          @click.native.prevent="gotoSignup"
-          >注册</el-button
-        >
-      </div>
-      <!-- 
-      <div class="tips">
-        <span style="margin-right: 20px">用户名：admin</span>
-        <span> 密码：任意</span>
-      </div> -->
+
+      
+
+      <el-form-item prop="captcha">
+        <span class="svg-container">
+          <svg-icon icon-class="captcha" />
+        </span>
+        <el-input
+          :key="captchaType"
+          ref="captcha"
+          v-model="loginForm.captcha"
+          :type="captchaType"
+          placeholder="captcha"
+          name="captcha"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span>
+          <img :src="captchaUrl" style="height:100%;width:20%">
+        </span>
+      </el-form-item>
+
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleLogin"
+        >登录</el-button
+      >
+      <!-- 新增注册按钮 -->
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-left: 0; margin-bottom: 30px"
+        @click.native.prevent="gotoSignup"
+        >注册</el-button
+      >
     </el-form>
   </div>
 </template>
@@ -87,8 +104,8 @@ export default {
       }
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("密码至少为六位"));
+      if (value.length < 0) {
+        callback(new Error("The password can not be less than 6 digits"));
       } else {
         callback();
       }
@@ -97,7 +114,10 @@ export default {
       loginForm: {
         username: "admin",
         password: "111111",
+        captcha:""
       },
+      captchaUrl:"https://www.baidu.com/img/flexible/logo/pc/result@2.png",
+      //表单的验证规则
       loginRules: {
         username: [
           { required: true, trigger: "blur", validator: validateUsername },
@@ -171,7 +191,7 @@ $cursor: #fff;
   .el-input {
     display: inline-block;
     height: 47px;
-    width: 85%;
+    width: 70%;
 
     input {
       background: transparent;

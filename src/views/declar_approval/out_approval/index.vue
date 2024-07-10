@@ -90,7 +90,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="apply_condition" label="审核情况" width="180">
+          <el-table-column prop="applyCondition" label="审核情况" width="180">
           </el-table-column>
         </el-table>
         <div class="page-part">
@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -132,7 +133,7 @@ export default {
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
-          apply_condition: "同意搬离",
+          applyCondition: "同意搬离",
         },
         {
           index: 1,
@@ -156,15 +157,60 @@ export default {
       pageSize2: 1,
     };
   },
+  async created() {
+    new Promise(async (resolve,reject) =>{
+      var status=0;
+      await request({
+        url: "/trans/review/out",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.firsttableData=response;
+        })
+    })
+    new Promise(async (resolve,reject) =>{
+      var status=1;
+      await request({
+        url: "/trans/review/out",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.secondtableData=response;
+        })
+    })
+  },
+  //标签页跳转方法
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
     handleSuccess(index, row) {
-      console.log(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/out/accept/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     handleCancel(index, row) {
-      console.log(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/out/reject/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     handleSendBack(index, row) {
       console.log(index, row);
