@@ -155,7 +155,7 @@
           ></el-table-column>
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" @click="checkDetail(project.name)"
+              <el-button type="text" @click="checkDetail(scope.row.name)"
                 >查看详情</el-button
               >
             </template>
