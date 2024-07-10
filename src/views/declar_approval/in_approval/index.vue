@@ -30,7 +30,7 @@
               <el-button
                 type="text"
                 size="mini"
-                @click="checkDetail(scope.$index, scope.row.unicode)"
+                @click="checkDetail(scope.$index, scope.row.id)"
                 >[详情]</el-button
               >
             </template>
@@ -106,11 +106,8 @@
               >
             </template>
           </el-table-column>
-          <el-table-column
-            prop="applyCondition"
-            label="申请情况"
-            width="180"
-          ></el-table-column>
+          <el-table-column prop="applyCondition" label="申请情况" width="180">
+          </el-table-column>
         </el-table>
         <div class="page-part">
           <el-pagination
@@ -142,14 +139,6 @@ export default {
           date: "2016-05-02",
           apply_condition: "",
         },
-
-        {
-          index: 1,
-          unicode: "12345",
-          name: "王小虎",
-          date: "2016-05-02",
-          apply_condition: "",
-        },
         // 其他数据...
       ],
       secondtableData: [
@@ -159,13 +148,6 @@ export default {
           name: "王小虎",
           date: "2016-05-02",
           applyCondition: "已通过",
-        },
-        {
-          index: 1,
-          unicode: "12345",
-          name: "王小虎",
-          date: "2016-05-02",
-          apply_condition: "",
         },
         // 其他数据...
       ],
@@ -234,7 +216,7 @@ export default {
       console.log(index, row);
     },
     checkDetail(index, unicode) {
-      console.log(index, unicode);
+      this.$router.push({ path: `/details/info/${unicode}` });
     },
     handleSizeChange(pageSize) {
       if (this.activeName === "first") {

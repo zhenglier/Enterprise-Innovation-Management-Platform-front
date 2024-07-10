@@ -127,34 +127,34 @@
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="注册资本(万元)" prop="money">
+          <el-form-item label="注册资本(万元)" prop="registeredCapital">
             <el-input
-              v-model="baseinfoForm.money"
+              v-model="baseinfoForm.registeredCapital"
               autocomplete="off"
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="信用代码" prop="creditcode">
+          <el-form-item label="信用代码" prop="creditCode">
             <el-input
-              v-model="baseinfoForm.creditcode"
+              v-model="baseinfoForm.creditCode"
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="公司网址" prop="netaddress">
+          <el-form-item label="公司网址" prop="netAddress">
             <el-input
-              v-model="baseinfoForm.netaddress"
+              v-model="infoForm.netAddress"
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="办公地址" prop="workaddress">
+          <el-form-item label="办公地址" prop="workAddress">
             <el-input
-              v-model="baseinfoForm.workaddress"
+              v-model="infoForm.workAddress"
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="注册地址" prop="signupaddress">
+          <el-form-item label="注册地址" prop="address">
             <el-input
-              v-model="baseinfoForm.signupaddress"
+              v-model="baseinfoForm.address"
               class="custom-input"
             ></el-input>
           </el-form-item>
@@ -164,9 +164,9 @@
               class="custom-input"
             ></el-input>
           </el-form-item>
-          <el-form-item label="企业性质" prop="property">
+          <el-form-item label="企业性质" prop="type">
             <el-select
-              v-model="baseinfoForm.property"
+              v-model="baseinfoForm.type"
               placeholder="请选择企业性质"
             >
               <el-option label="国有企业" value="guoyou"></el-option>
@@ -177,66 +177,24 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="国民经济行业分类" prop="field">
-            <el-select
-              v-model="baseinfoForm.field"
-              placeholder="请选择行业类型"
-            >
-              <el-option label="制造业" value="making"></el-option>
-              <el-option
-                label="信息传输，软件和信息技术服务业"
-                value="infotrans"
-              ></el-option>
-              <el-option label="金融业" value="financial"></el-option>
-              <el-option
-                label="科学研究和技术服务类"
-                value="scientic"
-              ></el-option>
-              <el-option
-                label="交通运输，仓储和邮政业"
-                value="posttrans"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="高新技术产业分类" prop="highfield">
-            <el-select
-              v-model="baseinfoForm.highfield"
-              placeholder="请选择产业类型"
-            >
-              <el-option label="生物医药" value="biology"></el-option>
-              <el-option
-                label="航空，航天设备及设备制造"
-                value="highsky"
-              ></el-option>
-              <el-option
-                label="电子及通信设备制造"
-                value="electrical"
-              ></el-option>
-              <el-option
-                label="计算机及办公设备制造"
-                value="computer"
-              ></el-option>
-              <el-option label="信息化学品制造" value="chemical"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="注册时间" required>
             <el-col :span="3">
-              <el-form-item prop="date1">
+              <el-form-item prop="registerAt">
                 <el-date-picker
                   type="date"
                   placeholder="选择日期"
-                  v-model="baseinfoForm.date1"
+                  v-model="baseinfoForm.registerAt"
                   style="width: 100%"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="认定情况" prop="type">
-            <el-checkbox-group v-model="baseinfoForm.type">
-              <el-checkbox label="高企" name="type"></el-checkbox>
-              <el-checkbox label="科技小巨人" name="type"></el-checkbox>
-              <el-checkbox label="上市企业" name="type"></el-checkbox>
-              <el-checkbox label="专精特新中小企业" name="type"></el-checkbox>
+          <el-form-item label="认定情况" prop="recognition">
+            <el-checkbox-group v-model="recognition">
+              <el-checkbox label="高企" name="recognition"></el-checkbox>
+              <el-checkbox label="科技小巨人" name="recognition"></el-checkbox>
+              <el-checkbox label="上市企业" name="recognition"></el-checkbox>
+              <el-checkbox label="专精特新中小企业" name="recognition"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="企业创办类别" prop="resource">
@@ -246,16 +204,16 @@
               <el-radio label="公司制"></el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="申请入驻载体" prop="carrier">
+          <el-form-item label="申请入驻载体" prop="carrierId">
             <el-select
-              v-model="baseinfoForm.carrier"
+              v-model="baseinfoForm.carrierId"
               placeholder="请选择欲入驻载体"
             >
               <el-option
                 v-for="item in carrierOptions"
                 :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :label="item.name"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -589,39 +547,38 @@ export default {
       centerDialogVisible: false,
       baseinfoForm: {
         name: "",
-        money: "",
-        creditcode: "",
-        netaddress: "",
-        workaddress: "",
-        signupaddress: "",
+        registeredCapital: "",
+        creditCode: "",
+        address: "",
         business: "",
-        property: "",
-        field: "",
-        highfield: "",
-        date1: "",
-        type: [],
-        carrier: "",
+        type: "",
+        registerAt: "",
+        carrierId: "",
       },
+      infoForm:{
+        netAddress: "",
+        workAddress: "",
+      },
+      recognition: [],
       //这里是所有的载体选项
       carrierOptions: [
-        { label: "制造业", value: "making" },
-        { label: "金融业", value: "financial" },
+        { name: "制造业", id: "making" },
       ],
       baseinforules: {
         name: [
           { required: true, message: "企业名称不能为空", trigger: "blur" },
           { min: 3, max: 5, message: "长度至少3个字符", trigger: "blur" },
         ],
-        money: [
+        registeredCapital: [
           { required: true, message: "注册资本不能为空", trigger: "blur" },
         ],
-        property: [
+        type: [
           { required: true, message: "请选择企业性质", trigger: "change" },
         ],
-        creditcode: [
+        creditCode: [
           { required: true, message: "信用代码不能为空", trigger: "blur" },
         ],
-        date1: [
+        registerAt: [
           {
             type: "date",
             required: true,
@@ -629,11 +586,7 @@ export default {
             trigger: "change",
           },
         ],
-        field: [{ required: true, message: "请选择行业分类", trigger: "blur" }],
-        highfield: [
-          { required: true, message: "请选择行业分类", trigger: "blur" },
-        ],
-        carrier: [
+        carrierId: [
           { required: true, message: "入驻载体不能为空", trigger: "blur" },
         ],
       },
@@ -705,7 +658,17 @@ export default {
       },
     };
   },
-
+  mounted(){
+    new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/ins",
+        method: "get",
+      })
+        .then((response) =>{
+          this.carrierOptions=response;
+        })
+    })
+  },
   methods: {
     next() {
       if (this.activeStep === 0) this.activeStep++;
@@ -737,9 +700,35 @@ export default {
     },
     //包含将数据传输到后端的逻辑，对所有的数据post,发axios请求
     submit() {
-      console.log(this.baseinfoForm);
-      console.log(this.employinfoForm);
-      console.log(this.socialinfoForm);
+      // console.log(this.baseinfoForm);
+      // console.log(this.infoForm);
+      // console.log(this.employinfoForm);
+      // console.log(this.socialinfoForm);
+      let data=this.baseinfoForm;
+      let certification="";
+      this.recognition.forEach((value,index)=>{
+        certification+='_'+value;
+      })
+      data["certification"]=certification;
+      let additionalData={
+        infoForm:this.infoForm,
+        socialinfoForm:this.socialinfoForm,
+        employinfoForm:this.employinfoForm,
+      }
+      data["additionalData"]= JSON.stringify(additionalData)
+      console.log(data)
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/in",
+        method: "post",
+        data
+      })
+        .then((response) =>{
+          this.carrierOptions=response;
+        })
+    })
+      // data.certification=
+
       this.centerDialogVisible = true;
       
     },

@@ -82,8 +82,9 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="handleCardClick(project)"
-              >查看详情</el-button>
+                @click="checkDetail(name)"
+                >查看详情</el-button
+              >
             </div>
             <div class="card-content">
               <p>{{ project.unit }}</p>
@@ -103,8 +104,9 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="handleCardClick(project)"
-              >查看详情</el-button>
+                @click="checkDetail(name)"
+                >查看详情</el-button
+              >
             </div>
             <div class="card-content">
               <p>{{ project.unit }}</p>
@@ -159,8 +161,9 @@
             <template slot-scope="scope">
               <el-button
                 type="text"
-                @click="viewPolicyDetails(scope.row)"
-              >查看详情</el-button>
+                @click="checkDetail(paginatedPolicies.name)"
+                >查看详情</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -322,6 +325,7 @@ export default {
         }
         // Add more policy data here
       ],
+
       currentPage: 1,
       pageSize: 10
     }
@@ -402,10 +406,8 @@ export default {
     monthhandleTabClick(tab) {
       console.log(`切换到标签页: ${tab.name}`)
     },
-    // 跳转到对应的项目详情页
-    handleCardClick(project) {
-      // Handle click event, e.g., navigate to project details page
-      console.log(`Clicked on project: ${project.name}`)
+    checkDetail(name) {
+      this.$router.push({ path: `/details/policy/${name}` });
     },
     selectMonth(month) {
       this.selectedMonth = month
