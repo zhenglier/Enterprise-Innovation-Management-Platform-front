@@ -853,15 +853,16 @@ var constantRoutes = [
     ],
   },
   {
-    path: "/",
+    path: "/details",
     component: Layout,
-    redirect: "/Qin",
+    name: "Details",
+
     children: [
       {
-        path: "Qin",
-        name: "qin",
-        component: () => import("@/views/Qin/index"),
-        meta: { title: "项目查询子页面", icon: "dashboard" },
+        path: "pro",
+        name: "Pro",
+        component: () => import("@/views/details/pro/index"),
+        meta: { title: "项目详情", icon: "dashboard" },
       },
     ],
   },
