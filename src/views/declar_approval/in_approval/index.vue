@@ -106,11 +106,8 @@
               >
             </template>
           </el-table-column>
-          <el-table-column
-            prop="apply_condition"
-            label="申请情况"
-            width="180"
-          ></el-table-column>
+          <el-table-column prop="applyCondition" label="申请情况" width="180">
+          </el-table-column>
         </el-table>
         <div class="page-part">
           <el-pagination
@@ -129,6 +126,7 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -149,7 +147,7 @@ export default {
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
-          apply_condition: "已通过",
+          applyCondition: "已通过",
         },
         // 其他数据...
       ],
@@ -159,17 +157,60 @@ export default {
       pageSize2: 10,
     };
   },
+  async created() {
+    new Promise(async (resolve,reject) =>{
+      var status=0;
+      await request({
+        url: "/trans/review/in",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.firsttableData=response;
+        })
+    })
+    new Promise(async (resolve,reject) =>{
+      var status=1;
+      await request({
+        url: "/trans/review/in",
+        method: "get",
+        params:{status}
+      })
+        .then((response) =>{
+          // console.log(response);
+          this.secondtableData=response;
+        })
+    })
+  },
+  //标签页跳转方法
   methods: {
-    handleClick(tab, event) {
+        handleClick(tab, event) {
       console.log(tab, event);
     },
     handleSuccess(index, row) {
-      row.apply_condition = "已通过";
-      this.moveToSecondTable(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/in/accept/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     handleCancel(index, row) {
-      row.apply_condition = "已拒绝";
-      this.moveToSecondTable(index, row);
+      new Promise(async (resolve,reject) =>{
+      await request({
+        url: "/trans/review/in/reject/"+row.appId,
+        method: "put",
+      })
+        .then((response) =>{
+          console.log(response);
+          window.location.reload();
+        })
+      })
     },
     handleSendBack(index, row) {
       row.apply_condition = "已退回";

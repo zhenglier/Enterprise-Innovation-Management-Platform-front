@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from "@/api/user";
+import { login, logout, getInfo,signup } from "@/api/user";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 import { resetRouter } from "@/router";
 
@@ -34,52 +34,46 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo;
+    const { username, password, uuid, captcha} = userInfo;
     //发送网络请求
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password })
+      login({ username: username.trim(), password: password, uuid: uuid, captcha: captcha })
         .then((response) => {
-          const { data } = response;
+          const  data  = response;
+
+          if (data.code === 20001) {
+            alert("请输入验证码");
+          } else if (data.code === 20002) {
+            alert("请刷新页面");
+          } else if (data.code === 20003) {
+            alert("验证码错误");
+          }
+
           commit("SET_TOKEN", data.token);
           console.log(data.role+" login");
-          localStorage.clear();
+          localStorage.removeItem('role');
           localStorage.setItem('role',data.role);
           resetRouter();
           setToken(data.token);
           window.location.reload();
           resolve();
         })
-        .catch((error) => {
-          reject(error);
-        });
+        // .catch((error) => {
+        //   reject(error);
+        // });
     });
   },
-
-  
-
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token)
-        .then((response) => {
-          const { data } = response;
-
-          if (!data) {
-            return reject("Verification failed, please Login again.");
-          }
-
-          const { name, avatar } = data;
-
-          commit("SET_NAME", name);
-          commit("SET_AVATAR", avatar);
-          resolve(data);
+  signup({commit},userInfo){
+    // console.log(userInfo)
+    return new Promise((resolve,reject) => {
+      signup(userInfo.username,userInfo.password)
+        .then((response) =>{
+          console.log(response);
+          resolve();
         })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
+    })
 
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -95,7 +89,6 @@ const actions = {
         });
     });
   },
-
   // remove token
   resetToken({ commit }) {
     return new Promise((resolve) => {
@@ -103,7 +96,7 @@ const actions = {
       commit("RESET_STATE");
       resolve();
     });
-  },
+  }
 };
 
 export default {

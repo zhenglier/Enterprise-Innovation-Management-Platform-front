@@ -95,8 +95,8 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        carrier: "",
+        name: "默认",
+        carrier: "默认",
         date1: "",
         date2: "",
         // 这里的type定义成了数组类型
