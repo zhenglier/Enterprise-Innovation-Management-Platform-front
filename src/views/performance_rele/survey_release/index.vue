@@ -1,175 +1,64 @@
 <template>
   <div>
     <div class="performance-template-maker-header">
-      <span> 发布绩效考核模板</span>
+      <h2 class="per-release">发布绩效考核</h2>
     </div>
 
-    <div class="PA-basic-info">
-      <div class="PA-basic-info-header">
-        <span>基本信息</span>
-      </div>
-
-      <div class="PA-basic-info-content">
-        <div style="margin: 20px"></div>
-
-        <el-form
-          :label-position="right"
-          label-width="80px"
-          :model="formLabelAlign"
-        >
-          <el-form-item label="名称">
-            <el-input v-model="name"></el-input>
-          </el-form-item>
-          <el-form-item label="活动区域">
-            <el-input v-model="region"></el-input>
-          </el-form-item>
-          <el-form-item label="活动形式">
-            <el-input v-model="type"></el-input>
-          </el-form-item>
-          <el-form-item label="类型">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="活动日期">
-            <div class="block">
-              <el-date-picker
-                v-model="value1"
-                type="date"
-                placeholder="选择日期"
-              >
-              </el-date-picker>
-            </div>
-          </el-form-item>
-
-          <el-form-item label="描述">
-            <el-input
-              type="textarea"
-              :rows="2"
-              placeholder="请输入内容"
-              v-model="textarea"
-            >
-            </el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
-
-    <div class="show-file">
-      <div class="show-file-header">
-        <span> 示例文件 </span>
-      </div>
-      <div>
-        <div>
-          <el-button size="small" @click="addRow">新增</el-button>
-        </div>
-        <!--设置的表单-->
-        <el-form :model="studentData" ref="data" label-width="100">
-          <el-table
-            border
-            :header-cell-style="{ 'text-align': 'center' }"
-            :cell-style="{ 'text-align': 'center' }"
-            :data="studentData"
-            ref="table"
-            style="width: 100%"
-          >
-            <el-table-column align="center" label="姓名">
-              <template slot-scope="scope">
-                <!--表格里面嵌套表单,这么做就可以进行非空校验了，如果只用表格不嵌套表单就不能校验-->
-
-                <el-form-item
-                  :prop="scope.$index + '.name'"
-                  :rules="{
-                    required: true,
-                    message: '姓名不能为空',
-                    trigger: 'blur',
-                  }"
-                >
-                  <el-input
-                    v-model="studentData[scope.$index].name"
-                    autocomplete="off"
-                    size="small"
-                    placeholder="姓名"
-                  ></el-input>
-                </el-form-item>
+    <div id="app">
+    <el-container>
+      <!-- <el-header class="header">
+        <comtitle :titlemsg="'查询组件'"></comtitle>
+      </el-header> -->
+      <el-main class="content">
+        <el-row class="row1">
+          <el-col :span="2">搜索ID</el-col>
+          <el-col :span="6">
+            <el-input v-model="inputId" placeholder="请输入内容"></el-input>
+          </el-col>
+          <el-col :span="1">&nbsp;</el-col>
+          <el-col :span="2">搜索名称</el-col>
+          <el-col :span="6">
+            <el-input v-model="inputName" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-row>
+        <el-table
+          :data="studentsNewList"
+          style="width:95%"
+          class="eltable1">
+          <el-table-column
+            prop="id"
+            label="模板ID"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="模板名称"
+            width="280">
+          </el-table-column>
+          <el-table-column
+            prop="state"
+            label="状态"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="etime"
+            label="模板创建日期">
+          </el-table-column>
+          <el-table-column
+            prop="app"
+            label="发布">
+          <template slot-scope="scope">
+            <el-button type="text" @click="checkDetail(scope.row.phone)">发布</el-button>
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="年龄">
-              <template slot-scope="scope">
-                <el-form-item
-                  :prop="scope.$index + '.age'"
-                  :rules="{
-                    required: true,
-                    message: '年龄不能为空',
-                    trigger: 'blur',
-                  }"
-                >
-                  <el-input
-                    v-model="studentData[scope.$index].age"
-                    autocomplete="off"
-                    size="small"
-                    type="number"
-                    placeholder="收款方开户行号"
-                  ></el-input>
-                </el-form-item>
-              </template>
-            </el-table-column>
 
-            <el-table-column align="center" label="性别">
-              <template slot-scope="scope">
-                <el-form-item
-                  :prop="scope.$index + '.sex'"
-                  :rules="{
-                    required: true,
-                    message: '性别不能为空',
-                    trigger: 'blur',
-                  }"
-                >
-                  <el-input
-                    v-model="studentData[scope.$index].sex"
-                    autocomplete="off"
-                    size="small"
-                    placeholder="性别"
-                  ></el-input>
-                </el-form-item>
-              </template>
-            </el-table-column>
+        </el-table>
+      </el-main>
+    </el-container>
+  </div>
 
-            <el-table-column fixed="right" label="操作" width="100">
-              <template slot-scope="scope">
-                <el-button
-                  @click="handleDeleteRow(studentData[scope.$index])"
-                  type="text"
-                  size="small"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-form>
 
-        <div slot="footer" class="dialog-footer" style="margin-bottom: 10px">
-          <el-button size="mini" @click="submit">提交</el-button>
-          <el-button size="mini" @click="resetForm()">重置</el-button>
-        </div>
-      </div>
-    </div>
-
-    <div class="module">
-      <div class="module-header"></div>
-      <span>模块选择</span>
-    </div>
-    <div class="module-adder">
-      <el-button type="primary">选择模板</el-button>
-    </div>
   </div>
 </template>
 
@@ -179,7 +68,48 @@ export default {
     return {
       // 带图卡片的日期
       currentDate: new Date(),
-
+      studentsList:[
+          {id:1,name:'合肥市2023-2024年度第一次考核1',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核2',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核3',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核4',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核5',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核6',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核7',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核8',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核9',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核10',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核11',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核12',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核13',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核14',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核15',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核16',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核17',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核18',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核19',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核20',state:'已完成',etime:new Date(),goal:60}
+          ],
+          studentsNewList:[                   {id:1,name:'合肥市2023-2024年度第一次考核1',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核2',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核3',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核4',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核5',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核6',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核7',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核8',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核9',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核10',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核11',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核12',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核13',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核14',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核15',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核16',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核17',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核18',state:'已完成',etime:new Date(),goal:60},
+          {id:1,name:'合肥市2023-2024年度第一次考核19',state:'已完成',etime:new Date(),goal:100},
+          {id:2,name:'合肥市2023-2024年度第一次考核20',state:'已完成',etime:new Date(),goal:60}],
       studentData: [],
       options: [
         {
@@ -206,6 +136,20 @@ export default {
     };
   },
   methods: {
+    searchId(keywords) {
+          return this.studentsList.filter(item =>{
+            if(item.id == keywords) {
+              return item
+            }
+          })
+        },
+        searchName(keywords) {
+          return this.studentsList.filter(item =>{
+            if(item.name.includes(keywords)&&item.cname.includes(keywords)){
+              return item
+            }
+          })
+        },
     policyhandleTabClick(tab) {
       // 可在此处添加点击标签页的逻辑
       console.log(`切换到标签页: ${tab.name}`);
@@ -253,12 +197,28 @@ export default {
       }
     },
   },
+  watch:{
+  inputId: function(val) {
+          if(val == ''){
+            this.studentsNewList = this.studentsList
+          }else{
+            this.studentsNewList = this.searchId(val)
+          }
+        },
+        inputName: function(val) {
+          if(val == ''){
+            this.studentsNewList = this.studentsList
+          }else{
+            this.studentsNewList = this.searchName(val)
+          }
+        },
+      },
 };
 </script>
 
 <style scoped>
 .performance-template-maker-header {
-  background-color: #829bed; /* 设置背景颜色 */
+  background-color: #ffffff; /* 设置背景颜色 */
   padding: 10px 20px; /* 设置内边距 */
 }
 .PA-basic-info {
@@ -398,4 +358,7 @@ export default {
   margin: 0 auto;
   padding: 0 0.25rem;
 }
+.per-release{
+    display: inline-block;
+  }
 </style>
