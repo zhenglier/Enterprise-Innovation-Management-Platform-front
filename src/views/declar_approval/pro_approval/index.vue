@@ -1,7 +1,7 @@
 <template>
   <div class="all_body">
     <div style="padding: 20px" class="top1">
-      <el-alert :closable="false" title="项目审核" />
+      <el-alert :closable="false" title="项目审批" />
     </div>
     <div class="search">
       <div class="Input">
@@ -14,45 +14,46 @@
     </div>
     <div class="se_body">
       <el-table ref="filterTable" :data="tableData" style="width: 100%">
-      <el-table-column prop="number" label="请求号" min-width="10%">
-      </el-table-column>
-      <el-table-column prop="name" label="项目名称"min-width="30%">
-      </el-table-column>
-      <el-table-column prop="initiator" label="发起方"min-width="20%"> </el-table-column>
-     
+        <el-table-column prop="number" label="请求号" min-width="10%">
+        </el-table-column>
+        <el-table-column prop="name" label="项目名称" min-width="30%">
+        </el-table-column>
+        <el-table-column prop="initiator" label="发起方" min-width="20%">
+        </el-table-column>
 
-      <el-table-column
-        prop="result"
-        label="状态"
-        min-width="20%"
-        :filters="[
-          { text: '待审核', value: '待审核' },
-          { text: '同意', value: '同意' },
-          { text: '拒绝', value: '拒绝' },
-          { text: '退回', value: '退回' },
-        ]"
-        :filter-method="filterTag"
-        filter-placement="bottom-end"
-      >
-        <template slot-scope="scope">
-          <el-tag :type="getTagType(scope.row.result)" disable-transitions>{{
-            scope.row.result
-          }}</el-tag>
-        </template>
-      </el-table-column>
-    </el-table-column>
-        <el-table-column fixed="right" label="操作" min-width="20%">
+        <el-table-column
+          prop="result"
+          label="状态"
+          min-width="20%"
+          :filters="[
+            { text: '待审核', value: '待审核' },
+            { text: '同意', value: '同意' },
+            { text: '拒绝', value: '拒绝' },
+            { text: '退回', value: '退回' },
+          ]"
+          :filter-method="filterTag"
+          filter-placement="bottom-end"
+        >
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >审核</el-button
-            >
-            
-            <el-button type="text" size="small">查看</el-button>
+            <el-tag :type="getTagType(scope.row.result)" disable-transitions>{{
+              scope.row.result
+            }}</el-tag>
           </template>
         </el-table-column>
-    </el-table>
-   </div>
-   <div class="block">
+
+        <el-table-column fixed="right" label="操作" min-width="20%">
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="checkDetail(scope.row.name)"
+              >详情</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div class="block">
       <span class="demonstration"></span>
       <el-pagination
         @size-change="handleSizeChange"
@@ -80,21 +81,24 @@
   width: 150px;
   margin: 2px 15px;
 }
-.se_body{
-  margin-left:30px ;
+.se_body {
+  margin-left: 30px;
   margin-right: 30px;
-  margin-top:20px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
-.block{
+.block {
   text-align: center;
-  
+
   padding-bottom: 20px;
 }
 </style>
 <script>
 export default {
   methods: {
+    checkDetail(name) {
+      this.$router.push({ path: `/details/approval/${name}` });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -105,16 +109,15 @@ export default {
       return row.result === value;
     },
     handleClick(row) {
-     
-     console.log(row);
-   },
+      console.log(row);
+    },
     getTagType(result) {
       const resultTagMap = {
         待审核: "info",
         同意: "success",
         拒绝: "danger",
         退回: "warning",
-        
+
         // 可以继续添加更多的状态及其对应的标签类型
       };
       return resultTagMap[result];
@@ -125,79 +128,79 @@ export default {
       currentPage4: 1,
       tableData: [
         {
-          number:"100001",
-        name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
-        initiator: "某文化企业",
-          
-          result:"同意",
+          number: "100001",
+          name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
+          initiator: "某文化企业",
+
+          result: "同意",
         },
         {
-          number:"100002",
+          number: "100002",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"退回",
+          result: "退回",
         },
         {
-          number:"100003",
+          number: "100003",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-result:"拒绝",
+          result: "拒绝",
         },
         {
-          number:"100003",
+          number: "100003",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"同意",
+          result: "同意",
         },
         {
-          number:"100004",
+          number: "100004",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"同意",
+          result: "同意",
         },
         {
-          number:"100005",
+          number: "100005",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"待审核",
+          result: "待审核",
         },
         {
-          number:"100006",
+          number: "100006",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"待审核",
+          result: "待审核",
         },
         {
-          number:"100007",
+          number: "100007",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"退回",
+          result: "退回",
         },
         {
-          number:"100008",
+          number: "100008",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"拒绝",
+          result: "拒绝",
         },
         {
-          number:"100009",
+          number: "100009",
 
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"同意",
+          result: "同意",
         },
         {
-          number:"1000010",
+          number: "1000010",
           name: "2024年北京广播电视网络视听发展基金优秀网络微短剧项目",
           initiator: "某文化企业",
-          result:"同意",
-        }
-      ]
+          result: "同意",
+        },
+      ],
     };
   },
 };
