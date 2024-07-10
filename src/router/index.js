@@ -513,7 +513,30 @@ var constantRoutes = [
       },
     ],
   },
-
+  {
+    path: "/carrier",
+    component: Layout,
+    redirect: "/change/baseInfochange",
+    name: "Carrier",
+    meta: {
+      title: "信息变更",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "baseInfochange",
+        component: () => import("@/views/carrier/baseInfochange/index"), // Parent router-view
+        name: "BaseInfochange",
+        meta: { title: "基本信息完善" },
+      },
+      {
+        path: "baseInfoQuery",
+        component: () => import("@/views/carrier/baseInfoQuery/index"),
+        name: "Base_Information",
+        meta: { title: "载体信息查看" },
+      },
+    ],
+  },
   {
     path: "/policy_related",
     component: Layout,
@@ -575,6 +598,7 @@ var constantRoutes = [
       },
     ],
   },
+
   {
     path: "/performance_requ",
     component: Layout,
@@ -677,7 +701,51 @@ var constantRoutes = [
       },
     ],
   },
-
+  {
+    path: "/details",
+    component: Layout,
+    name: "Details",
+    meta: {
+      title: "详情",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "pro/:unicode",
+        name: "Pro",
+        component: () => import("@/views/details/pro"),
+        meta: { title: "项目详情", icon: "dashboard" },
+        props: true,
+      },
+      {
+        path: "info/:unicode",
+        name: "Info",
+        component: () => import("@/views/details/info"),
+        meta: { title: "企业详情", icon: "dashboard" },
+        props: true,
+      },
+      {
+        path: "policy/:unicode",
+        name: "Info",
+        component: () => import("@/views/details/policy"),
+        meta: { title: "政策详情", icon: "dashboard" },
+        props: true,
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/judge",
+    children: [
+      {
+        path: "judge",
+        name: "Judge",
+        component: () => import("@/views/judge/index"),
+        meta: { title: "审批界面", icon: "dashboard" },
+      },
+    ],
+  },
   {
     path: "/example",
     component: Layout,

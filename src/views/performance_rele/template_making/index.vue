@@ -1,19 +1,18 @@
 <template>
-  <!-- 绩效 -->
   <div>
     <h2>绩效模板制作</h2>
     <el-alert :closable="false">基本信息</el-alert>
     <el-form
       :model="baseinfoForm"
       :rules="baseinforules"
-      ref="ruleForm"
+      ref="baseinfoFormRef"
       label-width="120px"
       class="baseinfoForm"
     >
       <el-form-item label="考核名称" prop="name">
         <el-input v-model="baseinfoForm.name"></el-input>
       </el-form-item>
-      <el-form-item label="考核类型" prop="type">
+      <el-form-item label="考核类型" prop="types">
         <el-select v-model="baseinfoForm.types" placeholder="请选择考核类型">
           <el-option label="年度" value="year"></el-option>
           <el-option label="季度" value="season"></el-option>
@@ -35,7 +34,7 @@
       </el-form-item>
       <el-form-item label="考核结束日期" required>
         <el-col :span="11">
-          <el-form-item prop="date1">
+          <el-form-item prop="date2">
             <el-date-picker
               type="date"
               placeholder="选择日期"
@@ -49,56 +48,77 @@
         <el-input type="textarea" v-model="baseinfoForm.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="resetForm('baseinfoForm')">重置</el-button>
+        <el-button @click="resetForm('baseinfoFormRef')">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <!-- 动态板块 -->
     <div v-for="(panel, index) in panels" :key="index" class="panel panel-info">
       <div class="panel-body">
-        <!-- 这里是动态增加的表单的内容 -->
-        <h2 class="panel-heading">板块 {{ index + 1 }}</h2>
-        <fieldset class="title-fieldset"></fieldset>
-        <!-- 动态表单 -->
+        <div class="panel-header">
+          <h2 class="panel-heading">{{ panel.name }}</h2>
+          <div class="title-underline"></div>
+        </div>
         <el-form
-          :model="dynamicValidateForm"
-          ref="dynamicValidateForm"
+          :model="panel"
+          :rules="panelRules"
+          ref="panelForms"
           label-width="100px"
           class="demo-dynamic"
         >
-          <el-form-item
-            prop="email"
-            label="邮箱"
-            :rules="[
-              { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-              {
-                type: 'email',
-                message: '请输入正确的邮箱地址',
-                trigger: ['blur', 'change'],
-              },
-            ]"
-          >
-            <el-input v-model="dynamicValidateForm.email"></el-input>
+          <el-form-item label="分数占比" prop="score">
+            <el-input
+              type="number"
+              v-model="panel.score"
+              placeholder="分数占比"
+              @change="validateScore"
+            ></el-input>
           </el-form-item>
           <el-form-item
-            v-for="(domain, index) in dynamicValidateForm.domains"
-            :label="'域名' + index"
-            :key="domain.key"
-            :prop="'domains.' + index + '.value'"
-            :rules="{
-              required: true,
-              message: '域名不能为空',
-              trigger: 'blur',
-            }"
+            v-for="(input, idx) in panel.inputs"
+            :key="idx"
+            :label="input.label"
           >
-            <el-input v-model="domain.value"></el-input
-            ><el-button @click.prevent="removeDomain(domain)">删除</el-button>
+            <el-input v-model="input.value"></el-input>
+            <el-button @click.prevent="removeInput(index, idx)">删除</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button @click="addDomain">新增域名</el-button>
-            <el-button @click="resetForm('dynamicValidateForm')"
-              >重置</el-button
-            >
+            <el-input
+              v-model="panel.newInputLabel"
+              placeholder="输入框标签"
+            ></el-input>
+            <el-button @click="addInput(index)">新增输入框</el-button>
+          </el-form-item>
+
+          <h3>示例文件</h3>
+          <el-table :data="panel.files">
+            <el-table-column prop="name" label="文件名">
+              <template slot-scope="scope">
+                <span>{{ getFileName(scope.row.name) }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="desc" label="描述"></el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button @click="downloadFile(scope.row)">下载</el-button>
+                <el-button @click="removeFile(index, scope.$index)"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-form-item class="file-inputs">
+            <el-input
+              v-model="panel.newFileName"
+              type="file"
+              placeholder="文件名"
+              class="file-input"
+            ></el-input>
+            <el-input
+              v-model="panel.newFileDesc"
+              placeholder="描述"
+              class="custom-input"
+            ></el-input>
+            <el-button @click="addFile(index)">新增文件</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -107,9 +127,28 @@
       </div>
     </div>
     <div class="func-box">
-      <el-button type="primary" @click="addPanel">添加板块</el-button>
+      <el-button type="primary" @click="showPanelDialog">添加板块</el-button>
       <el-button type="primary" @click="submit">发布模板</el-button>
     </div>
+
+    <!-- 新增板块对话框 -->
+    <el-dialog title="新增板块" :visible.sync="panelDialogVisible">
+      <el-form ref="panelForm" :model="newPanel" label-width="80px">
+        <el-form-item
+          label="板块名称"
+          prop="name"
+          :rules="[
+            { required: true, message: '请输入板块名称', trigger: 'blur' },
+          ]"
+        >
+          <el-input v-model="newPanel.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="panelDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="addPanel">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -117,16 +156,6 @@
 export default {
   data() {
     return {
-      //每一个板块的动态表单
-      dynamicValidateForm: {
-        domains: [
-          {
-            value: "",
-          },
-        ],
-        email: "",
-      },
-      //基本信息表单
       baseinfoForm: {
         name: "",
         types: "",
@@ -134,7 +163,6 @@ export default {
         date2: "",
         desc: "",
       },
-      //基本信息表单校验规则
       baseinforules: {
         name: [
           { required: true, message: "考核名称不能为空", trigger: "blur" },
@@ -163,46 +191,136 @@ export default {
           { required: true, message: "考核描述不能为空", trigger: "blur" },
         ],
       },
-      //动态板块数组
-      panels: [
-        {
-          name: "",
-          region: "",
-          date1: "",
-          desc: "",
-        },
-      ],
+      panels: [],
+      panelRules: {
+        name: [{ required: true, message: "请输入板块名称", trigger: "blur" }],
+        score: [
+          { required: true, message: "请输入分数占比", trigger: "blur" },
+          {
+            validator: (rule, value, callback) => {
+              if (value < 1 || value > 100) {
+                callback(new Error("分数占比应在1到100之间"));
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur",
+          },
+        ],
+        inputs: [{ required: true, message: "请输入内容", trigger: "blur" }],
+      },
+      panelDialogVisible: false,
+      newPanel: {
+        name: "",
+      },
     };
   },
   methods: {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    showPanelDialog() {
+      this.newPanel.name = "";
+      this.panelDialogVisible = true;
+    },
     addPanel() {
+      if (!this.newPanel.name) {
+        this.$message.error("请填写板块名称");
+        return;
+      }
+
       this.panels.push({
-        name: "",
-        count: "",
-        desc: "",
+        name: this.newPanel.name,
+        score: 0,
+        inputs: [{ label: "邮箱", value: "" }],
+        newInputLabel: "",
+        files: [],
+        newFileName: "",
+        newFileDesc: "",
       });
+      this.panelDialogVisible = false;
     },
     removePanel(index) {
       this.panels.splice(index, 1);
     },
-    // 每个板块的动态表单
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    removeDomain(item) {
-      var index = this.dynamicValidateForm.domains.indexOf(item);
-      if (index !== -1) {
-        this.dynamicValidateForm.domains.splice(index, 1);
+    addInput(panelIndex) {
+      if (this.panels[panelIndex].newInputLabel) {
+        this.panels[panelIndex].inputs.push({
+          label: this.panels[panelIndex].newInputLabel,
+          value: "",
+        });
+        this.panels[panelIndex].newInputLabel = "";
       }
     },
-    addDomain() {
-      this.dynamicValidateForm.domains.push({
-        value: "",
-        key: Date.now(),
+    removeInput(panelIndex, inputIndex) {
+      this.panels[panelIndex].inputs.splice(inputIndex, 1);
+    },
+    addFile(panelIndex) {
+      if (
+        this.panels[panelIndex].newFileName &&
+        this.panels[panelIndex].newFileDesc
+      ) {
+        this.panels[panelIndex].files.push({
+          name: this.panels[panelIndex].newFileName,
+          desc: this.panels[panelIndex].newFileDesc,
+        });
+        this.panels[panelIndex].newFileName = "";
+        this.panels[panelIndex].newFileDesc = "";
+      }
+    },
+    removeFile(panelIndex, fileIndex) {
+      this.panels[panelIndex].files.splice(fileIndex, 1);
+    },
+    downloadFile(file) {
+      // 模拟下载文件的逻辑
+      this.$message.success(`开始下载文件：${file.name}`);
+    },
+    validateScore() {
+      let totalScore = this.panels.reduce(
+        (acc, panel) => acc + parseInt(panel.score),
+        0
+      );
+      if (totalScore > 100) {
+        this.$message.error("各板块分数占比总和不能超过100");
+      }
+    },
+    submit() {
+      this.$refs.baseinfoFormRef.validate((valid) => {
+        if (valid) {
+          this.$refs.panelForms.forEach((ref) => {
+            ref.validate((valid) => {
+              if (!valid) {
+                this.$message.error("请完善板块信息");
+              }
+            });
+          });
+
+          // Perform submission logic if all forms are valid
+          if (this.panels.length > 0) {
+            let totalScore = this.panels.reduce(
+              (acc, panel) => acc + parseInt(panel.score),
+              0
+            );
+            if (totalScore > 100) {
+              this.$message.error("各板块分数占比总和不能超过100");
+              return;
+            }
+            // Your submit logic here
+            //这里将整个模板发送到考察发布页面
+            this.$message.success("模板发布成功");
+          } else {
+            this.$message.error("请添加至少一个板块");
+          }
+        } else {
+          this.$message.error("请完善基本信息");
+        }
       });
+    },
+    getFileName(fullPath) {
+      // Split the path using the backslash or forward slash
+      let parts = fullPath.split(/[\\\/]/);
+      // Return the last part which is the file name
+      return parts[parts.length - 1];
     },
   },
 };
@@ -212,18 +330,34 @@ export default {
 .panel {
   margin-top: 20px;
 }
-.title-fieldset {
-  border: none;
+.title-underline {
   border-top: 3px solid black;
-}
-.title-fieldset .inner {
-  margin: 0 auto;
-  padding: 0 0.25rem;
+  margin-top: 10px;
 }
 .func-box {
   margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.panel-header {
+  margin-bottom: 30px;
+}
+
+.file-inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-input {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.el-input__inner {
+  width: 100%;
 }
 </style>

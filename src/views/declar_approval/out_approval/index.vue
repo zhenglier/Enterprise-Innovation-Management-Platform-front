@@ -54,10 +54,10 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage1"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
+            :page-sizes="[1, 20, 50, 100]"
+            :page-size="pageSize1"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
+            :total="firsttableData.length"
           >
           </el-pagination>
         </div>
@@ -98,10 +98,10 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage2"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
+            :page-sizes="[1, 20, 50, 100]"
+            :page-size="pageSize2"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
+            :total="secondtableData.length"
           >
           </el-pagination>
         </div>
@@ -115,19 +115,19 @@ import request from "@/utils/request";
 export default {
   data() {
     return {
-      //标签页跳转数据
       activeName: "second",
-      // 未完成审核列表
       firsttableData: [
+        { index: 1, unicode: "12345", name: "王小虎", date: "2016-05-02" },
+        // Add more data as needed
+      ],
+      secondtableData: [
         {
           index: 1,
           unicode: "12345",
           name: "王小虎",
           date: "2016-05-02",
+          apply_condition: "同意搬离",
         },
-      ],
-      //完成审核列表
-      secondtableData: [
         {
           index: 1,
           unicode: "12345",
@@ -135,9 +135,26 @@ export default {
           date: "2016-05-02",
           applyCondition: "同意搬离",
         },
+        {
+          index: 1,
+          unicode: "12345",
+          name: "王小虎",
+          date: "2016-05-02",
+          apply_condition: "同意搬离",
+        },
+        {
+          index: 1,
+          unicode: "12345",
+          name: "王小虎",
+          date: "2016-05-02",
+          apply_condition: "同意搬离",
+        },
+        // Add more data as needed
       ],
-      currentPage1: 4,
-      currentPage2: 4,
+      currentPage1: 1,
+      currentPage2: 1,
+      pageSize1: 1,
+      pageSize2: 1,
     };
   },
   async created() {
@@ -171,7 +188,6 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    //同意搬离按钮,这里的两个参数
     handleSuccess(index, row) {
       new Promise(async (resolve,reject) =>{
       await request({
@@ -184,7 +200,6 @@ export default {
         })
       })
     },
-    //拒绝搬离按钮
     handleCancel(index, row) {
       new Promise(async (resolve,reject) =>{
       await request({
@@ -197,15 +212,25 @@ export default {
         })
       })
     },
+    handleSendBack(index, row) {
+      console.log(index, row);
+    },
     checkDetail(index, unicode) {
       console.log(index, unicode);
     },
-    //设置分页的方法
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    handleSizeChange(pageSize) {
+      if (this.activeName === "first") {
+        this.pageSize1 = pageSize;
+      } else if (this.activeName === "second") {
+        this.pageSize2 = pageSize;
+      }
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    handleCurrentChange(currentPage) {
+      if (this.activeName === "first") {
+        this.currentPage1 = currentPage;
+      } else if (this.activeName === "second") {
+        this.currentPage2 = currentPage;
+      }
     },
   },
 };

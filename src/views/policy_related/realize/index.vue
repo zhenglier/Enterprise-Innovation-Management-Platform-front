@@ -80,7 +80,7 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="handleCardClick(project)"
+                @click="checkDetail(name)"
                 >查看详情</el-button
               >
             </div>
@@ -102,7 +102,7 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="handleCardClick(project)"
+                @click="checkDetail(name)"
                 >查看详情</el-button
               >
             </div>
@@ -119,40 +119,62 @@
           >查看更多 &gt;</el-button
         >
         <fieldset class="title-fieldset"></fieldset>
-      </div>
-      <div class="month-container">
-        <el-tabs
-          v-model="monthactiveTab"
-          @tab-click="monthhandleTabClick"
-          type="border-card"
-          stretch="true"
-        >
-          <el-tab-pane
-            v-for="(items, month) in monthlyData"
-            :label="month"
-            :key="month"
+        <!-- 月份的选项行 -->
+        <div class="month-selection">
+          <el-button
+            v-for="month in months"
+            :key="month.value"
+            :type="month.value === selectedMonth ? 'primary' : 'default'"
+            @click="selectMonth(month.value)"
           >
-            <el-table :data="paginatedData(month)">
-              <el-table-column prop="title" label="政策名称"></el-table-column>
-              <el-table-column
-                prop="start_date"
-                label="发布日期"
-              ></el-table-column>
-              <el-table-column
-                prop="end_date"
-                label="结束日期"
-              ></el-table-column>
-            </el-table>
-            <div class="page-part">
-              <el-pagination
-                v-model="pagination[month].currentPage"
-                :total="items.length"
-                :page-size="pageSize"
-                @current-change="handlePageChange(month)"
-              ></el-pagination>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
+            {{ month.label }}
+          </el-button>
+        </div>
+        <!-- 政策列表 -->
+        <el-table :data="paginatedPolicies" style="width: 100%">
+          <el-table-column
+            prop="daysLeft"
+            label="剩余天数"
+            width="120"
+          ></el-table-column>
+          <el-table-column prop="name" label="政策名称"></el-table-column>
+          <el-table-column
+            prop="startDate"
+            label="申报开始时间"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="endDate"
+            label="申报结束时间"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="views"
+            label="浏览量"
+            width="120"
+          ></el-table-column>
+          <el-table-column label="操作" width="120">
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                @click="checkDetail(paginatedPolicies.name)"
+                >查看详情</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- Pagination -->
+        <div class="page-part">
+          <el-pagination
+            @current-change="handlePageChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            background
+            layout="prev, pager, next"
+            :total="filteredPolicies.length"
+            :page-sizes="[5, 10, 20, 50]"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -264,99 +286,81 @@ export default {
         { name: "项目名称7", unit: "发布单位7", views: 70 },
         { name: "项目名称8", unit: "发布单位8", views: 85 },
       ],
+      months: [
+        { value: 1, label: "一月" },
+        { value: 2, label: "二月" },
+        { value: 3, label: "三月" },
+        { value: 4, label: "四月" },
+        { value: 5, label: "五月" },
+        { value: 6, label: "六月" },
+        { value: 7, label: "七月" },
+        { value: 8, label: "八月" },
+        { value: 9, label: "九月" },
+        { value: 10, label: "十月" },
+        { value: 11, label: "十一月" },
+        { value: 12, label: "十二月" },
+      ],
+      selectedMonth: new Date().getMonth() + 1,
+      policyCalendarList: [
+        // Example data
+        // 注意列表中会有一个剩余日期，这个不需要传，是直接通过结束时间和系统时间做差
+        {
+          id: 1,
+          name: "政策1",
+          startDate: "2024-01-15",
+          endDate: "2024-02-15",
+          views: 100,
+        },
+        {
+          id: 2,
+          name: "政策2",
+          startDate: "2024-03-01",
+          endDate: "2024-04-01",
+          views: 150,
+        },
+        // Add more policy data here
+      ],
 
-      //政策月历部分
-      monthlyData: {
-        一月: [
-          {
-            title:
-              "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
-            start_date: "2024-06-17",
-            end_date: "2024-08-09",
-          },
-          {
-            title:
-              "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...",
-            start_date: "2024-05-17",
-            end_date: "2024-08-09",
-          },
-          // More items...
-        ],
-        二月: [
-          // Items for February
-          {
-            title:
-              "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
-            start_date: "2024-06-17",
-            end_date: "2024-08-09",
-          },
-          {
-            title:
-              "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...",
-            start_date: "2024-06-17",
-            end_date: "2024-08-09",
-          },
-        ],
-        三月: [
-          // Items for March
-          {
-            title:
-              "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
-            start_date: "2024-06-17",
-            end_date: "2024-08-09",
-          },
-          {
-            title:
-              "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...",
-            start_date: "2024-06-17",
-            end_date: "2024-08-09",
-          },
-        ],
-        四月: [
-          // Items for April
-        ],
-        五月: [
-          // Items for May
-        ],
-        六月: [
-          // Items for June
-        ],
-        七月: [
-          // Items for July
-        ],
-        八月: [
-          // Items for August
-        ],
-        九月: [
-          // Items for September
-        ],
-        十月: [
-          // Items for October
-        ],
-        十一月: [
-          // Items for November
-        ],
-        十二月: [
-          // Items for December
-        ],
-      },
-      pagination: {
-        一月: { currentPage: 1 },
-        二月: { currentPage: 1 },
-        三月: { currentPage: 1 },
-        四月: { currentPage: 1 },
-        五月: { currentPage: 1 },
-        六月: { currentPage: 1 },
-        七月: { currentPage: 1 },
-        八月: { currentPage: 1 },
-        九月: { currentPage: 1 },
-        十月: { currentPage: 1 },
-        十一月: { currentPage: 1 },
-        十二月: { currentPage: 1 },
-      },
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 10,
     };
+  },
+  computed: {
+    filteredPolicies() {
+      const startOfMonth = new Date(
+        new Date().getFullYear(),
+        this.selectedMonth - 1,
+        1
+      );
+      const endOfMonth = new Date(
+        new Date().getFullYear(),
+        this.selectedMonth,
+        0
+      );
+      const today = new Date();
+
+      return this.policyCalendarList
+        .filter((policy) => {
+          const startDate = new Date(policy.startDate);
+          const endDate = new Date(policy.endDate);
+          return (
+            (startDate >= startOfMonth && startDate <= endOfMonth) ||
+            (endDate >= startOfMonth && endDate <= endOfMonth) ||
+            (startDate <= startOfMonth && endDate >= endOfMonth)
+          );
+        })
+        .map((policy) => {
+          const endDate = new Date(policy.endDate);
+          const timeDiff = endDate.getTime() - today.getTime();
+          const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          return { ...policy, daysLeft };
+        });
+    },
+    paginatedPolicies() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.filteredPolicies.slice(start, end);
+    },
   },
   methods: {
     proroute() {
@@ -371,25 +375,21 @@ export default {
     monthhandleTabClick(tab) {
       console.log(`切换到标签页: ${tab.name}`);
     },
-    //日期分页
-    handlePageChange(month) {
-      return (page) => {
-        this.$set(this.pagination[month], "currentPage", page);
-      };
+    checkDetail(name) {
+      this.$router.push({ path: `/details/policy/${name}` });
     },
-    //跳转到对应的项目详情页
-    handleCardClick(project) {
-      // Handle click event, e.g., navigate to project details page
-      console.log(`Clicked on project: ${project.name}`);
+    selectMonth(month) {
+      this.selectedMonth = month;
+      this.currentPage = 1;
     },
-  },
-  computed: {
-    paginatedData() {
-      return (month) => {
-        const start = (this.pagination[month].currentPage - 1) * this.pageSize;
-        const end = start + this.pageSize;
-        return this.monthlyData[month].slice(start, end);
-      };
+    handlePageChange(page) {
+      this.currentPage = page;
+    },
+    viewPolicyDetails(policy) {
+      console.log(`查看政策详情: ${policy.name}`);
+      // Implement navigation to policy details page
+      const policyName = policy.name;
+      this.$router.push({ name: "PolicyDetails", params: { policyName } });
     },
   },
 };
@@ -586,5 +586,20 @@ export default {
   display: table;
   content: "";
   clear: both;
+}
+
+/* 政策月历部分 */
+.month-selection {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.policy-calendar {
+  margin-top: 20px;
+}
+
+.policy-calendar .el-table__header-wrapper {
+  background-color: #f5f7fa;
 }
 </style>

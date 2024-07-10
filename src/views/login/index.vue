@@ -1,7 +1,5 @@
 <template>
   <div class="login-container">
-    <!-- model是表单的数据对象 -->
-    <!-- rules是表单的验证规则 -->
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -97,12 +95,10 @@ import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
-  //返回的数据，会到哪里去？
   data() {
-    //这里定义了两个验证函数
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error("请输入用户名"));
       } else {
         callback();
       }
@@ -115,7 +111,6 @@ export default {
       }
     };
     return {
-      //表单数据
       loginForm: {
         username: "admin",
         password: "111111",
@@ -159,7 +154,6 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true;
-          //触发action,这里的user是模块
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
@@ -175,7 +169,6 @@ export default {
         }
       });
     },
-    //默认是在登录界面，这里只需要做一个注册页面的跳转就可以
     gotoSignup() {
       this.$router.push({ path: "/signup" });
     },
@@ -184,9 +177,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
@@ -197,7 +187,6 @@ $cursor: #fff;
   }
 }
 
-/* reset element-ui css */
 .login-container {
   .el-input {
     display: inline-block;
@@ -227,6 +216,17 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
+  .button-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .el-button {
+    flex: 1;
+  }
 }
 </style>
 
@@ -239,6 +239,10 @@ $light_gray: #eee;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
+  background-image: url("../../assets/background2.jpg"); /* 设置背景图片 */
+  opacity: 0.9;
+  background-size: cover; /* 背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中 */
   overflow: hidden;
 
   .login-form {
@@ -274,8 +278,8 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 26px;
-      color: $light_gray;
+      font-size: 40px;
+      color: #000000c5;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -293,5 +297,3 @@ $light_gray: #eee;
   }
 }
 </style>
-
-<!-- 增加注释 -->

@@ -730,6 +730,7 @@ export default {
       // data.certification=
 
       this.centerDialogVisible = true;
+      
     },
     handleRemove(file, fileList) {
       this.socialinfoForm.proveList = fileList;

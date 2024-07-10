@@ -2,9 +2,7 @@
 <template>
     <div>
 <div class="per-history-header">
-    <span>
-        历史绩效
-    </span>
+  <h2 class="per-history-title">历史绩效</h2>
 </div>
 <div class="per-history-content">
     <div id="app">
@@ -244,6 +242,8 @@ changeMessage() {
   .eltable1{
     overflow: scroll;
   }
-
+  .per-history-title{
+    display: inline-block;
+  }
     </style>
     
