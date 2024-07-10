@@ -4,7 +4,11 @@
       <el-alert :closable="false" title="重大信息变更审批" />
     </div>
     <div class="se_body">
-      <el-table ref="filterTable" :data="changeData" style="width: 100%">
+      <el-table
+        :data="getCurrentPageData(OnlytableData, currentPage, pageSize)"
+        stripe
+        style="width: 100%"
+      >
         <el-table-column prop="number" label="序号" min-width="10%">
         </el-table-column>
         <el-table-column prop="date" label="申请时间" min-width="20%">
@@ -39,20 +43,19 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
-
-    <div class="block">
-      <span class="demonstration"></span>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[10, 20]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
-      >
-      </el-pagination>
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[1, 2]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="OnlytableData.length"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +87,11 @@ export default {
     handleClick(row) {
       console.log(row);
     },
+    getCurrentPageData(data, currentPage, pageSize) {
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      return data.slice(start, end);
+    },
     //该函数用用于跳转到审批界面（审批界面只有一个，内容根据传递的参数动态显示，且该函数不一定对）
     goToApprovalPage(row) {
       this.$router.push({
@@ -111,8 +119,23 @@ export default {
   },
   data() {
     return {
-      currentPage4: 1,
-      changeData: [],
+      currentPage: 1,
+      OnlytableData: [
+        {
+          number: 1,
+          date: "2016-05-20",
+          name: "王小龙",
+          kind: "企业企业名称变更",
+          result: "同意",
+        },
+        {
+          number: 2,
+          date: "2016-05-20",
+          name: "王小龙",
+          kind: "企业企业名称变更",
+          result: "同意",
+        },
+      ],
     };
   },
 };
