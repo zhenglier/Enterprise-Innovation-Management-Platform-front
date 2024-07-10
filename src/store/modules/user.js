@@ -42,11 +42,11 @@ const actions = {
           const  data  = response;
 
           if (data.code === 20001) {
-            console.log("请输入验证码");
+            alert("请输入验证码");
           } else if (data.code === 20002) {
-            console.log("请刷新页面");
+            alert("请刷新页面");
           } else if (data.code === 20003) {
-            console.log("验证码错误");
+            alert("验证码错误");
           }
 
           commit("SET_TOKEN", data.token);
