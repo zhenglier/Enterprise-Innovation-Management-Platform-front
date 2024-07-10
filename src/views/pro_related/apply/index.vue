@@ -146,6 +146,7 @@
 }
 </style>
 <script>
+import request from '@/utils/request'
 export default {
   data() {
     return {
@@ -176,6 +177,22 @@ export default {
         type: "warning",
       })
         .then(() => {
+          let data={
+            name:this.Apply_name,
+            data:JSON.stringify(this.fileList),
+          };
+          console.log(data);
+          new Promise(async (resolve,reject) =>{
+          await request({
+            url: "/program/application/add",
+            method: "post",
+            data
+          })
+            .then((response) =>{
+              console.log(response);
+              window.location.reload();
+            })
+          })
           this.$message({
             type: "success",
             message: "提交成功！",
