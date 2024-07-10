@@ -6,7 +6,7 @@
     <!--按钮部分-->
     <div class="button-container" style="margin: 5px 5px">
       <el-button type="warning">保存</el-button>
-      <el-button type="success">发布</el-button>
+      <el-button type="success" @click="submit()">发布</el-button>
 
       <el-button type="danger">返回</el-button>
     </div>
@@ -25,7 +25,7 @@
         >
           <el-form-item label="事项名称">
             <el-col :span="10"></el-col
-            ><el-input v-model="formLabelAlign.name"></el-input>
+            ><el-input v-model="data.formLabelAlign.name"></el-input>
           </el-form-item>
         </div>
       </el-form>
@@ -55,14 +55,14 @@
           ><el-col :span="12"
             ><el-form-item label="实施主体名称">
               <el-input
-                v-model="BasicInfo.main"
+                v-model="data.BasicInfo.main"
                 placeholder="主体名称"
               ></el-input> </el-form-item
           ></el-col>
           <el-col :span="12">
             <el-form-item label="申领对象">
               <el-input
-                v-model="BasicInfo.number"
+                v-model="data.BasicInfo.number"
                 placeholder="对象名称"
               ></el-input>
             </el-form-item> </el-col
@@ -71,14 +71,14 @@
           ><el-col :span="12"
             ><el-form-item label=" 到现场次数" style="margin-left: 13px">
               <el-input
-                v-model="BasicInfo.number"
+                v-model="data.BasicInfo.number"
                 placeholder="次数"
               ></el-input> </el-form-item
           ></el-col>
           <el-col :span="12">
             <el-form-item label="扶持金额">
               <el-input
-                v-model="BasicInfo.money"
+                v-model="data.BasicInfo.money"
                 placeholder="金额数"
               ></el-input>
             </el-form-item> </el-col
@@ -102,7 +102,7 @@
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4 }"
             placeholder="请输入内容"
-            v-model="Condition.content"
+            v-model="data.Condition.content"
           >
           </el-input>
         </el-form-item>
@@ -125,7 +125,7 @@
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4 }"
             placeholder="请输入内容"
-            v-model="Description.desc"
+            v-model="data.Description.desc"
           >
           </el-input>
         </el-form-item>
@@ -155,28 +155,28 @@
 
       <el-form
         ref="Material"
-        :model="Material"
+        :model="data.Material"
         label-position="left"
         label-width="130px"
       >
         <el-form-item label="材料名称">
-          <el-input v-model="Material.name"></el-input>
+          <el-input v-model="data.Material.name"></el-input>
         </el-form-item>
 
         <el-form-item label="是否必须">
-          <el-checkbox-group v-model="Material.necessary">
+          <el-checkbox-group v-model="data.Material.necessary">
             <el-checkbox label="是" name="type"></el-checkbox>
             <el-checkbox label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="是否需要签字">
-          <el-checkbox-group v-model="Material.signature">
+          <el-checkbox-group v-model="data.Material.signature">
             <el-checkbox label="是" name="type"></el-checkbox>
             <el-checkbox label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="是否需要盖章">
-          <el-checkbox-group v-model="Material.stamp">
+          <el-checkbox-group v-model="data.Material.stamp">
             <el-checkbox label="是" name="type"></el-checkbox>
             <el-checkbox label="否" name="type"></el-checkbox>
           </el-checkbox-group>
@@ -187,7 +187,7 @@
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-change="handleChange"
-            :file-list="Material.applyfile"
+            :file-list="data.Material.applyfile"
             :on-success="handleSuccess"
             :on-preview="handlePictureCardPreview"
           >
@@ -195,11 +195,11 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="其他信息">
-          <el-input v-model="Material.other"></el-input>
+          <el-input v-model="data.Material.other"></el-input>
         </el-form-item>
 
         <el-form-item label="已创建的申报材料">
-          <el-table :data="Material.createdMaterials">
+          <el-table :data="data.Material.createdMaterials">
             <el-table-column prop="序号" label="序号"></el-table-column>
             <el-table-column prop="材料名称" label="材料名称"></el-table-column>
             <el-table-column prop="上传要求" label="上传要求"></el-table-column>
@@ -246,24 +246,24 @@
 
       <el-form
         ref="handleProcedure"
-        :model="HandleProcedure"
+        :model="data.HandleProcedure"
         label-position="left"
         label-width="130px"
       >
         <el-form-item label="步骤名称">
-          <el-input v-model="HandleProcedure.name"></el-input>
+          <el-input v-model="data.HandleProcedure.name"></el-input>
         </el-form-item>
         <el-form-item label="步骤详细信息">
           <el-input
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4 }"
             placeholder="请输入内容"
-            v-model="HandleProcedure.details"
+            v-model="data.HandleProcedure.details"
           >
           </el-input>
         </el-form-item>
         <el-form-item label="已创建的申报程序">
-          <el-table :data="HandleProcedure.createdProcedures">
+          <el-table :data="data.HandleProcedure.createdProcedures">
             <el-table-column prop="序号" label="序号"></el-table-column>
 
             <el-table-column prop="步骤名称" label="步骤信息"></el-table-column>
@@ -312,7 +312,7 @@
       </el-row>
       <el-form
         :inline="true"
-        :model="ApplyDate"
+        :model="data.ApplyDate"
         label-position="left"
         label-width="200px"
       >
@@ -320,7 +320,7 @@
           <el-date-picker
             type="date"
             placeholder="选择日期"
-            v-model="ApplyDate.start_date"
+            v-model="data.ApplyDate.start_date"
             style="width: 90%"
           >
           </el-date-picker>
@@ -329,7 +329,7 @@
           <el-date-picker
             type="date"
             placeholder="选择日期"
-            v-model="ApplyDate.end_date"
+            v-model="data.ApplyDate.end_date"
             style="width: 100%"
           >
           </el-date-picker>
@@ -354,10 +354,10 @@
           </div></el-col
         >
       </el-row>
-      <el-form :label-position="top" :model="telephoneNumber">
+      <el-form :label-position="top" :model="data.telephoneNumber">
         <el-form-item label="">
           <el-input
-            v-model="telephoneNumber.number"
+            v-model="data.telephoneNumber.number"
             placeholder="咨询电话"
           ></el-input>
         </el-form-item>
@@ -385,7 +385,7 @@
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             multiple
-            :file-list="fileList"
+            :file-list="data.fileList"
             :on-change="handleFileChange"
             :on-success="handleUploadSuccess"
             :on-remove="handleRemove"
@@ -395,9 +395,9 @@
           </el-upload>
         </el-col>
       </el-row>
-      <el-form :model="Annex" label-position="top">
+      <el-form :model="data.Annex" label-position="top">
         <el-form-item label="">
-          <el-table :data="Annex.FILES">
+          <el-table :data="data.Annex.FILES">
             <el-table-column prop="annex_index" label="序号"></el-table-column>
 
             <el-table-column
@@ -446,9 +446,9 @@
           </div></el-col
         >
       </el-row>
-      <el-form :model="projectStyle" label-width="80px">
+      <el-form :model="data.projectStyle" label-width="80px">
         <el-form-item label="">
-          <el-checkbox-group v-model="projectStyle.type">
+          <el-checkbox-group v-model="data.projectStyle.type">
             <el-checkbox label="科技创新" name="type"></el-checkbox>
             <el-checkbox label="商务贸易" name="type"></el-checkbox>
             <el-checkbox label="文化" name="type"></el-checkbox>
@@ -464,6 +464,9 @@
 <script>
 export default {
   method: {
+    submit(){
+      console.log();
+    },
     handleFileChange(file, fileList) {
       this.Annex.FILES = fileList.map((f, index) => ({
         annex_index: index + 1,
@@ -533,49 +536,51 @@ export default {
   },
   data() {
     return {
-      formLabelAlign: {
-        name: "",
-      },
-      BasicInfo: {
-        main: "",
-        object: "",
-        number: "",
-        money: "",
-      },
-      Condition: {
-        content: "",
-      },
-      Description: {
-        desc: "",
-      },
-      Material: {
-        name: "",
-        necessary: "",
-        signature: "",
-        stamp: "",
-        other: "",
-        applyfile: [],
-        createdMaterials: [], // 用于保存已创建的材料的数组
-      },
-      HandleProcedure: {
-        name: "",
-        details: "",
-        createdProcedures: [], //用于保存已创建的申报程序
-      },
-      ApplyDate: {
-        start_date: "",
-        end_date: "",
-      },
-      telephoneNumber: {
-        telephoneNumber: "",
-      },
-      Annex: {
-        FILES: [],
-      },
-      fileList: [],
-      projectStyle: {
-        type: [],
-      },
+      data:{
+        formLabelAlign: {
+          name: "",
+        },
+        BasicInfo: {
+          main: "",
+          object: "",
+          number: "",
+          money: "",
+        },
+        Condition: {
+          content: "",
+        },
+        Description: {
+          desc: "",
+        },
+        Material: {
+          name: "",
+          necessary: "",
+          signature: "",
+          stamp: "",
+          other: "",
+          applyfile: [],
+          createdMaterials: [], // 用于保存已创建的材料的数组
+        },
+        HandleProcedure: {
+          name: "",
+          details: "",
+          createdProcedures: [], //用于保存已创建的申报程序
+        },
+        ApplyDate: {
+          start_date: "",
+          end_date: "",
+        },
+        telephoneNumber: {
+          telephoneNumber: "",
+        },
+        Annex: {
+          FILES: [],
+        },
+        fileList: [],
+        projectStyle: {
+          type: [],
+        },
+      }
     };
   },
 };

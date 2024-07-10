@@ -72,7 +72,7 @@
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
-              @click="checkDetail(project.name)"
+              @click="checkDetail(project.id)"
             >
               查看详情
             </el-button>
@@ -139,8 +139,8 @@ export default {
       selectedOptions: {},
       // 项目数据
       projects: [
-        { name: "项目名称1", unit: "发布单位1", views: 100 },
-        { name: "项目名称2", unit: "发布单位2", views: 120 },
+        { id:1,name: "项目名称1", unit: "发布单位1", views: 100 },
+        { id:2,name: "项目名称2", unit: "发布单位2", views: 120 },
         { name: "项目名称3", unit: "发布单位3", views: 80 },
         { name: "项目名称4", unit: "发布单位4", views: 90 },
         { name: "项目名称5", unit: "发布单位5", views: 110 },
@@ -150,8 +150,8 @@ export default {
       ],
       // 筛选后的项目数据
       filteredProjects: [
-        { name: "项目名称1", unit: "发布单位1", views: 100 },
-        { name: "项目名称2", unit: "发布单位2", views: 120 },
+        { id:1,name: "项目名称1", unit: "发布单位1", views: 100 },
+        { id:2,name: "项目名称2", unit: "发布单位2", views: 120 },
         { name: "项目名称3", unit: "发布单位3", views: 80 },
         { name: "项目名称4", unit: "发布单位4", views: 90 },
         { name: "项目名称5", unit: "发布单位5", views: 110 },
@@ -217,9 +217,9 @@ export default {
         });
     },
     // 处理查看详情按钮点击事件
-    checkDetail(name) {
+    checkDetail(id) {
       //项目路由
-      this.$router.push({ path: `/details/pro/${name}` });
+      this.$router.push({ path: `/details/pro/${id}` });
     },
     // 处理每页显示的项目数改变事件
     handleSizeChange(val) {
