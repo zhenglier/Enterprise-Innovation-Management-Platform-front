@@ -232,7 +232,28 @@ export default {
       annex: [], //附件
     };
   },
+  created() {
+    const id = this.$route.params.id;
+    this.fetchEnterpriseDetails(id);
+  },
   methods: {
+    fetchEnterpriseDetails(id) {
+      // 替换为你的后端接口
+
+      const mockData = {
+        project: {
+          project_name: "", //项目名称
+        },
+        telephoneNumber: "",
+        baseInfo: [], //基本信息
+        descriptions: "", //事项描述
+        Condition: "", //受理条件
+        applyFile: [], //申报材料
+        procedureFile: [], //办理程序
+        apply_time: [], //申请时间
+        annex: [], //附件
+      };
+    },
     apply() {
       this.submitApplication(); // Call the function to submit the application
       this.$message({

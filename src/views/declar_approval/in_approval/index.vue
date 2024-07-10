@@ -101,7 +101,7 @@
               <el-button
                 type="text"
                 size="mini"
-                @click="checkDetail(scope.$index, scope.row.unicode)"
+                @click="checkDetail(scope.$index, scope.row.id)"
                 >[详情]</el-button
               >
             </template>
@@ -187,8 +187,8 @@ export default {
     handleSendBack(index, row) {
       console.log(index, row);
     },
-    checkDetail(index, unicode) {
-      console.log(index, unicode);
+    checkDetail(index, id) {
+      console.log(index, id);
     },
     handleSizeChange(pageSize) {
       if (this.activeName === "first") {
