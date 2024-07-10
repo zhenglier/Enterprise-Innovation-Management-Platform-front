@@ -173,7 +173,7 @@ export default {
       console.log(index, row);
     },
     checkDetail(index, unicode) {
-      this.$router.push({ path: `/details/pro/${unicode}` });
+      this.$router.push({ path: `/details/info/${unicode}` });
     },
     handleSizeChange(pageSize) {
       if (this.activeName === "first") {

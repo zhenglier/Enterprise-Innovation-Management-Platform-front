@@ -155,7 +155,9 @@
           ></el-table-column>
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" @click="viewPolicyDetails(scope.row)"
+              <el-button
+                type="text"
+                @click="checkDetail(paginatedPolicies.name)"
                 >查看详情</el-button
               >
             </template>
@@ -318,6 +320,7 @@ export default {
         },
         // Add more policy data here
       ],
+
       currentPage: 1,
       pageSize: 10,
     };
@@ -373,7 +376,7 @@ export default {
       console.log(`切换到标签页: ${tab.name}`);
     },
     checkDetail(name) {
-      this.$router.push({ path: `/details/pro/${name}` });
+      this.$router.push({ path: `/details/policy/${name}` });
     },
     selectMonth(month) {
       this.selectedMonth = month;

@@ -856,13 +856,30 @@ var constantRoutes = [
     path: "/details",
     component: Layout,
     name: "Details",
-
+    meta: {
+      title: "详情",
+      icon: "form",
+    },
     children: [
       {
         path: "pro/:unicode",
         name: "Pro",
         component: () => import("@/views/details/pro"),
         meta: { title: "项目详情", icon: "dashboard" },
+        props: true,
+      },
+      {
+        path: "info/:unicode",
+        name: "Info",
+        component: () => import("@/views/details/info"),
+        meta: { title: "企业详情", icon: "dashboard" },
+        props: true,
+      },
+      {
+        path: "policy/:unicode",
+        name: "Info",
+        component: () => import("@/views/details/policy"),
+        meta: { title: "政策详情", icon: "dashboard" },
         props: true,
       },
     ],
