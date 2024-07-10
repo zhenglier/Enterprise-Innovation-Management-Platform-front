@@ -403,7 +403,9 @@
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleSuccess"
+            :on-change="handleProveChange"
             :file-list="socialinfoForm.proveList"
+            :auto-upload="false"
             class="pic-upload"
           >
             <i class="el-icon-plus"></i>
@@ -516,6 +518,7 @@
               action="https://jsonplaceholder.typicode.com/posts/"
               :on-change="handleChange"
               :file-list="employinfoForm.materialList"
+              :auto-upload="false"
             >
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">
@@ -570,7 +573,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import request from "@/utils/request";
 export default {
   data() {
     return {
@@ -704,20 +707,6 @@ export default {
   },
 
   methods: {
-    async loadJsonFromFile(file, fileList){
-      this.uploadFiles = fileList
-      console.log(fileList[2].raw);
-
-      let data=new FormData()
-      data.append(fileList[2].name,fileList[2].raw)
-      await axios.post('http://localhost:8080/test/test', data
-      )  
-        .then(response => {  
-          // console.log(response.data);
-          // valid=response.data;
-        });
-      
-    },
     next() {
       if (this.activeStep === 0) this.activeStep++;
       else {
@@ -746,12 +735,11 @@ export default {
     prev() {
       if (this.activeStep > 0) this.activeStep--;
     },
-    //这个函数貌似没什么用
-    // handleChange(val) {
-    //   console.log(val);
-    // },
     //包含将数据传输到后端的逻辑，对所有的数据post,发axios请求
     submit() {
+      console.log(this.baseinfoForm);
+      console.log(this.employinfoForm);
+      console.log(this.socialinfoForm);
       this.centerDialogVisible = true;
     },
     handleRemove(file, fileList) {
@@ -770,6 +758,9 @@ export default {
     handleChange(file, fileList) {
       this.employinfoForm.materialList = fileList;
     },
+    handleProveChange(flie,fileList){
+      this.socialinfoForm.proveList = fileList;
+    }
   },
 };
 </script>
