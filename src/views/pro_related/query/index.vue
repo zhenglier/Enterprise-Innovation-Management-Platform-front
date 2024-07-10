@@ -9,6 +9,27 @@
       </div>
       <div class="s"><el-button icon="el-icon-search" circle></el-button></div>
     </div>
+    <div class="table-container">
+      <el-table :data="toptableData" border>
+        <el-table-column prop="category" label="类别" width="150">
+        </el-table-column>
+        <el-table-column label="选项">
+          <template slot-scope="scope">
+            <div
+              v-for="item in scope.row.options"
+              :key="item"
+              class="option-item"
+              :class="{
+                highlight: selectedOptions[scope.row.category] === item,
+              }"
+              @click="handleOptionClick(scope.row.category, item)"
+            >
+              <span>{{ item }}</span>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <el-container>
       <el-aside width="200px">
         <el-row><div class="status">申报状态</div></el-row>
@@ -154,7 +175,48 @@
     </div>
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      toptableData: [
+        {
+          category: "申报状态",
+          options: ["不限", "待申请", "已通过", "已拒绝", "已退回"],
+        },
+        {
+          category: "主管部门",
+          options: [
+            "不限",
+            "广电局",
+            "教育局",
+            "人力资源保障局",
+            "文化和旅游局",
+          ],
+        },
+        {
+          category: "行业/主题",
+          options: [
+            "不限",
+            "科技创新",
+            "商务贸易",
+            "文化",
+            "农村农业",
+            "节能环保",
+            "社会保障",
+          ],
+        },
+      ],
+      selectedOptions: {},
+    };
+  },
+  methods: {
+    handleOptionClick(category, item) {
+      this.$set(this.selectedOptions, category, item);
+    },
+  },
+};
+</script>
 <style>
 .zuoxia {
   margin: 2px 2px;
@@ -211,7 +273,33 @@
   padding: 0 0;
   line-height: 80px;
 }
+.table-container {
+  width: 100%;
+  background-color: #f5f7fa; /* Light gray background color */
+}
 
+.el-table th,
+.el-table td {
+  background-color: #f5f7fa;
+}
+
+.option-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Space between options */
+}
+
+.option-item {
+  flex: 1; /* Allow items to grow and fill the space */
+  min-width: 80px; /* Minimum width to keep items readable */
+  cursor: pointer;
+  text-align: center;
+}
+
+.option-item.highlight span {
+  color: red;
+  font-weight: bold;
+}
 body > .el-container {
   margin-bottom: 40px;
 }

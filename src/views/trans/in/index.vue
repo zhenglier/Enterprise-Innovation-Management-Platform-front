@@ -246,6 +246,19 @@
               <el-radio label="公司制"></el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="申请入驻载体" prop="carrier">
+            <el-select
+              v-model="baseinfoForm.carrier"
+              placeholder="请选择欲入驻载体"
+            >
+              <el-option
+                v-for="item in carrierOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
       </div>
 
@@ -567,7 +580,7 @@ export default {
         { title: "社会信息" },
         { title: "员工与租房信息" },
       ],
-      activeNames: ["1", "2", "3", "4"],
+      activeNames: ["1", "2"],
       //点击提交按钮后的提示框
       centerDialogVisible: false,
       baseinfoForm: {
@@ -583,7 +596,13 @@ export default {
         highfield: "",
         date1: "",
         type: [],
+        carrier: "",
       },
+      //这里是所有的载体选项
+      carrierOptions: [
+        { label: "制造业", value: "making" },
+        { label: "金融业", value: "financial" },
+      ],
       baseinforules: {
         name: [
           { required: true, message: "企业名称不能为空", trigger: "blur" },
@@ -609,6 +628,9 @@ export default {
         field: [{ required: true, message: "请选择行业分类", trigger: "blur" }],
         highfield: [
           { required: true, message: "请选择行业分类", trigger: "blur" },
+        ],
+        carrier: [
+          { required: true, message: "入驻载体不能为空", trigger: "blur" },
         ],
       },
 

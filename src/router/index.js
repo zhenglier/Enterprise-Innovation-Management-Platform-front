@@ -612,6 +612,12 @@ var constantRoutes = [
         component: () => import("@/views/pro_related/apply/index"),
         meta: { title: "项目申报" },
       },
+      {
+        path: "release",
+        name: "Release",
+        component: () => import("@/views/pro_related/release/index"),
+        meta: { title: "项目发布" },
+      },
 
       {
         path: "query",
@@ -658,7 +664,30 @@ var constantRoutes = [
       },
     ],
   },
-
+  {
+    path: "/carrier",
+    component: Layout,
+    redirect: "/change/baseInfochange",
+    name: "Carrier",
+    meta: {
+      title: "信息变更",
+      icon: "nested",
+    },
+    children: [
+      {
+        path: "baseInfochange",
+        component: () => import("@/views/carrier/baseInfochange/index"), // Parent router-view
+        name: "BaseInfochange",
+        meta: { title: "基本信息完善" },
+      },
+      {
+        path: "baseInfoQuery",
+        component: () => import("@/views/carrier/baseInfoQuery/index"),
+        name: "Base_Information",
+        meta: { title: "载体信息查看" },
+      },
+    ],
+  },
   {
     path: "/policy_related",
     component: Layout,
@@ -720,6 +749,7 @@ var constantRoutes = [
       },
     ],
   },
+
   {
     path: "/performance_requ",
     component: Layout,
@@ -822,7 +852,32 @@ var constantRoutes = [
       },
     ],
   },
-
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/Qin",
+    children: [
+      {
+        path: "Qin",
+        name: "qin",
+        component: () => import("@/views/Qin/index"),
+        meta: { title: "项目查询子页面", icon: "dashboard" },
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/judge",
+    children: [
+      {
+        path: "judge",
+        name: "Judge",
+        component: () => import("@/views/judge/index"),
+        meta: { title: "审批界面", icon: "dashboard" },
+      },
+    ],
+  },
   {
     path: "/example",
     component: Layout,

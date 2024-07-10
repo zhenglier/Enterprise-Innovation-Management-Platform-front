@@ -4,29 +4,26 @@
       <div class="policy-header-content">
         <div class="policy-icon">
           <img
-            src="https://zhengce.beijing.gov.cn/bk-config/pub/0002/0001/zhengcetoutiao2.png?version=v1.1.5"
-            alt="政策头条"
-            class="zhengcetoutiao-title"
-          />
-          <img
             src="https://zhengce.beijing.gov.cn/bk-config/pub/0002/0001/zhengcetoutiao.png?version=v1.1.5"
             class="zhengcetoutiao-img"
             alt="政策头条图片"
           />
+          <img
+            src="https://zhengce.beijing.gov.cn/bk-config/pub/0002/0001/zhengcetoutiao2.png?version=v1.1.5"
+            alt="政策头条"
+            class="zhengcetoutiao-title"
+          />
         </div>
-        <div class="policy-text">
-          <!-- 这个list后续可以用vue的v-for进行渲染 -->
-          <ul>
-            <li>
-              关于克现《门头沟区关于支持和服务高新技术企业发展若干措施》2023年度应发资金的通知
+        <div class="top-policy-container">
+          <ul class="top-policy-list">
+            <li v-for="toppolicy in toppolicyList" :key="toppolicy.id">
+              <span class="top-policy-title">{{ toppolicy.title }}</span>
+              <span class="top-policy-date">{{ toppolicy.date }}</span>
             </li>
-            <li>关于申报2024年北京市企业海外知识产权预警项目的通知</li>
-            <li>关于征集电子商务创新示范项目的通知</li>
           </ul>
         </div>
       </div>
     </div>
-    <!-- 这个div用来做一个格子，然后设置一个背景图片 -->
     <div></div>
     <div class="policy-container">
       <el-tabs v-model="policyactiveTab" @tab-click="policyhandleTabClick">
@@ -37,7 +34,6 @@
       <div class="policy-content">
         <div v-if="policyactiveTab === 'policyList'">
           <ul class="policy-list">
-            <!-- 内容是从policyList中拿来的 -->
             <li v-for="policy in policyList" :key="policy.id">
               <span class="policy-title">{{ policy.title }}</span>
               <span class="policy-date">{{ policy.date }}</span>
@@ -45,167 +41,140 @@
           </ul>
         </div>
         <div v-if="policyactiveTab === 'beijing'">
-          <!-- 北京的内容 -->
-          <p>北京的政策内容展示在这里。</p>
+          <ul class="policy-list">
+            <li v-for="policy in beijingpolicyList" :key="policy.id">
+              <span class="policy-title">{{ policy.title }}</span>
+              <span class="policy-date">{{ policy.date }}</span>
+            </li>
+          </ul>
         </div>
         <div v-if="policyactiveTab === 'districts'">
-          <!-- 各区的内容 -->
-          <p>各区的政策内容展示在这里。</p>
+          <ul class="policy-list">
+            <li v-for="policy in districtspolicyList" :key="policy.id">
+              <span class="policy-title">{{ policy.title }}</span>
+              <span class="policy-date">{{ policy.date }}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
     <div class="project-container">
       <div class="sector-header">
         <h2 class="project-apply-header">项目申报</h2>
-        <!-- 这个文字链接点击后进入到项目查询界面 -->
-        <el-link
-          href="https://element.eleme.io"
-          target="_blank"
-          class="more-button"
-          >查看更多 &gt;
-        </el-link>
+        <el-button type="text" @click="proroute" class="more-button"
+          >查看更多 &gt;</el-button
+        >
         <fieldset class="title-fieldset"></fieldset>
       </div>
+      <!-- 放置卡片 -->
       <div class="project-cards">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>卡片名称</span>
-            <el-button style="float: right; padding: 3px 0" type="text"
-              >操作按钮</el-button
-            >
-          </div>
-          <div v-for="o in 4" :key="o" class="text item">
-            {{ "列表内容 " + o }}
-          </div>
-        </el-card>
-        <!-- 这个card貌似也要动态生成 -->
+        <!-- First Row -->
+        <div class="card-row">
+          <el-card
+            v-for="(project, index) in projects.slice(0, 4)"
+            :key="index"
+            class="box-card"
+          >
+            <div slot="header" class="clearfix">
+              <span>{{ project.name }}</span>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="handleCardClick(project)"
+                >查看详情</el-button
+              >
+            </div>
+            <div class="card-content">
+              <p>{{ project.unit }}</p>
+              <p>{{ project.views }} 浏览量</p>
+            </div>
+          </el-card>
+        </div>
+        <!-- Second Row -->
+        <div class="card-row">
+          <el-card
+            v-for="(project, index) in projects.slice(4, 8)"
+            :key="index"
+            class="box-card"
+          >
+            <div slot="header" class="clearfix">
+              <span>{{ project.name }}</span>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="handleCardClick(project)"
+                >查看详情</el-button
+              >
+            </div>
+            <div class="card-content">
+              <p>{{ project.unit }}</p>
+              <p>{{ project.views }} 浏览量</p>
+            </div>
+          </el-card>
+        </div>
       </div>
       <div class="sector-header">
         <h2 class="policy-month-header">政策月历</h2>
-        <el-link
-          href="https://element.eleme.io"
-          target="_blank"
-          class="more-button"
-          >查看更多 &gt;
-        </el-link>
-        <fieldset class="title-fieldset"></fieldset>
-      </div>
-      <div class="month-container">
-        <el-tabs
-          v-model="monthactiveTab"
-          @tab-click="monthhandleTabClick"
-          type="border-card"
+        <el-button type="text" @click="policyroute" class="more-button"
+          >查看更多 &gt;</el-button
         >
-          <el-tab-pane label="1月" name="January"></el-tab-pane>
-          <el-tab-pane label="2月" name="February"></el-tab-pane>
-          <el-tab-pane label="3月" name="March"></el-tab-pane>
-          <el-tab-pane label="4月" name="April"></el-tab-pane>
-          <el-tab-pane label="5月" name="May"></el-tab-pane>
-          <el-tab-pane label="6月" name="June"></el-tab-pane>
-          <el-tab-pane label="7月" name="July"></el-tab-pane>
-          <el-tab-pane label="8月" name="August"></el-tab-pane>
-          <el-tab-pane label="9月" name="September"></el-tab-pane>
-          <el-tab-pane label="10月" name="October"></el-tab-pane>
-          <el-tab-pane label="11月" name="November"></el-tab-pane>
-          <el-tab-pane label="12月" name="December"></el-tab-pane>
-        </el-tabs>
-        <div class="month-content">
-          <!-- 条件渲染内容 -->
-          <div v-if="monthactiveTab === 'January'">
-            <ul class="month-list">
-              <li v-for="policy in policyList" :key="policy.id">
-                <span class="month-title">{{ policy.title }}</span>
-                <span class="month-date">{{ policy.date }}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div v-if="monthactiveTab === 'February'">
-            <!-- 北京的内容 -->
-            <p>北京的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'March'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'April'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'May'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'June'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'July'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'August'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'September'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'October'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'November'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
-          <div v-if="monthactiveTab === 'December'">
-            <!-- 各区的内容 -->
-            <p>各区的政策内容展示在这里。</p>
-          </div>
+        <fieldset class="title-fieldset"></fieldset>
+        <!-- 月份的选项行 -->
+        <div class="month-selection">
+          <el-button
+            v-for="month in months"
+            :key="month.value"
+            :type="month.value === selectedMonth ? 'primary' : 'default'"
+            @click="selectMonth(month.value)"
+          >
+            {{ month.label }}
+          </el-button>
         </div>
-        <!-- 分页组件 -->
-        <!-- 分页组件也是根据月份变化的 -->
-        <el-pagination background layout="prev, pager, next" :total="1000">
-        </el-pagination>
+        <!-- 政策列表 -->
+        <el-table :data="paginatedPolicies" style="width: 100%">
+          <el-table-column
+            prop="daysLeft"
+            label="剩余天数"
+            width="120"
+          ></el-table-column>
+          <el-table-column prop="name" label="政策名称"></el-table-column>
+          <el-table-column
+            prop="startDate"
+            label="申报开始时间"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="endDate"
+            label="申报结束时间"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="views"
+            label="浏览量"
+            width="120"
+          ></el-table-column>
+          <el-table-column label="操作" width="120">
+            <template slot-scope="scope">
+              <el-button type="text" @click="viewPolicyDetails(scope.row)"
+                >查看详情</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- Pagination -->
+        <div class="page-part">
+          <el-pagination
+            @current-change="handlePageChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            background
+            layout="prev, pager, next"
+            :total="filteredPolicies.length"
+            :page-sizes="[5, 10, 20, 50]"
+          ></el-pagination>
+        </div>
       </div>
     </div>
-
-    <div class="policy-month-container"></div>
-
-    <!-- 图文解读部分暂时不做，因为没有这部分的内容 -->
-
-    <!-- <div class="pic-text-container">
-      <h2>图文解读</h2>
-      <el-link href="https://element.eleme.io" target="_blank"
-        >查看更多 &gt;
-      </el-link>
-      <div class="pic-text-content">
-        <el-row>
-          <el-col
-            :span="8"
-            v-for="(o, index) in 2"
-            :key="o"
-            :offset="index > 0 ? 2 : 0"
-          >
-            <el-card :body-style="{ padding: '0px' }">
-              <img
-                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                class="image"
-              />
-              <div style="padding: 14px">
-                <span>好吃的汉堡</span>
-                <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -214,16 +183,28 @@ export default {
   data() {
     return {
       policyactiveTab: "policyList",
-      monthactiveTab: "January",
-      // 带图卡片的日期
-      currentDate: new Date(),
-      monthList: [
+      // 头条处的数据
+      toppolicyList: [
         {
           id: 1,
-          title: "fukc",
-          date: "2024-07-05",
+          title:
+            "北京市市场监督管理局 北京市财政局关于印发《实施首都标准化战略补...》",
+          date: "2024-06-14",
+        },
+        {
+          id: 2,
+          title:
+            "北京市顺义区经济和信息化局关于印发《顺义区进一步促进第三代等先...》",
+          date: "2024-06-12",
+        },
+        {
+          id: 3,
+          title:
+            "北京市顺义区经济和信息化局关于印发《顺义区促进高端制造业和先进...》",
+          date: "2024-06-12",
         },
       ],
+      //政策清单部分数据
       policyList: [
         {
           id: 1,
@@ -262,15 +243,152 @@ export default {
           date: "2024-05-23",
         },
       ],
+      //北京政策数据
+      beijingpolicyList: [
+        {
+          id: 5,
+          title:
+            "北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》",
+          date: "2024-05-31",
+        },
+        {
+          id: 6,
+          title:
+            "北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》",
+          date: "2024-05-23",
+        },
+      ],
+      //各区政策数据
+      districtspolicyList: [
+        {
+          id: 5,
+          title:
+            "北京市商务局等8部门关于印发《2024年北京市汽车以旧换新补贴实施...》",
+          date: "2024-05-31",
+        },
+        {
+          id: 6,
+          title:
+            "北京市人民政府办公厅关于印发《北京市加快医药健康协同创新行动计...》",
+          date: "2024-05-23",
+        },
+      ],
+      //卡片的数据部分
+      projects: [
+        { name: "项目名称1", unit: "发布单位1", views: 100 },
+        { name: "项目名称2", unit: "发布单位2", views: 120 },
+        { name: "项目名称3", unit: "发布单位3", views: 80 },
+        { name: "项目名称4", unit: "发布单位4", views: 90 },
+        { name: "项目名称5", unit: "发布单位5", views: 110 },
+        { name: "项目名称6", unit: "发布单位6", views: 130 },
+        { name: "项目名称7", unit: "发布单位7", views: 70 },
+        { name: "项目名称8", unit: "发布单位8", views: 85 },
+      ],
+      months: [
+        { value: 1, label: "一月" },
+        { value: 2, label: "二月" },
+        { value: 3, label: "三月" },
+        { value: 4, label: "四月" },
+        { value: 5, label: "五月" },
+        { value: 6, label: "六月" },
+        { value: 7, label: "七月" },
+        { value: 8, label: "八月" },
+        { value: 9, label: "九月" },
+        { value: 10, label: "十月" },
+        { value: 11, label: "十一月" },
+        { value: 12, label: "十二月" },
+      ],
+      selectedMonth: new Date().getMonth() + 1,
+      policyCalendarList: [
+        // Example data
+        // 注意列表中会有一个剩余日期，这个不需要传，是直接通过结束时间和系统时间做差
+        {
+          id: 1,
+          name: "政策1",
+          startDate: "2024-01-15",
+          endDate: "2024-02-15",
+          views: 100,
+        },
+        {
+          id: 2,
+          name: "政策2",
+          startDate: "2024-03-01",
+          endDate: "2024-04-01",
+          views: 150,
+        },
+        // Add more policy data here
+      ],
+      currentPage: 1,
+      pageSize: 10,
     };
   },
+  computed: {
+    filteredPolicies() {
+      const startOfMonth = new Date(
+        new Date().getFullYear(),
+        this.selectedMonth - 1,
+        1
+      );
+      const endOfMonth = new Date(
+        new Date().getFullYear(),
+        this.selectedMonth,
+        0
+      );
+      const today = new Date();
+
+      return this.policyCalendarList
+        .filter((policy) => {
+          const startDate = new Date(policy.startDate);
+          const endDate = new Date(policy.endDate);
+          return (
+            (startDate >= startOfMonth && startDate <= endOfMonth) ||
+            (endDate >= startOfMonth && endDate <= endOfMonth) ||
+            (startDate <= startOfMonth && endDate >= endOfMonth)
+          );
+        })
+        .map((policy) => {
+          const endDate = new Date(policy.endDate);
+          const timeDiff = endDate.getTime() - today.getTime();
+          const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          return { ...policy, daysLeft };
+        });
+    },
+    paginatedPolicies() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.filteredPolicies.slice(start, end);
+    },
+  },
   methods: {
+    proroute() {
+      this.$router.push({ name: "Query" });
+    },
+    policyroute() {
+      this.$router.push({ name: "Browse" });
+    },
     policyhandleTabClick(tab) {
-      // 可在此处添加点击标签页的逻辑
       console.log(`切换到标签页: ${tab.name}`);
     },
-    monthhandelTabClick(tab) {
+    monthhandleTabClick(tab) {
       console.log(`切换到标签页: ${tab.name}`);
+    },
+    //跳转到对应的项目详情页
+    handleCardClick(project) {
+      // Handle click event, e.g., navigate to project details page
+      console.log(`Clicked on project: ${project.name}`);
+    },
+    selectMonth(month) {
+      this.selectedMonth = month;
+      this.currentPage = 1;
+    },
+    handlePageChange(page) {
+      this.currentPage = page;
+    },
+    viewPolicyDetails(policy) {
+      console.log(`查看政策详情: ${policy.name}`);
+      // Implement navigation to policy details page
+      const policyName = policy.name;
+      this.$router.push({ name: "PolicyDetails", params: { policyName } });
     },
   },
 };
@@ -278,33 +396,33 @@ export default {
 
 <style scoped>
 .policy-header {
-  background-color: #f5e8de; /* 设置背景颜色 */
-  padding: 10px 20px; /* 设置内边距 */
+  background-color: #f5e8de;
+  padding: 10px 20px;
 }
 
 .policy-header-content {
-  display: flex; /* 使用flex布局 */
-  align-items: center; /* 垂直居中对齐 */
+  display: flex;
+  align-items: center;
 }
 
 .policy-icon img {
-  width: 50px; /* 设置图标宽度 */
-  margin-right: 10px; /* 设置图标与文本之间的间距 */
+  width: 50px;
+  margin-right: 10px;
 }
 
 .policy-text ul {
-  list-style: none; /* 去掉默认的列表样式 */
-  padding: 0; /* 去掉内边距 */
-  margin: 0; /* 去掉外边距 */
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .policy-text li {
-  margin-bottom: 5px; /* 设置每个列表项的间距 */
-  font-size: 14px; /* 设置字体大小 */
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .policy-text li:last-child {
-  margin-bottom: 0; /* 去掉最后一个列表项的间距 */
+  margin-bottom: 0;
 }
 
 .policy-container {
@@ -337,7 +455,6 @@ export default {
   color: #999;
 }
 
-/* 卡片的样式 */
 .text {
   font-size: 14px;
 }
@@ -359,7 +476,6 @@ export default {
   width: 480px;
 }
 
-/* 设置带图卡片样式 */
 .time {
   font-size: 13px;
   color: #999;
@@ -400,14 +516,13 @@ export default {
 
 .more-button {
   float: right;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .policy-month-header {
   display: inline-block;
 }
 
-/* 设置分割线样式 */
 .title-fieldset {
   border: none;
   border-top: 3px solid black;
@@ -415,5 +530,75 @@ export default {
 .title-fieldset .inner {
   margin: 0 auto;
   padding: 0 0.25rem;
+}
+
+.page-part {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-policy-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.top-policy-list li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-policy-date {
+  margin-left: 50px;
+}
+
+.zhengcetoutiao-title {
+  margin-left: 20px;
+}
+
+/* 设置卡片的布局 */
+.project-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.box-card {
+  width: calc(50% - 10px); /* Adjust based on your design */
+  margin-bottom: 20px;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+/* 政策月历部分 */
+.month-selection {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.policy-calendar {
+  margin-top: 20px;
+}
+
+.policy-calendar .el-table__header-wrapper {
+  background-color: #f5f7fa;
 }
 </style>
