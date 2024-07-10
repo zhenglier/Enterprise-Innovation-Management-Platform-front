@@ -60,6 +60,16 @@
         </el-table-column>
         <el-table-column prop="hot" label="浏览量"> </el-table-column>
         <el-table-column prop="date" label="发布日期"> </el-table-column>
+        <el-table-column label="政策详情" width="180">
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="mini"
+              @click="checkDetail(scope.$index, scope.row.policy_name)"
+              >[详情]</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <div class="page-part">
@@ -272,6 +282,9 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
       this.filterTableData();
+    },
+    checkDetail(policy_name) {
+      this.$router.push({ path: `/details/policy/${policy_name}` });
     },
   },
   computed: {
