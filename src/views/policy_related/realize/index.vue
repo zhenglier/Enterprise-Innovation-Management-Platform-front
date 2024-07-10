@@ -80,7 +80,7 @@
               <el-button
                 style="float: right; padding: 3px 0"
                 type="text"
-                @click="checkDetail(project.name)"
+                @click="checkproDetail(project.name)"
                 >查看详情</el-button
               >
             </div>
