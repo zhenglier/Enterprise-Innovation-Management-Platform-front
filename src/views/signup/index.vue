@@ -217,6 +217,10 @@ $light_gray: #eee;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
+  background-image: url("../../assets/background2.jpg"); /* 设置背景图片 */
+  opacity: 0.9;
+  background-size: cover; /* 背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中 */
   overflow: hidden;
 
   .signup-form {
