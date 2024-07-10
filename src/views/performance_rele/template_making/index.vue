@@ -91,7 +91,11 @@
 
           <h3>示例文件</h3>
           <el-table :data="panel.files">
-            <el-table-column prop="name" label="文件名"></el-table-column>
+            <el-table-column prop="name" label="文件名">
+              <template slot-scope="scope">
+                <span>{{ getFileName(scope.row.name) }}</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="desc" label="描述"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
@@ -105,6 +109,7 @@
           <el-form-item class="file-inputs">
             <el-input
               v-model="panel.newFileName"
+              type="file"
               placeholder="文件名"
               class="file-input"
             ></el-input>
@@ -301,6 +306,7 @@ export default {
               return;
             }
             // Your submit logic here
+            //这里将整个模板发送到考察发布页面
             this.$message.success("模板发布成功");
           } else {
             this.$message.error("请添加至少一个板块");
@@ -309,6 +315,12 @@ export default {
           this.$message.error("请完善基本信息");
         }
       });
+    },
+    getFileName(fullPath) {
+      // Split the path using the backslash or forward slash
+      let parts = fullPath.split(/[\\\/]/);
+      // Return the last part which is the file name
+      return parts[parts.length - 1];
     },
   },
 };
