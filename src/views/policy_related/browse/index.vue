@@ -240,7 +240,7 @@ export default {
         const selectedDepartment = this.selectedOptions["主管部门"];
         const selectedLevel = this.selectedOptions["政策层级"];
         return (
-          (selectedLevel === "不限" || selectedLevel === item.policy_level) &&
+          (selectedLevel === "不限" || selectedLevel === item.level) &&
           (selectedDepartment === "不限" ||
             selectedDepartment === item.manage) &&
           (keyword === "" || policyName.includes(keyword))
@@ -250,12 +250,12 @@ export default {
     },
     sortbyTime() {
       this.filteredTableData.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+        return new Date(b.createAt) - new Date(a.createAt);
       });
     },
     sortbyHot() {
       this.filteredTableData.sort((a, b) => {
-        return b.hot - a.hot;
+        return b.clicks - a.clicks;
       });
     },
     handleSearchPolicy() {
