@@ -604,14 +604,17 @@ export default {
       name: "", //企业变更前名称
       name_list: [], //证明材料
       //
+
       registered_capital: "", //变更前的注册资本
       date2: "", // 存储选择的日期
       money_list: [], //证明材料
       //
+
       currentStatus: "", //变更前的状态
       date3: "", // 存储选择的日期
       status_list: [], //证明材料
       //
+
       orgBusiness: "", //变更前的主营业务
       date4: "", // 存储选择的日期
 
