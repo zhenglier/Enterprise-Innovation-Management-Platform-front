@@ -216,7 +216,14 @@
   </div>
 </template>
 <script>
+
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       project: {
@@ -234,26 +241,27 @@ export default {
   },
   created() {
     const id = this.$route.params.id;
-    this.fetchEnterpriseDetails(id);
+    this.getEnterpriseDetails(id);
+    // console.log("测试");
   },
   methods: {
-    fetchEnterpriseDetails(id) {
-      // 替换为你的后端接口
+    // fetchEnterpriseDetails(id) {
+    //   // 替换为你的后端接口
 
-      const mockData = {
-        project: {
-          project_name: "", //项目名称
-        },
-        telephoneNumber: "",
-        baseInfo: [], //基本信息
-        descriptions: "", //事项描述
-        Condition: "", //受理条件
-        applyFile: [], //申报材料
-        procedureFile: [], //办理程序
-        apply_time: [], //申请时间
-        annex: [], //附件
-      };
-    },
+    //   const mockData = {
+    //     project: {
+    //       project_name: "", //项目名称
+    //     },
+    //     telephoneNumber: "",
+    //     baseInfo: [], //基本信息
+    //     descriptions: "", //事项描述
+    //     Condition: "", //受理条件
+    //     applyFile: [], //申报材料
+    //     procedureFile: [], //办理程序
+    //     apply_time: [], //申请时间
+    //     annex: [], //附件
+    //   };
+    // },
     apply() {
       this.submitApplication(); // Call the function to submit the application
       this.$message({
@@ -293,6 +301,22 @@ export default {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    },
+    async getEnterpriseDetails(id) {
+      try {
+        const response = await fetchEnterpriseDetails(id);
+        this.project = response.project;
+        this.telephoneNumber = response.telephoneNumber;
+        this.baseInfo = response.baseInfo;
+        this.descriptions = response.descriptions;
+        this.Condition = response.Condition;
+        this.applyFile = response.applyFile;
+        this.procedureFile = response.procedureFile;
+        this.apply_time = response.apply_time;
+        this.annex = response.annex;
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };

@@ -859,10 +859,11 @@ var constantRoutes = [
 
     children: [
       {
-        path: "pro",
+        path: "pro/:unicode",
         name: "Pro",
-        component: () => import("@/views/details/pro/:id"),
+        component: () => import("@/views/details/pro"),
         meta: { title: "项目详情", icon: "dashboard" },
+        props: true,
       },
     ],
   },

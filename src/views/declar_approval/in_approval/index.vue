@@ -101,7 +101,7 @@
               <el-button
                 type="text"
                 size="mini"
-                @click="checkDetail(scope.$index, scope.row.id)"
+                @click="checkDetail(scope.$index, scope.row.unicode)"
                 >[详情]</el-button
               >
             </template>
@@ -141,14 +141,6 @@ export default {
           date: "2016-05-02",
           apply_condition: "",
         },
-
-        {
-          index: 1,
-          unicode: "12345",
-          name: "王小虎",
-          date: "2016-05-02",
-          apply_condition: "",
-        },
         // 其他数据...
       ],
       secondtableData: [
@@ -158,13 +150,6 @@ export default {
           name: "王小虎",
           date: "2016-05-02",
           apply_condition: "已通过",
-        },
-        {
-          index: 1,
-          unicode: "12345",
-          name: "王小虎",
-          date: "2016-05-02",
-          apply_condition: "",
         },
         // 其他数据...
       ],
@@ -187,8 +172,8 @@ export default {
     handleSendBack(index, row) {
       console.log(index, row);
     },
-    checkDetail(index, id) {
-      console.log(index, id);
+    checkDetail(index, unicode) {
+      this.$router.push({ path: `/details/pro/${unicode}` });
     },
     handleSizeChange(pageSize) {
       if (this.activeName === "first") {
