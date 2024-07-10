@@ -30,7 +30,7 @@
               <el-button
                 type="text"
                 size="mini"
-                @click="checkDetail(scope.$index, scope.row.unicode)"
+                @click="checkDetail(scope.$index, scope.row.id)"
                 >[详情]</el-button
               >
             </template>
