@@ -182,14 +182,17 @@ export default {
     },
     // 从后端获取项目数据
     async fetchProjects() {
-      try {
-        const response = await fetch("https://api.example.com/projects"); // 替换为真实的API地址
-        const data = await response.json();
-        this.projects = data;
-        this.filterProjects();
-      } catch (error) {
-        console.error("Failed to fetch projects:", error);
-      }
+      new Promise(async (resolve,reject) =>{
+          await request({
+            url: "/program/application/add",
+            method: "post",
+            data
+          })
+            .then((response) =>{
+              console.log(response);
+              window.location.reload();
+            })
+          })
     },
     // 处理选项点击事件
     handleOptionClick(category, item) {
